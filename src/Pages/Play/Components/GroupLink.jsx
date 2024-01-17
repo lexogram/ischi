@@ -16,9 +16,9 @@ export const GroupLink = () => {
   const [ src, setSrc ] = useState()
   const [ collapsed, setCollapsed ] = useState(true)
   
-  const { origin, pathname, hash } = location
+  const href = location.href.replace(/(?<=play).*/, "")
   const group = encodeURI(group_name)
-  const groupLink = `${origin}${pathname}${hash}?group=${group}`
+  const groupLink = `${href}/${group}`
   
 
   const toggleCollapsed = () => {

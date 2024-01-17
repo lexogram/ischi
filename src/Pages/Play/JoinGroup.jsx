@@ -9,6 +9,7 @@ import React, {
   useRef,
   useEffect
 } from 'react'
+import { useParams } from 'react-router-dom'
 import { WSContext } from '../../Contexts'
 import lock from '../../Assets/locked.png'
 import unlocked from '../../Assets/unlocked.png'
@@ -20,15 +21,18 @@ export const JoinGroup = () => {
     joinGroup,
     errorStatus
   } = useContext(WSContext)
-
   // Check if this is a referral
-  const urlParams = new URLSearchParams(window.location.search);
-  const queryGroup = urlParams.get('group');
+  const { group, user } = useParams()
 
-  const [ user_name, setUserName ] = useState("")
-  const [ group_name, setGroupName ] = useState(queryGroup || "")
+  console.log("group:", group);
+  console.log("user:", user);
+  
+  
+
+  const [ user_name, setUserName ] = useState(user || "")
+  const [ group_name, setGroupName ] = useState(group || "")
   const [ create_group, setCreateGroup ] = useState(false)
-  const [ locked, setLocked ] = useState(!!queryGroup)
+  const [ locked, setLocked ] = useState(!!group)
   const [ disabled, setDisabled ] = useState(true)
 
 

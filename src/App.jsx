@@ -42,7 +42,22 @@ function App() {
             <Route path="create" element={<Create />} />
             <Route path="credits" element={<Credits />} />
             <Route path="login" element={<OnBoard />} />
-            <Route path="play" element={<Play />} />
+            {/* Allow /play route to specify group and user */}
+            <Route path="play">
+              <Route
+                path=":group/:user/*"
+                element={<Play />}
+              />
+              <Route
+                path=":group/"
+                element={<Play />}
+              />
+              <Route
+                path=""
+                element={<Play />}
+              />
+              
+            </Route>
             <Route path="not-found/*" element={<NotFound />} />
 
             {/* PRIVATE "onboard" ROUTES */}
