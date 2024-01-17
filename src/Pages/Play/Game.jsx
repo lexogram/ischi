@@ -6,7 +6,7 @@
 import React, { useContext } from 'react'
 import { GameContext } from '../../Contexts'
 
-import { Board } from '../../Components/Board'
+import { Board } from './Components/Board'
 
 
 

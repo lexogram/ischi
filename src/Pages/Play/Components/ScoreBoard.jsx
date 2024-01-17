@@ -4,7 +4,7 @@
 
 
 import React, { useContext } from 'react'
-import { GameContext } from '../Contexts'
+import { GameContext } from '../../../Contexts'
 
 export const ScoreBoard = (props) => {
   const { score, setGameData } = useContext(GameContext)

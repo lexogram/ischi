@@ -7,7 +7,7 @@ import React, { useContext } from 'react';
 import { Outlet } from "react-router-dom";
 import { NavContext } from '../Contexts'
 
-import { Menu } from '../Components/Menu';
+import { Menu } from '../Pages/Menu';
 
 export const Frame = () => {
   return (

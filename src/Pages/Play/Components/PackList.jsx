@@ -4,7 +4,7 @@
 
 
 import React, { useContext } from 'react'
-import { GameContext, WSContext } from '../Contexts'
+import { GameContext, WSContext } from '../../../Contexts'
 import { PackCard } from './PackCard'
 
 

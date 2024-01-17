@@ -4,7 +4,7 @@
 
 
 import React from 'react'
-import { useResize } from '../Hooks/useResize'
+import { useResize } from '../../../Hooks/useResize'
 
 import { Card } from '../Components/Card'
 import { NextCard } from './NextCard'

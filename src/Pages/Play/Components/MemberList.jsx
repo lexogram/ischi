@@ -4,7 +4,7 @@
 
 
 import React, { useContext } from 'react'
-import { WSContext } from '../Contexts'
+import { WSContext } from '../../../Contexts'
 
 export const MemberList = () => {
   const { members, user_id, owner_id } = useContext(WSContext)

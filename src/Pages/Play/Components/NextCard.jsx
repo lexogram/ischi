@@ -4,7 +4,7 @@
 
 
 import React, { useContext } from 'react'
-import { WSContext, GameContext } from '../Contexts'
+import { WSContext, GameContext } from '../../../Contexts'
 
 
 export const NextCard = ({ r }) => {

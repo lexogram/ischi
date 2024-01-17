@@ -4,7 +4,7 @@
 
 
 import React, { useRef, useEffect, useState } from 'react'
-import { DELAY_ARRAY } from '../Constants'
+import { DELAY_ARRAY } from '../../../Constants'
 
 
 export const DelaySlider = ({ delay, setDelay }) => {

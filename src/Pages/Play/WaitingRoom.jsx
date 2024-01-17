@@ -4,9 +4,9 @@
 
 
 import React from 'react'
-import { MemberList } from '../../Components/MemberList'
-import { PackList } from '../../Components/PackList'
-import { GroupLink } from '../../Components/GroupLink'
+import { MemberList } from './Components/MemberList'
+import { PackList } from './Components/PackList'
+import { GroupLink } from './Components/GroupLink'
 
 export const WaitingRoom = () => {
   return (

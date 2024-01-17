@@ -5,9 +5,9 @@
 
 import React, { useContext, useEffect, useState } from 'react'
 import { toString } from 'qrcode' 
-import { WSContext } from '../Contexts'
-import { Copy } from './Copy'
-import { copyToClipboardAsync } from '../Utilities/helpers'
+import { WSContext } from '../../../Contexts'
+import { Copy } from '../../../Components/Copy'
+import { copyToClipboardAsync } from '../../../Utilities/helpers'
 
 
 
