@@ -1,0 +1,273 @@
+:root {
+  --light: #ddd;
+  --r: 34;
+  --g: 34;
+  --b: 34;
+  --a: 0.95;
+  --dark: rgb(var(--r), var(--g), var(--b));
+  --darkly: rgba(var(--r), var(--g), var(--b), var(--a));
+}
+
+body {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: var(--dark);
+  color: var(--light);
+}
+
+#connecting {
+  width: 6em;
+}
+
+#disconnected {
+  text-align: center;
+  height: 7em;
+}
+
+button:not(:disabled),
+.button {
+  cursor: pointer
+}
+
+/* JOIN GROUP // JOIN GROUP // JOIN // JOIN GROUP // JOIN GROUP */
+
+form {
+  width: 15em;
+}
+
+form input[type=text],
+form button {
+  width: 100%
+}
+
+form input[readonly] {
+  color: #c90;
+}
+
+label {
+  position: relative; /* to allow lock image to be absolute*/
+}
+
+label[for=group-name] span {
+  transition: opacity 500ms;
+}
+
+label[for=group-name].locked span {
+  opacity: 0.5;
+}
+
+form img {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 2em;
+  opacity: 0;
+  transition: opacity 5000ms;
+  pointer-events: none;
+  cursor: default;
+}
+
+label[for=group-name].locked img{
+  opacity: 1;
+  pointer-events: all;
+  cursor: pointer;
+}
+
+label[for=create-group].locked {
+  opacity: 0.25;
+}
+
+label,
+label[for$=-name] * { /* user-name, group-name, not create-group */
+  display: block;
+  margin-bottom: 1em;
+}
+
+label[for] span {
+  margin-bottom: 0.25em;
+}
+
+li.owner {
+  font-weight: bold;
+  color: #fc6;
+}
+
+
+
+
+/* WAITING ROOM // WAITING ROOM // WAITING ROOM // WAITING ROOM */
+
+#group-link {
+  --size: 2em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#group-link div {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-top: 1em;
+}
+
+#group-link a {
+  display: inline-block;
+  color: var(--light);
+  width: calc(100% - var(--size));
+  overflow: auto;
+}
+
+#group-link svg {
+  position: absolute;
+  right: 0;
+  width: var(--size);
+  height: var(--size);
+  padding: 0.333em;
+  box-sizing: border-box;
+  border: 1px outset var(--light);
+  border-radius: 0.25em;
+  color: var(--light);
+}
+
+#group-link svg:hover {
+  background-color: #000;
+}
+
+#group-link svg:active {
+  border-style: inset;
+}
+
+#delay-slider {
+  height: 4em;
+  background-color: #333;
+}
+
+#delay-slider div {
+  height: 1em;
+  border-radius: 1em;
+}
+
+#delay-slider .range {
+  position: relative;
+  border: 1px solid var(--light);
+  box-sizing: content-box;
+}
+
+#delay-slider .thumb {
+  position: absolute;
+  background-color: var(--light);
+  width: 33.333%;
+  border: 1px solid var(--dark);
+  box-sizing: border-box;
+}
+
+#next-card {
+  --radius: 100px;
+  --bg-color: #080;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: var(--radius);
+  height: var(--radius);
+  border-bottom-left-radius: var(--radius);
+  text-align: right;
+  background-color: var(--bg-color);
+  border-top-width: 0;
+  border-right-width: 0;
+  border-color: var(--bg-color);
+  color: inherit;
+}
+
+#next-card:hover {
+  --bg-color: #090;
+  color: #fff;
+}
+
+#next-card:disabled {
+  opacity: 0.25
+}
+
+#next-card span {
+  position: relative;
+  font-size: 4.5vmin;
+  top: -1em;
+}
+
+/* SCORE */
+
+#score {
+  position: absolute;
+  top:0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: var(--darkly);
+  pointer-events: none;
+  font-size: 6vmin;
+  --edge: calc((100vw - 80vmin) / 2);
+}
+
+#score div {
+  position: absolute;
+  top: 50%;
+  border: 0.05em inset var(--light);
+  padding: 0 1em;
+  left: var(--edge);
+  right: var(--edge);
+  transform: translate(0, -50%);
+}
+
+#score h1 {
+  text-align: center;
+}
+
+#score ul {
+  list-style-type: none;
+  padding: 0;
+  max-height: calc(50vh - 2.05em);
+  overflow: auto
+}
+
+#score span {
+  display: inline-block;
+  width: 85%;
+}
+
+#score .score {
+  text-align: right;
+  width: 15%;
+}
+
+#score button {
+  position: absolute;
+  bottom: 0;
+  font-size: inherit;
+  left: var(--edge);
+  right: var(--edge);
+  width: 80vmin;
+  border: 0.05em outset #888;
+  border-radius: 0.25em;
+  background-color: var(--dark);
+  color: inherit;
+  z-index: 99;
+  pointer-events: all;
+}
+
+#score button:hover {
+  background-color: #000;
+  color: #fff;
+}
+
+#score button:active {
+  border-style: inset;
+}
+
+.shadow {
+  -webkit-filter: drop-shadow( 0px 0px 5px #fff);
+  filter: drop-shadow( 30x 0px 5px #fff);
+}
