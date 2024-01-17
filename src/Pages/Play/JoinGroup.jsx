@@ -9,9 +9,9 @@ import React, {
   useRef,
   useEffect
 } from 'react'
-import { WSContext } from '../Contexts'
-import lock from '../Assets/locked.png'
-import unlocked from '../Assets/unlocked.png'
+import { WSContext } from '../../Contexts'
+import lock from '../../Assets/locked.png'
+import unlocked from '../../Assets/unlocked.png'
 
 
 

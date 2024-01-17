@@ -1,5 +1,5 @@
 /**
- * src/Pages/Base.jsx
+ * src/Routes/Play.jsx
  */
 
 
@@ -7,15 +7,14 @@ import React, { useContext } from 'react'
 import { WSContext } from '../Contexts'
 import { GameContext } from '../Contexts'
 
-import { Connecting } from './Connecting'
-import { Disconnected } from './Disconnected'
-import { JoinGroup } from './JoinGroup'
-import { WaitingRoom } from './WaitingRoom'
-import { Game } from './Game'
+import { Connecting } from '../Pages/Play'
+import { Disconnected } from '../Pages/Play'
+import { JoinGroup } from '../Pages/Play'
+import { WaitingRoom } from '../Pages/Play'
+import { Game } from '../Pages/Play'
 
 
-
-export const Base = () => {
+export const Play = () => {
   const {
     socketIsOpen,
     socketError,
