@@ -1,0 +1,19 @@
+:root {
+  --light: #ddd;
+  --r: 34;
+  --g: 34;
+  --b: 34;
+  --a: 0.95;
+  --dark: rgb(var(--r), var(--g), var(--b));
+  --darkly: rgba(var(--r), var(--g), var(--b), var(--a));
+
+  --menu-width: min(20em, 50vmin);
+  --fixed-width: calc(100vw - var(--menu-width));
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: var(--dark);
+  color: var(--light);
+}

@@ -4,6 +4,7 @@ import { Confirm } from './Confirm'
 import { Contact } from './Contact'
 import { Create } from './Create'
 import { Credits } from './Credits'
+import { Details } from './Details'
 import { Frame } from './Frame'
 import { Home } from './Home'
 import { OnBoard } from './OnBoard'
@@ -18,6 +19,7 @@ export {
   Contact,
   Create,
   Credits,
+  Details,
   Frame,
   Home,
   OnBoard,

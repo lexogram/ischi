@@ -13,6 +13,8 @@ import { JoinGroup } from '../Pages/Play'
 import { WaitingRoom } from '../Pages/Play'
 import { Game } from '../Pages/Play'
 
+import '../SCSS/play.scss'
+
 
 export const Play = () => {
   const {
@@ -25,22 +27,28 @@ export const Play = () => {
     gameData
   } = useContext(GameContext)
 
+  const page = (() => {
+    if (!socketIsOpen) {
+      if (!socketError) {
+        return <Connecting />
+      } else {
+        return <Disconnected error={socketError} />
+      }
 
+    } else if (!user_name || !group_name) {
+        return <JoinGroup />
 
-  if (!socketIsOpen) {
-    if (!socketError) {
-      return <Connecting />
+    } else if (!gameData) {
+      return <WaitingRoom />
+
     } else {
-      return <Disconnected error={socketError} />
+      return <Game />
     }
+  })()
 
-  } else if (!user_name || !group_name) {
-      return <JoinGroup />
-
-  } else if (!gameData) {
-    return <WaitingRoom />
-
-  } else {
-    return <Game />
-  }
+  return (
+    <div id="play">
+      {page}
+    </div>
+  )
 }

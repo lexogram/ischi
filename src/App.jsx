@@ -12,6 +12,7 @@ import {
   Contact,
   Create,
   Credits,
+  Details,
   Frame,
   Home,
   OnBoard,
@@ -19,6 +20,7 @@ import {
   Play,
   RequireLogin
 } from "./Routes/"
+import "./SCSS/app.scss"
 
 function App() {
 
@@ -41,6 +43,7 @@ function App() {
             <Route path="contact" element={<Contact />} />
             <Route path="create" element={<Create />} />
             <Route path="credits" element={<Credits />} />
+            <Route path="details" element={<Details />} />
             <Route path="login" element={<OnBoard />} />
             {/* Allow /play route to specify group and user */}
             <Route path="play">
@@ -56,8 +59,9 @@ function App() {
                 path=""
                 element={<Play />}
               />
-              
             </Route>
+
+            {/*  CATCHALL FOR ALL UNLISTED PATHS */}
             <Route path="not-found/*" element={<NotFound />} />
 
             {/* PRIVATE "onboard" ROUTES */}
@@ -73,11 +77,11 @@ function App() {
                       element={<Account />}
                     />
 
-                    {/*  CATCHALL FOR UNLISTED PRIVATE PATHS */}
+                    {/* REDIRECT FOR UNLISTED PRIVATE PATHS */}
                     <Route
                       path="*" element={
                       <Navigate
-                        to="../not-found/at-all"
+                        to="../not-found/there"
                         replace={true}
                       />}
                     />
@@ -87,10 +91,10 @@ function App() {
             />
           </Route>
 
-          {/* CATCHALL FOR UNLISTED PUBLIC PATHS */}
+          {/* REDIRECT FOR UNLISTED PUBLIC PATHS */}
           <Route path="*" element={
             <Navigate
-              to="not-found"
+              to="not-found/here"
               replace={true}
             />}
           />
