@@ -46,7 +46,7 @@ export const Picture = ({
   const className = imageClicked ? "shadow" : ""
   const style = found
     ? { pointerEvents: "none", cursor: "default" }
-    : { pointerEvents: "all", cursor: "pointer" }
+    : { cursor: "pointer" }
 
 
   const clickPicture = () => {

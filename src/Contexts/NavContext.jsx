@@ -1,18 +1,25 @@
 /**
  * NavContext.jsx
- * description
+ *
+ *
  */
 
-import React, { createContext } from 'react'
+import React, { createContext, useState } from 'react'
+
+
 
 export const NavContext = createContext()
 
+
+
 export const NavProvider = ({ children }) => {
+  const [ outletLeft, setOutletLeft ] = useState(0)
 
   return (
     <NavContext.Provider
       value ={{
-        
+        outletLeft,
+        setOutletLeft
       }}
     >
       {children}

@@ -52,6 +52,9 @@
   }
 
   .menu-section {
+    & {
+      margin-bottom: 1em
+    }
     // Disclosure triangle / checkbox
     input {
       position: absolute;
@@ -93,27 +96,14 @@
       user-select: none;
     }
 
-    // Page links
-    a {
-      color: var(--light);
-      text-decoration: none;
-      border: 1px outset var(--light);
-      border-radius: 0.5em;
+    // .pages links and .play buttons
+    a,
+    button {
       display: inline-block;
       box-sizing: border-box;
       width: 100%;
       padding: 0.5em 1em;
-    }
-
-    a.here,
-    a:hover {
-      color: #fff;
-    }
-
-    a.here,
-    a:active {
-      background-color: #000;
-      border-style: inset;
+      cursor: pointer;
     }
 
     // Disclosure triangle at work

@@ -5,12 +5,13 @@
 
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { capitalize } from '../Utilities/helpers'
+import { capitalize, toneColor } from '../Utilities/helpers'
 import { Disclose } from '../Components/Disclose'
 
 
-export const Section = ({ 
-  section, 
+export const Section = ({
+  section,
+  title,
   open,
   toggleOpen,
   items,
@@ -21,12 +22,13 @@ export const Section = ({
     toggleOpen(section, !open)
   }
 
-  const title = capitalize(section)
 
-  
+  title = title || capitalize(section)
+
+
   const getLink = ({ text, type, to }) => {
     // Add .here class to the link to the current page
-    const className = to === page ? "here" : ""
+    const className = to === page ? "button here" : "button"
     return (
       <Link
         to={to}
@@ -38,6 +40,23 @@ export const Section = ({
     )
   }
 
+
+  const getButton = ({ text, callback, colour }) => {
+    const style = {
+      backgroundColor: colour ? colour : "inherit",
+      borderColor: colour ? toneColor(colour, 2) : "inherit"
+    }
+    return (
+      <button
+        onClick={callback}
+        style={style}
+      >
+        {text}
+      </button>
+    )
+  }
+
+
   const list = items.map( data => {
     const { type, text } = data
 
@@ -48,12 +67,15 @@ export const Section = ({
           return getLink(data)
 
         case "divider":
-          return <> 
+          return <>
             <span className="hr"><hr/></span>
             <span>{text}</span>
             <span><hr/></span>
           </>
-        // >>>
+        // >>> <<< Request from PlayActions
+        case "play":
+          return getButton(data)
+        //
       }
     })()
 

@@ -1,17 +1,23 @@
 /**
- * src/Pages/Game.jsx
+ * src/Pages/Play/Game.jsx
  */
 
 
 import React, { useContext } from 'react'
+import { useCircles } from '../../Hooks/useCircles'
 import { GameContext } from '../../Contexts'
+import { NavContext } from '../../Contexts'
 
-import { Board } from './Components/Board'
+import { Card } from './Components/Card'
+import { NextCard } from './Components/NextCard'
+import { ScoreBoard } from './Components/ScoreBoard'
 
 
 
 export const Game = () => {
   const { gameData } = useContext(GameContext)
+  const { outletLeft } = useContext(NavContext)
+  const { d, r, x, y } = useCircles(outletLeft)
   let {
     index,
     nextIndex,
@@ -52,13 +58,34 @@ export const Game = () => {
   }
 
 
+  // return (
+  //   <>
+  //     <Board
+  //       indices={indices}
+  //       match={match}
+  //       showScore={showScore}
+  //     />
+  //   </>
+  // )
+
   return (
-    <>
-      <Board
-        indices={indices}
+    <div id="board">
+      <Card
+        index={indices[0]}
+        top={true}
+        d={d}
+        x={x}
+        y={y}
         match={match}
-        showScore={showScore}
       />
-    </>
+      <Card
+        index={indices[1]}
+        d={d}
+        x={x}
+        y={y}
+        match={match}
+      />
+      { showScore ? <ScoreBoard /> : <NextCard r={r}/> }
+    </div>
   )
 }

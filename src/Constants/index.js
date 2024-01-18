@@ -2,7 +2,7 @@ const hostname = location.hostname
 export const IS_DEPLOYED = /lexogram.github.io/.test(hostname)
 
 export const HOSTNAME = IS_DEPLOYED
-  ? "ischi.onrender.com"
+  ? "nevzorovyh.lexogram.com"
   : hostname
 
 export const PORT = IS_DEPLOYED

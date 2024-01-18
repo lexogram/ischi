@@ -3,34 +3,52 @@
  */
 
 
-import React, { useState, useEffect } from 'react'
+import React, {
+  useState,
+  useEffect,
+  useContext,
+  useRef
+} from 'react'
+import { NavContext } from '../Contexts'
 import { usePage } from '../Hooks/usePage'
 import '../SCSS/menu.scss'
 
 import { Icon } from './Icon'
 import { PageTracker } from './PageTracker'
-import { Section } from './Section'
+import { PlayActions } from '../Pages/Play/PlayActions'
 
 
 
 export const Menu = () => {
+  const { setOutletLeft } = useContext(NavContext)
+  const menuRef = useRef()
   const page = usePage()
-  const [ fixMenu, setFixMenu ] = useState(true)
+  const [ fixMenu, setFixMenu ] = useState(false)
   const [ open, setOpen ] = useState(true)
   const [ sectionIsOpen, setSectionIsOpen ] = useState({
-    pages: true
+    pages: true,
+    play: true
   })
 
 
+  const updateOutletWidth = () => {
+    if (fixMenu) {
+      const { width } = menuRef.current.getBoundingClientRect()
+      setOutletLeft(width)
 
-  const toggleFixMenu = () => {
-    const fix = !fixMenu
+    } else {
+      setOutletLeft(0)
+    }
 
     // The className of div#root affects the width of <Outlet />
-    const set = fix ? "add" : "remove"
+    const set = fixMenu ? "add" : "remove"
     document.getElementById("root").classList[set]("fixed-menu")
+  }
 
-    setFixMenu(fix)
+
+  const toggleFixMenu = () => {
+    setFixMenu(!fixMenu)
+    // updateOutletWidth() will be called by useEffect
   }
 
 
@@ -45,6 +63,8 @@ export const Menu = () => {
     }, 2000)
   }, [])
 
+  useEffect(updateOutletWidth, [fixMenu])
+
 
   const toggleOpen = (section, state) => {
     setSectionIsOpen({ ...sectionIsOpen, [section]: state })
@@ -54,6 +74,7 @@ export const Menu = () => {
   return (
     <div id="menu"
       style={style}
+      ref={menuRef}
     >
       { !fixMenu &&
         <Icon
@@ -64,6 +85,12 @@ export const Menu = () => {
 
       <div className="items">
         {/* More local actions will go here */}
+        { page === "/play" &&
+          <PlayActions
+            open={sectionIsOpen.play}
+            toggleOpen={toggleOpen}
+          />
+        }
         <PageTracker
           open={sectionIsOpen.pages}
           toggleOpen={toggleOpen}

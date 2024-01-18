@@ -6,6 +6,8 @@
   --a: 0.95;
   --dark: rgb(var(--r), var(--g), var(--b));
   --darkly: rgba(var(--r), var(--g), var(--b), var(--a));
+  --disabled: #999;
+  --disabled-bg: #666;
 
   --menu-width: min(15em, 50vw);
   --fixed-width: calc(100vw - var(--menu-width));
@@ -16,4 +18,43 @@ body {
   min-height: 100vh;
   background-color: var(--dark);
   color: var(--light);
+}
+
+
+// BUTTONS AND LINKS THAT LOOK LIKE BUTTONS //
+
+
+button,
+.button {
+  border: 1px outset #888;
+  border-radius: 0.25em;
+  background-color: var(--dark);
+  color: var(--light);
+  text-decoration: none;
+  pointer-events: all;
+}
+
+button:disabled,
+.button:disabled {
+  color: var(--disabled);
+  background-color: var(--disabled-bg);
+  pointer-events: none;
+}
+
+button:not(:disabled):hover,
+.button:not(:disabled):hover,
+a.here {
+  color: #fff;
+}
+
+button:not(:disabled):active,
+.button:not(:disabled):active,
+a.here {
+  background-color: #000;
+  border-style: inset;
+}
+
+button:not(:disabled),
+.button {
+  cursor: pointer
 }

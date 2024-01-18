@@ -13,11 +13,6 @@
     height: 7em;
   }
 
-  button:not(:disabled),
-  .button {
-    cursor: pointer
-  }
-
   /* JOIN GROUP // JOIN GROUP // JOIN // JOIN GROUP // JOIN GROUP */
 
   form {
@@ -233,24 +228,10 @@
     position: absolute;
     bottom: 0;
     font-size: inherit;
-    left: var(--edge);
-    right: var(--edge);
-    width: 80vmin;
-    border: 0.05em outset #888;
-    border-radius: 0.25em;
-    background-color: var(--dark);
-    color: inherit;
+    left: 10%;
+    right: 10%;
+    width: 80%;
     z-index: 99;
-    pointer-events: all;
-  }
-
-  #score button:hover {
-    background-color: #000;
-    color: #fff;
-  }
-
-  #score button:active {
-    border-style: inset;
   }
 
   .shadow {

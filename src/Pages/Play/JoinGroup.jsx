@@ -22,12 +22,7 @@ export const JoinGroup = () => {
     errorStatus
   } = useContext(WSContext)
   // Check if this is a referral
-  const { group, user } = useParams()
-
-  console.log("group:", group);
-  console.log("user:", user);
-  
-  
+  const { group, user } = useParams()  
 
   const [ user_name, setUserName ] = useState(user || "")
   const [ group_name, setGroupName ] = useState(group || "")
