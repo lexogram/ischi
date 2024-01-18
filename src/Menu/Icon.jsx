@@ -17,7 +17,7 @@ export const Icon = ({ open, setOpen }) => {
     setOpen(!open)
   }
 
-  const openLeft = "calc(var(--menu-width) - var(--icon-width))"
+  const openLeft = "calc(var(--menu-width) - var(--icon-size))"
   
   const style = {
     opacity: (open ? "1" : (over ? "0.75" : "0.25")),

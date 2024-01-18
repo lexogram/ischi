@@ -1,4 +1,15 @@
 #menu {
+  // --menu-width: min(15em, 50vw); // in app.scss
+  --ratio: 0.25;
+  --icon-size: calc(var(--ratio) * var(--menu-width));
+  --disclose-space: 2rem;
+  --disclose-size: 1.2em;
+  --list-width: calc(
+    var(--menu-width) - var(--disclose-space) - 1rem
+  );
+  --items-height: calc(100vh - var(--icon-size) - 1.5rem);
+  --svg-margin: 0.4em;
+
   & {
     position: fixed;
     top: 0;
@@ -24,15 +35,106 @@
   }
 
   #icon {
-    --ratio: 0.25;
-    --icon-width: calc(var(--ratio) * var(--menu-width));
     position: fixed;
-    width: var(--icon-width);
-    height: var(--icon-width);
+    width: var(--icon-size);
+    height: var(--icon-size);
     stroke: #fff;
     top: 0;
     transition-property: left, opacity;
     transition-duration: .3s, .1s;
     transition-timing-function: linear, ease;
+  }
+
+  .items {
+    margin-top: var(--icon-size);
+    height: var(--items-height);
+    overflow-x: auto;
+  }
+
+  .menu-section {
+    // Disclosure triangle / checkbox
+    input {
+      position: absolute;
+      left: -9999px;
+      width: var(--disclose-space);
+      margin: 0;
+    }
+
+    svg {
+      width: var(--disclose-size);
+      height: var(--disclose-size);
+      vertical-align: middle;
+      margin-left: var(--svg-margin);
+      margin-right: var(--svg-margin);
+    }
+
+    span {
+      display: inline-block;
+    }
+
+    span.section-title {
+      width: var(--list-width);
+      font-weight: bold;
+    }
+
+    // Content of the section
+    ul {
+      position: relative;
+      left: var(--disclose-space);
+      width: var(--list-width);
+      list-style-type: none;
+      padding: 0;
+      margin-top: 0;
+      display: none;
+    }
+
+    li {
+      margin-top: 0.5em;
+      user-select: none;
+    }
+
+    // Page links
+    a {
+      color: var(--light);
+      text-decoration: none;
+      border: 1px outset var(--light);
+      border-radius: 0.5em;
+      display: inline-block;
+      box-sizing: border-box;
+      width: 100%;
+      padding: 0.5em 1em;
+    }
+
+    a.here,
+    a:hover {
+      color: #fff;
+    }
+
+    a.here,
+    a:active {
+      background-color: #000;
+      border-style: inset;
+    }
+
+    // Disclosure triangle at work
+    input:checked ~ ul {
+      display: block;
+    }
+
+    // Section divider
+    span.hr,
+    span.hr ~ span {
+      display: table-cell;
+      width: 33.333%;
+    }
+    hr {
+      position: relative;
+      top: 0.4ex;
+      margin-right: 0.25em;
+    }
+    span:last-child hr{
+      margin-right: 0;
+      margin-left: 0.25em;
+    }
   }
 }

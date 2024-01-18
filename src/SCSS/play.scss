@@ -1,4 +1,9 @@
 #play {
+  & {
+    height: 100vh;
+    overflow: auto;
+  }
+
   #connecting {
     width: 6em;
   }

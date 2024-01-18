@@ -28,3 +28,10 @@ export async function copyToClipboardAsync(textToCopy) {
     }
   }
 }
+
+
+export const capitalize = string => {
+  return string.split(/\n/)
+   .map( word => word[0].toUpperCase() + word.slice(1))
+   .join(" ")
+}

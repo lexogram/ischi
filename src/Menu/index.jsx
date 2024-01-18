@@ -7,11 +7,18 @@ import React, { useState, useEffect } from 'react'
 import '../SCSS/menu.scss'
 
 import { Icon } from './Icon'
+import { PageTracker } from './PageTracker'
+import { Section } from './Section'
 
 
-export const Menu = (props) => {
-  const [ fixMenu, setFixMenu ] = useState(false)
+
+export const Menu = () => {
+  const [ fixMenu, setFixMenu ] = useState(true)
   const [ open, setOpen ] = useState(true)
+  const [ sectionIsOpen, setSectionIsOpen ] = useState({
+    pages: true
+  })
+
 
 
   const toggleFixMenu = () => {
@@ -37,6 +44,11 @@ export const Menu = (props) => {
   }, [])
 
 
+  const toggleOpen = (section, state) => {
+    setSectionIsOpen({ ...sectionIsOpen, [section]: state })
+  }
+
+
   return (
     <div id="menu"
       style={style}
@@ -48,7 +60,13 @@ export const Menu = (props) => {
         />
       }
 
-
+      <div className="items">
+        {/* More local actions will go here */}
+        <PageTracker
+          open={sectionIsOpen.pages}
+          toggleOpen={toggleOpen}
+        />
+      </div>
 
       <label htmlFor="fix-menu">
         <input

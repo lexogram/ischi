@@ -7,7 +7,7 @@
   --dark: rgb(var(--r), var(--g), var(--b));
   --darkly: rgba(var(--r), var(--g), var(--b), var(--a));
 
-  --menu-width: min(20em, 50vmin);
+  --menu-width: min(15em, 50vw);
   --fixed-width: calc(100vw - var(--menu-width));
 }
 
