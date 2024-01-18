@@ -4,6 +4,7 @@
 
 
 import React, { useState, useEffect } from 'react'
+import { usePage } from '../Hooks/usePage'
 import '../SCSS/menu.scss'
 
 import { Icon } from './Icon'
@@ -13,6 +14,7 @@ import { Section } from './Section'
 
 
 export const Menu = () => {
+  const page = usePage()
   const [ fixMenu, setFixMenu ] = useState(true)
   const [ open, setOpen ] = useState(true)
   const [ sectionIsOpen, setSectionIsOpen ] = useState({
@@ -65,6 +67,7 @@ export const Menu = () => {
         <PageTracker
           open={sectionIsOpen.pages}
           toggleOpen={toggleOpen}
+          page={page}
         />
       </div>
 
