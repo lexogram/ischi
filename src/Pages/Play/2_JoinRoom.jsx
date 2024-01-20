@@ -22,6 +22,8 @@ import unlocked from '../../Assets/unlocked.png'
 export const JoinRoom = () => {
   const {
     joinRoom,
+    existing_room,
+    getExistingRoom,
     errorStatus
   } = useContext(WSContext)
   // Check if this is a referral
@@ -35,6 +37,9 @@ export const JoinRoom = () => {
   const [ locked, setLocked ] = useState(!!room)
   const [ disabled, setDisabled ] = useState(true)
 
+  const cantCreate = locked || !!existing_room || !room
+  const willCreate = create_room && !existing_room
+
 
   const focusRef = useRef()
 
@@ -46,13 +51,30 @@ export const JoinRoom = () => {
       setDisabled(!value || !room)
     } else {
       setRoom(value)
-      setDisabled(!value || !user_name)
+      setDisabled(true) // until we've checked for a name clash
+      getExistingRoom(value)
+    }
+  }
+
+
+  const updateDisabledState = () => {
+    if ( typeof existing_room === "string"
+      && existing_room.toLowerCase() === room.toLowerCase()
+       ) {
+      setRoom(existing_room)
+    }
+
+    if (user_name) {
+      if (willCreate || cantCreate) {
+        setDisabled(false)
+      }
     }
   }
 
 
   const toggleCreateRoom = () => {
     setCreateRoom(!create_room)
+    setDisabled(true) // so we check for name clash
   }
 
 
@@ -86,6 +108,8 @@ export const JoinRoom = () => {
 
 
   useEffect(focusOn, [])
+  useEffect(() => getExistingRoom(room), [])
+  useEffect(updateDisabledState, [existing_room, create_room])
 
 
   return (
@@ -125,22 +149,22 @@ export const JoinRoom = () => {
       </label>
       <label
         htmlFor="create-room"
-        className={locked ? "locked" : ""}
+        className={cantCreate ? "locked" : ""}
       >
         <input
           type="checkbox"
           id="create-room"
           name="create_room"
-          checked={create_room}
+          checked={willCreate}
           onChange={toggleCreateRoom}
-          disabled={locked}
+          disabled={cantCreate}
         />
         <span>Create a new room</span>
       </label>
 
       <p>{ errorStatus ? errorStatus : "" }</p>
 
-      { create_room &&
+      { willCreate &&
         <label htmlFor="create-teams">
           <input
             type="checkbox"
@@ -158,7 +182,7 @@ export const JoinRoom = () => {
         type="submit"
         disabled={disabled}
       >
-        {create_room ? "Create the Room" : "Enter the Room"}
+        {willCreate ? "Create the Room" : "Enter the Room"}
       </button>
     </form>
   )

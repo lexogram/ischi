@@ -39,6 +39,7 @@ export const WSProvider = ({ children }) => {
   const [ user_id, setUserId ] = useState()
   const [ user_name, setUserName ] = useState()
   const [ room, setRoom ] = useState()
+  const [ existing_room, setExistingRoom ] = useState(true)
   const [ errorStatus, setErrorStatus ] = useState(0)
   const [ members, setMembers ] = useState([])
   const [ host, setHost ] = useState()
@@ -142,8 +143,10 @@ export const WSProvider = ({ children }) => {
         // }
         // This <uuid> should be used as the sender_id for all
         // future messages.
-
         return setUserId(recipient_id)
+
+        case "existing_room":
+        return setExistingRoom(content)
 
       case "room_joined":
         return treatStatus(content)
@@ -242,6 +245,17 @@ export const WSProvider = ({ children }) => {
   }
 
 
+  const getExistingRoom = content => {
+    const message = {
+      recipient_id: "system",
+      subject: "get_existing_room",
+      content // room
+    }
+
+    sendMessage(message)
+  }
+
+
   const joinRoom = content => {
     const message = {
       recipient_id: "system",
@@ -271,11 +285,13 @@ export const WSProvider = ({ children }) => {
 
         sendMessage,
         addMessageListener,
-        removeMessageListener, 
+        removeMessageListener,
 
         user_id,
         user_name,
         room,
+        existing_room,
+        getExistingRoom,
         joinRoom,
         members,
         host,
