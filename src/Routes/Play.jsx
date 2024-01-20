@@ -10,7 +10,7 @@ import { GameContext } from '../Contexts'
 import { Connecting } from '../Pages/Play'
 import { Disconnected } from '../Pages/Play'
 import { JoinGroup } from '../Pages/Play'
-import { WaitingRoom } from '../Pages/Play'
+import { ChoosePack } from '../Pages/Play'
 import { Game } from '../Pages/Play'
 
 import '../SCSS/play.scss'
@@ -39,7 +39,7 @@ export const Play = () => {
         return <JoinGroup />
 
     } else if (!gameData) {
-      return <WaitingRoom />
+      return <ChoosePack />
 
     } else {
       return <Game />

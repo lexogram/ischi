@@ -9,7 +9,7 @@
 
 
 import React from 'react'
-import { Section } from '../../Menu/Section';
+import { Section } from '../../../Menu/Section';
 
 const USER  = 0
 const HOST  = 1

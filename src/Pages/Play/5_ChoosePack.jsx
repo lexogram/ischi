@@ -1,5 +1,5 @@
 /**
- * src/Pages/WaitingRoom.jsx
+ * src/Pages/ChoosePack.jsx
  */
 
 
@@ -8,7 +8,7 @@ import { MemberList } from './Components/MemberList'
 import { PackList } from './Components/PackList'
 import { GroupLink } from './Components/GroupLink'
 
-export const WaitingRoom = () => {
+export const ChoosePack = () => {
   return (
     <>
       <h1>Members</h1>

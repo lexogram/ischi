@@ -15,7 +15,7 @@ import '../SCSS/menu.scss'
 
 import { Icon } from './Icon'
 import { PageTracker } from './PageTracker'
-import { PlayActions } from '../Pages/Play/PlayActions'
+import { PlayActions } from '../Pages/Play/Components/PlayActions'
 
 
 
