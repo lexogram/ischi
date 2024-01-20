@@ -11,6 +11,9 @@ import React, {
 } from 'react'
 import { useParams } from 'react-router-dom'
 import { WSContext } from '../../Contexts'
+
+import { TeamPicker } from './Components/TeamPicker'
+
 import lock from '../../Assets/locked.png'
 import unlocked from '../../Assets/unlocked.png'
 
@@ -22,11 +25,13 @@ export const JoinRoom = () => {
     errorStatus
   } = useContext(WSContext)
   // Check if this is a referral
-  const { room: linkRoom, user } = useParams()  
+  const { room: linkRoom, user } = useParams()
 
   const [ user_name, setUserName ] = useState(user || "")
   const [ room, setRoom ] = useState(linkRoom || "")
   const [ create_room, setCreateRoom ] = useState(false)
+  const [ create_teams, setCreateTeams ] = useState(false)
+
   const [ locked, setLocked ] = useState(!!room)
   const [ disabled, setDisabled ] = useState(true)
 
@@ -48,6 +53,11 @@ export const JoinRoom = () => {
 
   const toggleCreateRoom = () => {
     setCreateRoom(!create_room)
+  }
+
+
+  const toggleCreateTeams = () => {
+    setCreateTeams(!create_teams)
   }
 
 
@@ -127,12 +137,28 @@ export const JoinRoom = () => {
         />
         <span>Create a new room</span>
       </label>
+
       <p>{ errorStatus ? errorStatus : "" }</p>
+
+      { create_room &&
+        <label htmlFor="create-teams">
+          <input
+            type="checkbox"
+            id="create-teams"
+            name="create_teams"
+            onChange={toggleCreateTeams}
+            checked={create_teams}
+          />
+          <span>Create teams?</span>
+        </label>
+      }
+      { create_teams && <TeamPicker /> }
+
       <button
         type="submit"
         disabled={disabled}
       >
-        Join the Room
+        {create_room ? "Create the Room" : "Enter the Room"}
       </button>
     </form>
   )
