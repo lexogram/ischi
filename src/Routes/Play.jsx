@@ -9,7 +9,7 @@ import { GameContext } from '../Contexts'
 
 import { Connecting } from '../Pages/Play'
 import { Disconnected } from '../Pages/Play'
-import { JoinGroup } from '../Pages/Play'
+import { JoinRoom } from '../Pages/Play'
 import { ChoosePack } from '../Pages/Play'
 import { Game } from '../Pages/Play'
 
@@ -19,9 +19,15 @@ import '../SCSS/play.scss'
 export const Play = () => {
   const {
     socketIsOpen,
+    reconnectionFailed,
     socketError,
+    user_id,
     user_name,
-    group_name,
+    room,
+    create_room,
+    host_name,
+    host_id,
+    teams,
   } = useContext(WSContext)
   const {
     gameData
@@ -35,8 +41,8 @@ export const Play = () => {
         return <Disconnected error={socketError} />
       }
 
-    } else if (!user_name || !group_name) {
-        return <JoinGroup />
+    } else if (!user_name || !room) {
+        return <JoinRoom />
 
     } else if (!gameData) {
       return <ChoosePack />

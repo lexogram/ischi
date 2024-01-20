@@ -16,7 +16,7 @@ export const PackCard = ({
   isUsersChoice,
   canVote,
   vote,
-  select, // function if isOwner, or undefined
+  select, // function if isHost, or undefined
   delay: defaultDelay
 }) => {
   const { name, count, thumbnail } = pack

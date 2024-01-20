@@ -8,15 +8,15 @@ import { WSContext, GameContext } from '../../../Contexts'
 
 
 export const NextCard = ({ r }) => {
-  const { user_id, owner_id } = useContext(WSContext)
+  const { user_id, host_id } = useContext(WSContext)
   const {
     requestNextCard,
     foundBy,
     delay
   } = useContext(GameContext)
-  const isOwner = user_id === owner_id
+  const isHost = user_id === host_id
 
-  if (!isOwner || !isNaN(delay)) {
+  if (!isHost || !isNaN(delay)) {
     return ""
   }
 

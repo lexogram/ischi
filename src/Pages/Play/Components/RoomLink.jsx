@@ -1,5 +1,5 @@
 /**
- * src/Components/GroupLink.jsx
+ * src/Components/RoomLink.jsx
  */
 
 
@@ -11,14 +11,13 @@ import { copyToClipboardAsync } from '../../../Utilities/helpers'
 
 
 
-export const GroupLink = () => {
-  const { group_name } = useContext(WSContext)
+export const RoomLink = () => {
+  const { room } = useContext(WSContext)
   const [ src, setSrc ] = useState()
   const [ collapsed, setCollapsed ] = useState(true)
   
   const href = location.href.replace(/(?<=play).*/, "")
-  const group = encodeURI(group_name)
-  const groupLink = `${href}/${group}`
+  const roomLink = `${href}/${encodeURI(room)}`
   
 
   const toggleCollapsed = () => {
@@ -27,7 +26,7 @@ export const GroupLink = () => {
 
 
   const copyToClipboard = () => {
-    copyToClipboardAsync(groupLink) // returns a promise
+    copyToClipboardAsync(roomLink) // returns a promise
   }
 
 
@@ -45,7 +44,7 @@ export const GroupLink = () => {
       }
     }
 
-    toString(groupLink, { type: "svg" }, callback)
+    toString(roomLink, { type: "svg" }, callback)
   }
 
   useEffect(createQRCode, [])
@@ -64,19 +63,19 @@ export const GroupLink = () => {
 
   return (
     <div
-      id="group-link"
+      id="room-link"
       onClick={toggleCollapsed}
     >
       <img
         src={src}
-        alt={`qrcode for ${groupLink}`}
+        alt={`qrcode for ${roomLink}`}
         style={imgStyle}
       />
 
       <div
         style={aStyle}
       >
-        <a href={groupLink}> {groupLink}</a>
+        <a href={roomLink}> {roomLink}</a>
         <Copy
           action={copyToClipboard}
         />

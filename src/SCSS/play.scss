@@ -36,11 +36,11 @@
     position: relative; /* to allow lock image to be absolute*/
   }
 
-  label[for=group-name] span {
+  label[for=room-name] span {
     transition: opacity 500ms;
   }
 
-  label[for=group-name].locked span {
+  label[for=room-name].locked span {
     opacity: 0.5;
   }
 
@@ -55,18 +55,18 @@
     cursor: default;
   }
 
-  label[for=group-name].locked img{
+  label[for=room-name].locked img{
     opacity: 1;
     pointer-events: all;
     cursor: pointer;
   }
 
-  label[for=create-group].locked {
+  label[for=create-room].locked {
     opacity: 0.25;
   }
 
   label,
-  label[for$=-name] * { /* user-name, group-name, not create-group */
+  label[for$=-name] * { /* user-name, room-name, not create-room */
     display: block;
     margin-bottom: 1em;
   }
@@ -75,7 +75,7 @@
     margin-bottom: 0.25em;
   }
 
-  li.owner {
+  li.host {
     font-weight: bold;
     color: #fc6;
   }
@@ -85,14 +85,14 @@
 
   /* WAITING ROOM // WAITING ROOM // WAITING ROOM // WAITING ROOM */
 
-  #group-link {
+  #room-link {
     --size: 2em;
     display: flex;
     flex-direction: column;
     align-items: center;
   }
 
-  #group-link div {
+  #room-link div {
     position: relative;
     display: flex;
     align-items: center;
@@ -100,14 +100,14 @@
     margin-top: 1em;
   }
 
-  #group-link a {
+  #room-link a {
     display: inline-block;
     color: var(--light);
     width: calc(100% - var(--size));
     overflow: auto;
   }
 
-  #group-link svg {
+  #room-link svg {
     position: absolute;
     right: 0;
     width: var(--size);
@@ -119,11 +119,11 @@
     color: var(--light);
   }
 
-  #group-link svg:hover {
+  #room-link svg:hover {
     background-color: #000;
   }
 
-  #group-link svg:active {
+  #room-link svg:active {
     border-style: inset;
   }
 

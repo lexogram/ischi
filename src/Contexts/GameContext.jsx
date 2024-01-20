@@ -26,7 +26,7 @@ export const GameProvider = ({ children }) => {
     sendMessage,
     addMessageListener,
     removeMessageListener,
-    group_name,
+    room,
     members
   } = useContext(WSContext)
   const [ packData, setPackData ] = useState([])
@@ -60,7 +60,7 @@ export const GameProvider = ({ children }) => {
     const message = {
       recipient_id: "game",
       subject: "vote",
-      content: { pack_name, group_name }
+      content: { pack_name, room }
     }
 
     sendMessage(message)
@@ -76,7 +76,7 @@ export const GameProvider = ({ children }) => {
     const message = {
       recipient_id: "game",
       subject: "select_pack",
-      content: { pack_name, group_name, delay }
+      content: { pack_name, room, delay }
     }
 
     setDelay(delay)
@@ -102,7 +102,7 @@ export const GameProvider = ({ children }) => {
       sendMessage({
         recipient_id: "game",
         subject: "match",
-        content: { href, group_name }
+        content: { href, room }
       })
 
       cardIndex = -1 // both images have been found
@@ -147,7 +147,7 @@ export const GameProvider = ({ children }) => {
     sendMessage({
       recipient_id: "game",
       subject: "request_next_card",
-      content: group_name
+      content: room
     })
   }
 

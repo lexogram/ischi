@@ -37,7 +37,7 @@ export const Game = () => {
   } else {
     if (index === -1) {
       // This user is joining at a time when the game is paused,
-      // waiting for the owner to click "Next"
+      // waiting for the host to click "Next"
       index = isNaN(nextIndex) ? images.length - 2 : nextIndex - 1
     }
 

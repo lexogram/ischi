@@ -45,14 +45,14 @@ function App() {
             <Route path="credits" element={<Credits />} />
             <Route path="details" element={<Details />} />
             <Route path="login" element={<OnBoard />} />
-            {/* Allow /play route to specify group and user */}
+            {/* Allow /play route to specify room and user */}
             <Route path="play">
               <Route
-                path=":group/:user/*"
+                path=":room/:user/*"
                 element={<Play />}
               />
               <Route
-                path=":group/"
+                path=":room/"
                 element={<Play />}
               />
               <Route

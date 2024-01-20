@@ -17,9 +17,9 @@ export const PackList = () => {
     select,
     delay
   } = useContext(GameContext)
-  const { user_id, owner_id, BASE_URL } = useContext(WSContext)
+  const { user_id, host_id, BASE_URL } = useContext(WSContext)
 
-  const isOwner = user_id === owner_id
+  const isHost = user_id === host_id
 
   const packList = packData.map( pack => (
     <PackCard
@@ -28,9 +28,9 @@ export const PackList = () => {
       pack={pack}
       votes={votes[pack.name]}
       isUsersChoice={pack.name === usersVote}
-      canVote={!isOwner}
+      canVote={!isHost}
       vote={() => vote(pack.name)}
-      select={isOwner && select}
+      select={isHost && select}
       delay={delay}
     />
   ))

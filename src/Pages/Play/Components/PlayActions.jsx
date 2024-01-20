@@ -1,7 +1,7 @@
 /**
  * src/Pages/Play/PlayActions.jsx
  * - [ ] Show link
- * - [ ] Leave group (return to Join Group)
+ * - [ ] Leave room (return to Join Room)
  * - [ ] Assign host
  * - [ ] Show members + score
  * - [ ] Reset score (at the end of a game)
@@ -31,8 +31,8 @@ export const PlayActions = (props) => {
     console.log("resetScore called:", event);
   }
 
-  const leaveGroup = (event) => {
-    console.log("leaveGroup called:", event);
+  const leaveRoom = (event) => {
+    console.log("leaveRoom called:", event);
   }
 
   const setHost = (event) => {
@@ -76,7 +76,7 @@ export const PlayActions = (props) => {
     { text: "Set Team Sound...",      callback: setTeamSound,
       type: "play",  level: TEAM,     colour: "#630"},
 
-    { text: "Leave Group",            callback: leaveGroup,
+    { text: "Leave Room",            callback: leaveRoom,
       type: "play",  level: USER,     colour: "#600"}, 
   ].filter( item => ( item.level <= level
                    && !(level === TEAM && item.level === HOST)

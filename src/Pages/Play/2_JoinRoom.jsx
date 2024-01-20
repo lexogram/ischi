@@ -1,5 +1,5 @@
 /**
- * src/Pages/JoinGroup.jsx
+ * src/Pages/JoinRoom.jsx
  */
 
 
@@ -16,18 +16,18 @@ import unlocked from '../../Assets/unlocked.png'
 
 
 
-export const JoinGroup = () => {
+export const JoinRoom = () => {
   const {
-    joinGroup,
+    joinRoom,
     errorStatus
   } = useContext(WSContext)
   // Check if this is a referral
-  const { group, user } = useParams()  
+  const { room: linkRoom, user } = useParams()  
 
   const [ user_name, setUserName ] = useState(user || "")
-  const [ group_name, setGroupName ] = useState(group || "")
-  const [ create_group, setCreateGroup ] = useState(false)
-  const [ locked, setLocked ] = useState(!!group)
+  const [ room, setRoom ] = useState(linkRoom || "")
+  const [ create_room, setCreateRoom ] = useState(false)
+  const [ locked, setLocked ] = useState(!!room)
   const [ disabled, setDisabled ] = useState(true)
 
 
@@ -38,29 +38,29 @@ export const JoinGroup = () => {
     const { name, value } = target
     if (name === "user_name") {
       setUserName(value)
-      setDisabled(!value || !group_name)
+      setDisabled(!value || !room)
     } else {
-      setGroupName(value)
+      setRoom(value)
       setDisabled(!value || !user_name)
     }
   }
 
 
-  const toggleCreateGroup = () => {
-    setCreateGroup(!create_group)
+  const toggleCreateRoom = () => {
+    setCreateRoom(!create_room)
   }
 
 
-  const joinTheGroup = event => {
+  const joinTheRoom = event => {
     event.preventDefault()
 
     const data = {
       user_name,
-      group_name,
-      create_group
+      room,
+      create_room
     }
 
-    joinGroup(data);
+    joinRoom(data);
   }
 
 
@@ -80,8 +80,8 @@ export const JoinGroup = () => {
 
   return (
     <form
-      id="join-group"
-      onSubmit={joinTheGroup}
+      id="join-room"
+      onSubmit={joinTheRoom}
     >
       <label htmlFor="user-name">
         <span>Choose a player name:</span>
@@ -95,15 +95,15 @@ export const JoinGroup = () => {
         />
       </label>
       <label
-        htmlFor="group-name"
+        htmlFor="room-name"
         className={locked ? "locked" : ""}
       >
-        <span>Choose a group:</span>
+        <span>Choose a room:</span>
         <input
           type="text"
-          id="group-name"
-          name="group_name"
-          value={group_name}
+          id="room-name"
+          name="room"
+          value={room}
           onChange={updateName}
           readOnly={locked}
         />
@@ -114,25 +114,25 @@ export const JoinGroup = () => {
         />
       </label>
       <label
-        htmlFor="create-group"
+        htmlFor="create-room"
         className={locked ? "locked" : ""}
       >
         <input
           type="checkbox"
-          id="create-group"
-          name="create_group"
-          checked={create_group}
-          onChange={toggleCreateGroup}
+          id="create-room"
+          name="create_room"
+          checked={create_room}
+          onChange={toggleCreateRoom}
           disabled={locked}
         />
-        <span>Create a new group</span>
+        <span>Create a new room</span>
       </label>
       <p>{ errorStatus ? errorStatus : "" }</p>
       <button
         type="submit"
         disabled={disabled}
       >
-        Join the Group
+        Join the Room
       </button>
     </form>
   )

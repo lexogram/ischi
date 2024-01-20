@@ -38,30 +38,30 @@ export const WSProvider = ({ children }) => {
   const [ socketError, setSocketError ] = useState("")
   const [ user_id, setUserId ] = useState()
   const [ user_name, setUserName ] = useState()
-  const [ group_name, setGroupName ] = useState()
+  const [ room, setRoom ] = useState()
   const [ errorStatus, setErrorStatus ] = useState(0)
   const [ members, setMembers ] = useState([])
-  const [ owner, setOwner ] = useState()
-  const [ owner_id, setOwnerId ] = useState()
+  const [ host, setHost ] = useState()
+  const [ host_id, setHostId ] = useState()
 
   // console.log("user_id:", user_id);
   // console.log("user_name:", user_name);
-  // console.log("group_name:", group_name);
+  // console.log("room:", room);
   // console.log("members:", members);
 
   const socketRef = useRef(null)
   const socket = socketRef.current
 
 
-  const treatStatus = ({ status, group_name, owner }) => {
+  const treatStatus = ({ status, room, host }) => {
     if (/-fail/.test(status)) {
       switch (status) {
         case "join-failed":
-          status = `The group "${group_name}" does not exist yet.
+          status = `The room "${room}" does not exist yet.
           Did you mean to create it?`
           break
         case "create-failed":
-          status = `The group "${group_name}" was created earlier by ${owner}. Uncheck the checkbox above if you only meant to join it.`
+          status = `The room "${room}" was created earlier by ${host}. Uncheck the checkbox above if you only meant to join it.`
       }
 
       setErrorStatus(status)
@@ -72,16 +72,16 @@ export const WSProvider = ({ children }) => {
   }
 
 
-  const setGroupMembers = ({
-    group_name,
+  const setRoomMembers = ({
+    room,
     members,
-    owner,
-    owner_id
+    host,
+    host_id
   }) => {
-    setGroupName(group_name)
+    setRoom(room)
     setMembers(members)
-    setOwner(owner)
-    setOwnerId(owner_id)
+    setHost(host)
+    setHostId(host_id)
   }
 
 
@@ -145,12 +145,12 @@ export const WSProvider = ({ children }) => {
 
         return setUserId(recipient_id)
 
-      case "group_joined":
+      case "room_joined":
         return treatStatus(content)
 
-      case "group_members":
-        // console.log("About to call setGroupMembers content:", content);
-        return setGroupMembers(content)
+      case "room_members":
+        // console.log("About to call setRoomMembers content:", content);
+        return setRoomMembers(content)
     }
   }
 
@@ -242,11 +242,11 @@ export const WSProvider = ({ children }) => {
   }
 
 
-  const joinGroup = content => {
+  const joinRoom = content => {
     const message = {
       recipient_id: "system",
-      subject: "join_group",
-      content // { user_name, group_name, create_group, ... }
+      subject: "set_user_name",
+      content // { user_name, room, create_room, ... }
     }
 
     const { user_name } = content
@@ -275,11 +275,11 @@ export const WSProvider = ({ children }) => {
 
         user_id,
         user_name,
-        group_name,
-        joinGroup,
+        room,
+        joinRoom,
         members,
-        owner,
-        owner_id,
+        host,
+        host_id,
         errorStatus
       }}
     >
