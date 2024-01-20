@@ -3,7 +3,7 @@
  */
 
 
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { WSContext } from '../Contexts'
 import { GameContext } from '../Contexts'
 
@@ -18,6 +18,7 @@ import '../SCSS/play.scss'
 
 export const Play = () => {
   const {
+    requestSocketToOpen,
     socketIsOpen,
     reconnectionFailed,
     socketError,
@@ -32,6 +33,7 @@ export const Play = () => {
   const {
     gameData
   } = useContext(GameContext)
+
 
   const page = (() => {
     if (!socketIsOpen) {
@@ -51,6 +53,17 @@ export const Play = () => {
       return <Game />
     }
   })()
+
+
+  const openSocketIfNeeded = () => {
+    if (!socketIsOpen) {
+      requestSocketToOpen()
+    }
+  }
+
+
+  useEffect(openSocketIfNeeded, [])
+
 
   return (
     <div id="play">

@@ -38,7 +38,7 @@ export const JoinRoom = () => {
   const [ disabled, setDisabled ] = useState(true)
 
   const cantCreate = locked || !!existing_room || !room
-  const willCreate = create_room && !existing_room
+  const willCreate = create_room && !existing_room && room
 
 
   const focusRef = useRef()
@@ -65,7 +65,7 @@ export const JoinRoom = () => {
     }
 
     if (user_name) {
-      if (willCreate || cantCreate) {
+      if (room && (willCreate || cantCreate)) {
         setDisabled(false)
       }
     }

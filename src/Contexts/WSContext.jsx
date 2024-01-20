@@ -34,6 +34,7 @@ export const WSContext = createContext()
 
 
 export const WSProvider = ({ children }) => {
+  const [ socketIsNeeded, setSocketIsNeeded ] = useState(false)
   const [ socketIsOpen, setSocketIsOpen ] = useState(false)
   const [ socketError, setSocketError ] = useState("")
   const [ user_id, setUserId ] = useState()
@@ -219,6 +220,10 @@ export const WSProvider = ({ children }) => {
 
 
   const prepareToOpenSocket = () => {
+    if (!socketIsNeeded) {
+      return
+    }
+
     // Don't create a WebSocket instance immediately, just in case
     // React.StrictMode is active during development. Instead,
     // create a timeout callback which will be triggered:
@@ -242,6 +247,11 @@ export const WSProvider = ({ children }) => {
     return () => {
       clearTimeout(timeOut)
     }
+  }
+
+
+  const requestSocketToOpen = () => {
+    setSocketIsNeeded(true)
   }
 
 
@@ -270,7 +280,7 @@ export const WSProvider = ({ children }) => {
   }
 
 
-  useEffect(prepareToOpenSocket, [])
+  useEffect(prepareToOpenSocket, [socketIsNeeded])
   useEffect(sendConnectionConfirmation, [user_id])
 
 
@@ -278,7 +288,7 @@ export const WSProvider = ({ children }) => {
     <WSContext.Provider
       value ={{
         BASE_URL,
-        openSocket,
+        requestSocketToOpen,
         closeSocket,
         socketIsOpen,
         socketError,
