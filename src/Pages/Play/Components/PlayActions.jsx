@@ -55,7 +55,7 @@ export const PlayActions = (props) => {
     console.log("setUpVoting called:", event);
   }
 
-  const level = HOST
+  const level = ADMIN
   const items = [
     { text: "Share...",               callback: showLink,
       type: "play",  level: USER,     colour: "#060"}, 

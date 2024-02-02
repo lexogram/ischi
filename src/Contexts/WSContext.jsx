@@ -42,6 +42,7 @@ export const WSProvider = ({ children }) => {
   const [ room, setRoom ] = useState()
   const [ existing_room, setExistingRoom ] = useState(true)
   const [ errorStatus, setErrorStatus ] = useState(0)
+  const [ teams, setTeams ] = useState([])
   const [ members, setMembers ] = useState([])
   const [ host, setHost ] = useState()
   const [ host_id, setHostId ] = useState()
@@ -303,6 +304,7 @@ export const WSProvider = ({ children }) => {
         existing_room,
         getExistingRoom,
         joinRoom,
+        teams,
         members,
         host,
         host_id,

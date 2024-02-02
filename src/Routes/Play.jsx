@@ -7,11 +7,16 @@ import React, { useContext, useEffect } from 'react'
 import { WSContext } from '../Contexts'
 import { GameContext } from '../Contexts'
 
-import { Connecting } from '../Pages/Play'
-import { Disconnected } from '../Pages/Play'
-import { JoinRoom } from '../Pages/Play'
-import { ChoosePack } from '../Pages/Play'
-import { Game } from '../Pages/Play'
+import Screens from  '../Pages/Play'
+const {
+  Connecting,
+  Disconnected,
+  JoinRoom,
+  TeamManagement,
+  TeamMembers,
+  ChoosePack,
+  Game
+} = Screens
 
 import '../SCSS/play.scss'
 
@@ -33,6 +38,27 @@ export const Play = () => {
   const {
     gameData
   } = useContext(GameContext)
+
+
+  const screenToShow = (() => {
+    if (!user_name || !room) {
+      return "JoinRoom"
+
+    } else if (!gameData) {
+      if (teams.length > 1) {
+        if (host_id === user_id) {
+          return "TeamManagement"
+        } else {
+          return "TeamMembers"
+        }
+      } else {
+        return "ChoosePack"
+      }
+
+    } else {
+      return "Game"
+    }
+  })()
 
 
   const page = (() => {
