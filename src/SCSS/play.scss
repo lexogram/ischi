@@ -44,6 +44,9 @@
     opacity: 0.5;
   }
 
+  /* For "lock" image only. Image will be invisible and
+     unclickable...
+  */
   form img {
     position: absolute;
     top: 0;
@@ -55,6 +58,11 @@
     cursor: default;
   }
 
+  /* ... unless a closed lock is to be shown. If it is clicked,
+     an open version of the lock will be shown instead, and its
+     opacity will fade to 0 over the transition time. It will
+     no longer be clickable
+  */
   label[for=room-name].locked img{
     opacity: 1;
     pointer-events: all;

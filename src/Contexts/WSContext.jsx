@@ -3,6 +3,7 @@
  * description
  */
 
+
 import React, {
   createContext,
   useState,
@@ -28,7 +29,6 @@ const [ SOCKET_URL, BASE_URL ] = (function (){
 })()
 
 
-
 export const WSContext = createContext()
 
 
@@ -46,11 +46,6 @@ export const WSProvider = ({ children }) => {
   const [ members, setMembers ] = useState([])
   const [ host, setHost ] = useState()
   const [ host_id, setHostId ] = useState()
-
-  // console.log("user_id:", user_id);
-  // console.log("user_name:", user_name);
-  // console.log("room:", room);
-  // console.log("members:", members);
 
   const socketRef = useRef(null)
   const socket = socketRef.current
@@ -131,10 +126,6 @@ export const WSProvider = ({ children }) => {
   const treatSystemMessage = data => {
     const { subject, recipient_id, content } = data
 
-    // console.log("System Message");
-    // console.log("subject:", subject);
-    // console.log("content:", content);
-
     switch (subject) {
       case "connection":
         // When it accepts a new connection request, WebSocket
@@ -145,10 +136,11 @@ export const WSProvider = ({ children }) => {
         // }
         // This <uuid> should be used as the sender_id for all
         // future messages.
-        return setUserId(recipient_id)
+        setUserId(recipient_id)
+        return true
 
-        case "existing_room":
-        return setExistingRoom(content)
+      case "existing_room":
+        return setExistingRoom(content) // string or undefined
 
       case "room_joined":
         return treatStatus(content)
@@ -163,7 +155,6 @@ export const WSProvider = ({ children }) => {
   const sendConnectionConfirmation = () => {
     if (user_id) {
       const timeNow = new Date().toTimeString().split(" ")[0]
-      // console.log(`Connected to ${SOCKET_URL} at ${timeNow}`)
 
       sendMessage({
         recipient_id: "system",
@@ -270,7 +261,7 @@ export const WSProvider = ({ children }) => {
   const joinRoom = content => {
     const message = {
       recipient_id: "system",
-      subject: "set_user_name",
+      subject: "send_user_to_room",
       content // { user_name, room, create_room, ... }
     }
 

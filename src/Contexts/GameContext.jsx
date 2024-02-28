@@ -49,7 +49,6 @@ export const GameProvider = ({ children }) => {
       const response = await fetch(URL)
       const data = await response.json()
       setPackData(data)
-
     })(PACK_SOURCE)
   }
 

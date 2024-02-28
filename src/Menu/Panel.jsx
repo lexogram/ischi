@@ -98,6 +98,8 @@ export const Menu = () => {
         />
       </div>
 
+      <a href="https://nevzorovyh.lexogram.com/echo-req">Get Origin</a>
+
       <label htmlFor="fix-menu">
         <input
           type="checkbox"
