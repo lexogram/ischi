@@ -1,5 +1,7 @@
 /**
  * src/Components/Menu.jsx
+ * 
+ * Generates a slide-out menu with sections for Actions and Pages
  */
 
 
@@ -21,18 +23,30 @@ import { PlayActions } from '../Pages/Play/Components/PlayActions'
 
 export const Menu = () => {
   const { setOutletLeft } = useContext(NavContext)
+  // 0 by default
   const menuRef = useRef()
-  const page = usePage()
+  const page = usePage() // "/hash" from "http://site.com/#/hash"
+  // Will be compared in <Section /> to the `to` link in the items
+  // defined by PageTracker, in order to highligh the current page
+
+  // Make menu slide away (unfixed) by default
   const [ fixMenu, setFixMenu ] = useState(false)
+  // Initially show menu open
   const [ open, setOpen ] = useState(true)
+  // Disclose all sections in menu by default
   const [ sectionIsOpen, setSectionIsOpen ] = useState({
     pages: true,
     play: true
   })
 
 
+  /** Called by useEffect if Fix Menu button toggled
+   *  Moves Outlet content away from menu if it's to be fixed open
+   */
   const updateOutletWidth = () => {
     if (fixMenu) {
+      // --menu-width is min(15em, 50vw) (in app.scss), so it can
+      // change  depending on the width of the viewport
       const { width } = menuRef.current.getBoundingClientRect()
       setOutletLeft(width)
 
@@ -40,7 +54,8 @@ export const Menu = () => {
       setOutletLeft(0)
     }
 
-    // The className of div#root affects the width of <Outlet />
+    // The className of div#root adjusts the width of <Outlet />
+    // by --menu-width, or 0
     const set = fixMenu ? "add" : "remove"
     document.getElementById("root").classList[set]("fixed-menu")
   }
@@ -53,10 +68,12 @@ export const Menu = () => {
 
 
   const style = {
+    // Move Menu left if it's neither open nor fixed
     left: (open || fixMenu ? 0 : "calc(-1 * var(--menu-width))")
   }
 
 
+  /** Slide the Menu off to the left after the user has seen it */
   useEffect(() => {
     setTimeout(() => {
       setOpen(false)
@@ -66,6 +83,7 @@ export const Menu = () => {
   useEffect(updateOutletWidth, [fixMenu])
 
 
+  /** Called by a click on a section disclosure triangle */
   const toggleOpen = (section, state) => {
     setSectionIsOpen({ ...sectionIsOpen, [section]: state })
   }
@@ -73,10 +91,10 @@ export const Menu = () => {
 
   return (
     <div id="menu"
-      style={style}
+      style={style} // { left }
       ref={menuRef}
     >
-      { !fixMenu &&
+      { !fixMenu && // hide icon if Menu is fixed open
         <Icon
           open={open}
           setOpen={setOpen}

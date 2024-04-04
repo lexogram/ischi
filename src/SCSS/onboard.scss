@@ -1,0 +1,23 @@
+form[id|="sign"] {
+  & {
+    width: 12em;
+    background-color: #333;
+    color: #ddd;
+    padding: 1em;
+    border-radius: 1em;
+  }
+  label {
+    display: block;
+    margin-bottom: 1em;
+  }
+  span {
+    display: block;
+  }
+  input:invalid {
+    border: 1px solid #f00;
+  }
+  &:invalid button {
+    pointer-events: none;
+    opacity: 0.25;
+  }
+}

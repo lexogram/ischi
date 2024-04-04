@@ -224,7 +224,7 @@ export const WSProvider = ({ children }) => {
     // * Before the next real render.
     //
     // If StrictMode _is_ active, React will unmount the Context
-    // immediately, which will trigger a call the clean-up
+    // immediately, which will trigger a call to the clean-up
     // function below. This will happen after the first
     // double-render, and so openSocket() will not be triggered
     // as a result of the "strict" (unmounted) render.

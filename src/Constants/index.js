@@ -1,5 +1,9 @@
 const hostname = location.hostname
-export const IS_DEPLOYED = true // /lexogram.github.io/.test(hostname) // true //
+export const IS_DEPLOYED = /lexogram.github.io/.test(hostname) // true //
+
+export const PROTOCOL = IS_DEPLOYED
+  ? "https://"
+  : "http://"
 
 export const HOSTNAME = IS_DEPLOYED
   ? "nevzorovyh.lexogram.com"
@@ -9,7 +13,7 @@ export const PORT = IS_DEPLOYED
   ? ""       // no colon
   : ":10000" // includes colon
 
-export const PACK_SOURCE = "packs.json"
+export const PACK_SOURCE = "packs/packs.json"
 
 export const DELAY_ARRAY = [
   [500,  "Show next card after half a second"],

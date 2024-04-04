@@ -12,15 +12,11 @@ export const RequireLogin = ({ children, redirectTo }) => {
   // console.log("idData:", idData);
   // {}
   //   OR
-  // { _id:             "FzJtDnE3yNmcbzGcb",
-  //   name:            "James",
-  //   role:            "teacher",
-  //   email_confirmed: true
+  // { username: "me",
+  //   email:    "me@example.com",
   // }
      
-  return idData.role
-       ? children
-       : <Navigate to={redirectTo} />;
+  return idData.username
+    ? children
+    : <Navigate to={redirectTo} />;
 }
-
-

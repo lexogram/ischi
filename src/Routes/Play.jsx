@@ -40,27 +40,6 @@ export const Play = () => {
   } = useContext(GameContext)
 
 
-  const screenToShow = (() => {
-    if (!user_name || !room) {
-      return "JoinRoom"
-
-    } else if (!gameData) {
-      if (teams.length > 1) {
-        if (host_id === user_id) {
-          return "TeamManagement"
-        } else {
-          return "TeamMembers"
-        }
-      } else {
-        return "ChoosePack"
-      }
-
-    } else {
-      return "Game"
-    }
-  })()
-
-
   const page = (() => {
     if (!socketIsOpen) {
       if (!socketError) {
@@ -70,10 +49,18 @@ export const Play = () => {
       }
 
     } else if (!user_name || !room) {
-        return <JoinRoom />
+      return <JoinRoom />
 
     } else if (!gameData) {
-      return <ChoosePack />
+      if (teams.length > 1) {
+        if (host_id === user_id) {
+          return <TeamManagement />
+        } else {
+          return <TeamMembers />
+        }
+      } else {
+        return <ChoosePack />
+      }
 
     } else {
       return <Game />

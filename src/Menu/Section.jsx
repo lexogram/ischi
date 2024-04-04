@@ -1,5 +1,11 @@
 /**
  * src/Menu/Section.jsx
+ * 
+ * Creates a section for the Menu with a disclosure button to
+ * hide the section's contents.
+ * 
+ * Called by Panel.jsx, via either PageTracker.jsx or 
+ * src/Pages/Play/PlayActions.jsx
  */
 
 
@@ -10,12 +16,22 @@ import { Disclose } from '../Components/Disclose'
 
 
 export const Section = ({
-  section,
-  title,
-  open,
-  toggleOpen,
-  items,
-  page // required for call from PageTracker
+  section,    // "pages" | "play"
+  title,      // "Pages" | "Actions"
+  open,       // boolean
+  toggleOpen, // function
+  items,      // { text: <string>,
+              //   type: "play",
+              //   callback: setUpVoting,
+              //   level: ADMIN,
+              //   colour: "#660"
+              // } OR {
+              //   text: <string>,
+              //   type: "link",
+              //   to: "/details"
+              // }
+  page // required for call from PageTracker. Used in Panel.jsx
+       // to determine whether to show the Actions section
 }) => {
 
   const toggleSection = () => {
@@ -26,6 +42,7 @@ export const Section = ({
   title = title || capitalize(section)
 
 
+  /** Called by list mapper if type === "page" */
   const getLink = ({ text, type, to }) => {
     // Add .here class to the link to the current page
     const className = to === page ? "button here" : "button"
@@ -41,6 +58,7 @@ export const Section = ({
   }
 
 
+  /** Called by list mapper if type === "play" */
   const getButton = ({ text, callback, colour }) => {
     const style = {
       backgroundColor: colour ? colour : "inherit",
@@ -75,7 +93,7 @@ export const Section = ({
         // >>> <<< Request from PlayActions
         case "play":
           return getButton(data)
-        //
+        // >>>
       }
     })()
 
