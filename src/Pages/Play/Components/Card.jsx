@@ -79,7 +79,7 @@ export const Card = ({ index, top, d, x, y, match }) => {
       <Picture
         key={href}
         match={href === match}
-        path={BASE_URL + root}
+        path={`${BASE_URL}ischi/${root}`}
         index={index}
         href={href}
         {...placement}

@@ -13,7 +13,7 @@ export const PORT = IS_DEPLOYED
   ? ""       // no colon
   : ":10000" // includes colon
 
-export const PACK_SOURCE = "packs/packs.json"
+export const PACK_SOURCE = "ischi/packs.json"
 
 export const DELAY_ARRAY = [
   [500,  "Show next card after half a second"],

@@ -24,7 +24,7 @@ export const PackList = () => {
   const packList = packData.map( pack => (
     <PackCard
       key={pack.name}
-      url={BASE_URL}
+      url={`${BASE_URL}ischi/`}
       pack={pack}
       votes={votes[pack.name]}
       isUsersChoice={pack.name === usersVote}
