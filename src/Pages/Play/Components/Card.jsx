@@ -97,7 +97,7 @@ export const Card = ({ index, top, d, x, y, match }) => {
         cx="50"
         cy="50"
         r="50"
-        fill="#ddd"
+        fill="#fff"
       />
       {pictures}
     </svg>

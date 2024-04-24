@@ -19,8 +19,10 @@ export const PackCard = ({
   select, // function if isHost, or undefined
   delay: defaultDelay
 }) => {
-  const { name, count, thumbnail } = pack
+  let { name, count, folder, thumbnail } = pack
   const [ delay, setDelay ] = useState(defaultDelay)
+
+  thumbnail = `${url}/${folder}/${thumnail}`
 
   const selectPack = () => {
     select(pack.name, delay)
@@ -32,7 +34,7 @@ export const PackCard = ({
     >
       <h1>{name}</h1>
       <p>Total images: {count}</p>
-      <img src={url + thumbnail} alt={name} />
+      <img src={thumbnail} alt={name} />
       <Star
         votes={votes || ""}
         isUsersChoice={isUsersChoice}

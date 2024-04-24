@@ -35,7 +35,7 @@ export const Picture = ({
 
   const cropPath = crop ? { clipPath: `url(#${defId})` } : {}
   const showStamp = match && foundBy
-  const colour = "#0909" // <<< HARD-CODED >>>
+  const colour = "#0099" // <<< HARD-CODED >>>
   const found = lastClick.cardIndex === -1
 
   const imageClicked = lastClick.href === href
@@ -87,8 +87,10 @@ export const Picture = ({
             textAnchor="middle"
             dominantBaseline="middle"
             fontSize={r / 2.5}
+            fontWeight="bold"
             transform={`rotate(${rotation})`}
             transform-origin={origin}
+            zIndex={99}
           >
             {foundBy}
           </text>

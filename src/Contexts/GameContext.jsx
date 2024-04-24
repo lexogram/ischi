@@ -44,12 +44,34 @@ export const GameProvider = ({ children }) => {
   // SELECTING A PACK // SELECTING A PACK // SELECTING A PACK //
 
   const fetchPackData = () => {
-    ;(async (URL) => {
-      URL = BASE_URL + URL
-      const response = await fetch(URL)
-      const data = await response.json()
-      setPackData(data)
-    })(PACK_SOURCE)
+    ;(async() => {
+      const query = { owner_type: "None" }
+      const GETPACKS = `${BASE_URL}packs/get`
+      const headers = {
+        "Content-Type": "application/json"
+      }
+      const method = "POST"
+      const credentials = "include"
+      const body = JSON.stringify({ query })
+
+      const options = {
+        headers,
+        method,
+        credentials,
+        body
+      }
+
+
+      try {
+        const response = await fetch(GETPACKS, options)
+        const data = await response.json()
+
+        setPackData(data.packs)
+
+      } catch (error) {
+        console.log("getPacks error:", error);
+      }
+    })()
   }
 
 
