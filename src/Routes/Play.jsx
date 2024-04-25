@@ -25,16 +25,19 @@ export const Play = () => {
   const {
     requestSocketToOpen,
     socketIsOpen,
-    reconnectionFailed,
     socketError,
     user_id,
     user_name,
     room,
-    create_room,
-    host_name,
     host_id,
     teams,
+
+    // Currently unused 
+    reconnectionFailed,
+    create_room,
+    host_name
   } = useContext(WSContext)
+  
   const {
     gameData
   } = useContext(GameContext)

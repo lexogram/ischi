@@ -22,7 +22,7 @@ export const PackCard = ({
   let { name, count, folder, thumbnail } = pack
   const [ delay, setDelay ] = useState(defaultDelay)
 
-  thumbnail = `${url}/${folder}/${thumnail}`
+  thumbnail = `${url}${folder}/${thumbnail}`
 
   const selectPack = () => {
     select(pack.name, delay)

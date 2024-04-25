@@ -8,6 +8,8 @@ import React from 'react'
 import { NavProvider, NavContext } from './NavContext'
 import { WSProvider, WSContext } from './WSContext'
 import { UserProvider, UserContext } from './UserContext'
+// import { CreateProvider, CreateContext } from './CreateContext'
+import { LayoutProvider, LayoutContext } from './LayoutContext'
 import { GameProvider, GameContext } from './GameContext'
 
 
@@ -17,9 +19,13 @@ const Provider = ({ children }) => {
     <NavProvider>
       <WSProvider>
         <UserProvider>
-          <GameProvider>
-            {children}
-          </GameProvider>
+          <LayoutProvider>
+            {/* <CreateProvider> */}
+              <GameProvider>
+                {children}
+              </GameProvider>
+            {/* </CreateProvider> */}
+          </LayoutProvider>
         </UserProvider>
       </WSProvider>
     </NavProvider>
@@ -32,5 +38,7 @@ export {
   NavContext,
   WSContext,
   UserContext,
+  LayoutContext,
+  // CreateContext,
   GameContext
 }

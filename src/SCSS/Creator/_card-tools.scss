@@ -1,0 +1,42 @@
+#card-tools {
+  right: 0;
+  text-align: right;
+  margin-right: var(--scroll-size);
+
+  #card-scale {
+    display: flex;
+    display: none;
+  
+    .slider {
+      flex-grow: 1;
+      display: flex;
+      justify-content: stretch;
+
+      * {
+        display: inline-block;
+      }
+
+      input {
+        width: 3.5em;
+        height: 1em;
+      }
+
+      div {
+        border: 1px solid black;
+        border-radius: 1em;
+        height: 1em;
+      }
+
+      .range {
+        flex-grow: 1;
+        flex-basis: 5em;
+        background-color: #fff;
+      }
+
+      .thumb {
+        width: 1em;
+        box-sizing: border-box;
+      }
+    }
+  }
+}

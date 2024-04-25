@@ -1,0 +1,61 @@
+@use '_variables';
+@use '_controller';
+@use '_create';
+
+
+
+article h1 {
+  margin-top: 0;
+  padding-top: 1em;
+}
+
+/* HOME // HOME // HOME // HOME // HOME // HOME // HOME // HOME */
+
+
+
+/* PREVIEW / PREVIEW / PREVIEW / PREVIEW / PREVIEW / PREVIEW */
+
+main {
+  height: calc(100% - var(--controller-height));
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  overflow: auto;
+  background-color: #fff;
+
+  .tweaker {
+    display: none;
+  }
+}
+
+/* LOGIN/REGISTER // LOGIN/REGISTER // LOGIN/REGISTER */
+
+a.button {
+  border: 1px #888 outset;
+  border-radius: 1em;
+  padding: 0.5em 1em;
+  margin-right: 1em;
+  color: #ccc;
+  text-decoration: none;
+
+  &:hover {
+    color: #fff;
+  }
+
+  &:active {
+    border-style: inset;
+  }
+}
+
+/* PRINT // PRINT // PRINT // PRINT // PRINT // PRINT // PRINT */
+
+@media print {
+  #controller, #controller *
+  {
+    display: none !important;
+  }
+
+  #root {
+    height: auto !important;
+  }
+}

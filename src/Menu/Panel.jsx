@@ -13,7 +13,7 @@ import React, {
 } from 'react'
 import { NavContext } from '../Contexts'
 import { usePage } from '../Hooks/usePage'
-import '../SCSS/menu.scss'
+// import '../SCSS/menu.scss'
 
 import { Icon } from './Icon'
 import { PageTracker } from './PageTracker'

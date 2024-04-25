@@ -1,0 +1,134 @@
+#images-in-cards {
+  height: var(--image-store-height);
+  overflow: auto;
+
+  .one-card {
+    margin: var(--one-card-margin) 0;
+
+    &.yellow {
+      background-color: #ffd;
+    }
+
+    &.lime {
+      background-color: #efd;
+    }
+
+    &.green {
+      background-color: #dfd;
+    }
+
+    &.teal {
+      background-color: #dfe;
+    }
+
+    &.cyan {
+      background-color: #dff;
+    }
+
+    &.blue {
+      background-color: #def;
+    }
+
+    &.royal {
+      background-color: #ddf;
+    }
+
+    &.purple {
+      background-color: #edf;
+    }
+
+    &.violet {
+      background-color: #fde;
+    }
+
+    &.pink {
+      background-color: #fdd;
+    }
+
+    &.grey {
+      background-color: #eee;
+    }
+
+    &:first-child,
+    &:last-child {
+      margin: 0
+    }
+  }
+
+  .square {
+    display: inline-block;
+    position: relative;
+    width: var(--image-size);
+    height: var(--image-size);
+    overflow: hidden; /* to hide excess border of .gap */
+    vertical-align: top; /* to leave no gaps between rows */
+    cursor: pointer;
+
+    .gap {
+      border: 100vmax solid var(--uncropped-border-color);
+      box-sizing: content-box;
+
+      &.crop {
+        border-color: var(--crop-border-color);
+      }
+
+      &.dragging {
+        border: none;
+      }
+    }
+
+    /* Show repeated image as unchangeable */
+    &.on-all-preview-cards {
+      cursor: default;
+    }
+
+    .gap,
+    .circle {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 100%;
+      z-index: 1;
+      /* Explicitly set content-box, in case another rule set
+        box-sizing to something different.
+      */
+      box-sizing: content-box;
+    }
+
+    &.hilite img {
+      opacity: 1;
+    }
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    opacity: 0.75;
+    object-fit: contain;
+  }
+
+  img.dragging {
+    opacity: 0.125
+  }
+
+  .extra {
+    div {
+      display: inline-block
+    }
+    img {
+      opacity: 0.25
+    }
+  }
+
+  .pin {
+    position: absolute;
+    top: 2px;
+    left: calc(50% - 8px);
+    width: 20px;
+    height: 30px;
+    opacity: 1;
+  }
+}

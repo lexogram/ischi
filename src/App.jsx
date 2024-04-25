@@ -21,8 +21,15 @@ import {
   RequireLogin
 } from "./Routes/"
 import "./SCSS/app.scss"
+import { useScrollSize } from './Hooks/useScrollSize'
+
 
 function App() {
+  // Set --scroll-size custom CSS property in App.css to OS value
+  const scrollSize = useScrollSize()
+  document.documentElement.style.setProperty(
+    '--scroll-size', scrollSize + 1 + "px"
+  );
 
   return (
     <Router

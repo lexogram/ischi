@@ -1,0 +1,7 @@
+@use "_card-maker";
+@use "_image-store";
+
+#create {
+  height: var(--card-height);
+  background-color: #222;
+}

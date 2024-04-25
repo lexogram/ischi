@@ -1,0 +1,85 @@
+@use "_card-tools";
+
+#card-maker {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  height: var(--card-height);
+  width: var(--maker-width);
+  overflow: auto;
+
+  div[id$="-tools"] {
+    position: fixed;
+    top: var(--controller-height);
+    width: var(--tool-width);
+    overflow: hidden;
+  }
+
+  div#card-scale,
+  div#image-tools {
+    opacity: 0.25;
+    pointer-events: none;
+  }
+
+  div[id$="-tools"] .slider,
+  div[id$="-tools"] button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 2rem;
+    width: 2rem;
+  }
+
+  #set-tools {
+    display: block;
+    top: var(--controller-height);
+    left: var(--store-width);
+    background-color: #0008;
+
+    label {
+      display: block;
+    }
+
+    label:disabled span {
+      color: #666;
+    }
+
+    input:not(:checked) ~ span {
+      color: var(--inactive-color);
+    }
+
+    input:disabled ~ span {
+      color: var(--disabled-color);
+    }
+  }
+
+  #image-tools {
+    display: flex;
+    display: none;
+    justify-content: end;
+    top: auto;
+    bottom: 0;
+    right: 0;
+    width: fit-content;
+
+    #reset-offset {
+      font-size: 2em;
+    }
+  }
+
+  .cards svg {
+    vertical-align: top; /* to remove gaps between cards */
+  }
+
+  .crop-circle {
+    opacity: 0;
+  }
+
+  #preview {
+    position: fixed;
+    bottom: 1em;
+    right: 1em;
+    padding: 0.25em 0.5em;
+  }
+}

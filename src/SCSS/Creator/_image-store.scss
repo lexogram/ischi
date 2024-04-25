@@ -1,0 +1,51 @@
+@use "_images-in-cards";
+
+#image-store {
+  height: 100%;
+  width: var(--store-width);
+  background-color: #111;
+
+  #size-chooser {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    height: var(--size-chooser-height);
+
+    .images-per-card {
+      span {
+        display: inline-block;
+        width: 2em;
+        height: 2em;
+        line-height: 2em;
+        border: 2px outset #666;
+        border-radius: 6px;
+        text-align: center;
+        background-color: #333;
+      }
+      
+      input[type="radio"] {
+        position: absolute;
+        visibility: hidden;
+        width: 0;
+
+        &:checked ~ span {
+          border-style: inset;
+          background-color: #111;
+        }
+      }
+    }
+
+    .add-more {
+      color: #a00;
+    }
+
+    .just-right {
+      color: #090;
+    }
+
+    .too-many {
+      color: #aa0;
+    }
+  }
+}

@@ -4,12 +4,13 @@
 
 
 import React from 'react'
+import { Creator } from '../Pages/Create'
 
 
 export const Create = (props) => {
 
 
   return (
-    <h1>Create goes here</h1>
+    <Creator />
   )
 }

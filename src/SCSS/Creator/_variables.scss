@@ -1,0 +1,33 @@
+:root {
+  /* <<< Will be changed programmatically */
+  --scroll-size: 20px;      /* depends on OS and browser */
+  --line-count: 3;
+  /* >>> */
+
+  --controller-height: 5em;
+  --card-height: calc(100vh - var(--controller-height));
+  --card-width: calc(var(--card-height) + var(--scroll-size));
+  --store-width: max(256px, calc(100vw - var(--card-width)));
+  --maker-width: min(
+    var(--card-width),
+    calc(100vw - var(--store-width))
+  );
+  --store-size: calc(var(--store-width) - var(--scroll-size));
+  --image-size: calc(var(--store-size) / var(--line-count));
+
+  --tool-width: min(
+    calc(var(--maker-width) / 2),
+    max(
+      14em,
+      calc(var(--maker-width) / 4)
+    ));
+  --one-card-margin: 1em;
+  --size-chooser-height: 8em;
+  --image-store-height: calc(100% - var(--size-chooser-height));
+
+  --crop-border-color: #000c;
+  --uncropped-border-color: #0001;
+
+  --inactive-color: #aaa;
+  --disabled-color: #666
+}

@@ -1,7 +1,5 @@
 #menu {
   // --menu-width: min(15em, 50vw); // in app.scss
-  --ratio: 0.25;
-  --icon-size: calc(var(--ratio) * var(--menu-width));
   --disclose-space: 2rem;
   --disclose-size: 1.2em;
   --list-width: calc(
