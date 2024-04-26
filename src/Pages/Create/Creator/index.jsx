@@ -5,9 +5,9 @@
 
 import React, { useContext } from 'react'
 import { LayoutContext } from '../../../Contexts'
-import { TitleBar } from './Titlebar'
+import { Header } from './Header'
 import { Panels } from './Panels'
-import { Help } from './Help'
+import { Help } from './Panels/Help'
 
 
 export const Creator = (props) => {
@@ -21,7 +21,7 @@ export const Creator = (props) => {
 
   return (
     <div id="creator">
-      <TitleBar />
+      <Header />
       {panel}
     </div>
   )

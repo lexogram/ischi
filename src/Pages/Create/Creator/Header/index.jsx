@@ -6,13 +6,13 @@
 import React, { useContext } from 'react'
 import { LayoutContext } from '../../../../Contexts'
 
-import { Button } from '../Button'
 import { Title } from './Title'
+import { Tab } from './Tab'
 import image from '../../../../Assets/image.png'
 import card from '../../../../Assets/card.png'
 
 
-export const TitleBar = (props) => {
+export const Header = (props) => {
   const { columns } = useContext(LayoutContext)
 
 
@@ -20,15 +20,15 @@ export const TitleBar = (props) => {
     <div id="titlebar">
       <Title />
       <div className="buttons">
-        {!columns && <Button
+        {!columns && <Tab
           role="gallery"
           content={<img src={image} alt="image" />}
         />}
-         {!columns && <Button
+         {!columns && <Tab
           role="cards"
           content={<img src={card} alt="card" />}
         />}
-        <Button
+        <Tab
           role="help"
           content={<span>?</span>}
         />

@@ -7,7 +7,7 @@ import React, { useContext } from 'react'
 import { LayoutContext } from '../../../../Contexts'
 
 
-export const Button = ({ content, role }) => {
+export const Tab = ({ content, role }) => {
   const {
     activeTab,
     setActiveTab,

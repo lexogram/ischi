@@ -4,7 +4,7 @@
 
 
 import React, { useContext } from 'react'
-import { LayoutContext } from '../../../Contexts'
+import { LayoutContext } from '../../../../Contexts'
 import { Gallery } from './Gallery'
 import { Cards } from './Cards'
 
