@@ -8,6 +8,7 @@ import { LayoutContext } from '../../../Contexts'
 import { Header } from './Header'
 import { Panels } from './Panels'
 import { Help } from './Panels/Help'
+import { Footer } from './Footer'
 
 
 export const Creator = (props) => {
@@ -23,6 +24,7 @@ export const Creator = (props) => {
     <div id="creator">
       <Header />
       {panel}
+      <Footer />
     </div>
   )
 }

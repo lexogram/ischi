@@ -1,0 +1,154 @@
+/* <<<< SLIDER-TYPE CHECKBOXES //// SLIDER-TYPE CHECKBOXES //// */
+
+/* 
+ * Edit the custom CSS properties to suit your taste, or override
+ * the default values with your own CSS selectors (see custom.css)
+ */
+ #creator {
+  label {
+    /* dimensions */
+    --size: 0.75em;
+    --gap: 0.5em;
+    --span-width: 8em;
+    --duration: 0.25s;
+    /* border for slot, background for ::after slider*/
+    --border-size: 0.02em;
+    --on-color: rgb(255,255,255);
+    --off-color: rgba(255,255,255,0.333);
+    /* background for slot */
+    --check-color: transparent;
+    --dim-color: rgba(255,255,255,0.125);
+    --two-color: var(--check-color);
+
+    /**********************************************************\
+  | * You should not need to change anything below this line * |
+    \**********************************************************/
+
+    /* center the sliders by default */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* don't allow text selection */
+    -webkit-user-select: none; /* Safari */
+    user-select: none;
+  }
+
+  input[type=checkbox] {
+    width: 0;
+    height: 0;
+    opacity: 0;
+    padding: 0;
+    margin: 0;
+    border: none;
+  }
+
+  span.pre {
+    text-align: right;
+  }
+
+  span.pre,
+  span.post {
+    width: var(--span-width);
+  }
+
+  /* Default slot display: dull border and background */
+  input[type=checkbox] ~ span.slot {
+    display: inline-block;
+    position: relative;
+    margin: 0 var(--gap);
+    width: calc(2 * var(--size));
+    height: var(--size);
+    border: var(--border-size) solid var(--off-color);
+    border-radius: var(--size);
+    background-color: var(--dim-color);
+    transition: all var(--duration);
+  }
+
+  /* Slot display when on: bright border, on background */
+  input[type=checkbox]:checked ~ span.slot {
+    border-color: var(--on-color);
+    background-color: var(--check-color);
+  }
+
+  /* Background color does not change for two-way */
+  .two-way input[type=checkbox] ~ span.slot {
+    border-color: var(--on-color);
+    background-color: var(--two-color);
+  }
+
+  /* Sliding ::after element */
+  input[type=checkbox] ~ span.slot::after {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    margin: 0;
+    width: var(--size);
+    height: var(--size);
+    left: 0;
+    top: 0;
+
+    background-color: var(--off-color);
+    border-radius: var(--size);
+    transition: all var(--duration);
+  }
+
+  .two-way input[type=checkbox] ~ span.slot::after  {
+    background-color: var(--on-color);
+  }
+
+  .reverse  input[type=checkbox]~ span.slot::after  {
+    left: var(--size);
+  }
+
+  input[type=checkbox]:checked ~ span.slot::after  {
+    left: var(--size);
+    background-color: var(--on-color);
+  }
+
+  .reverse input[type=checkbox]:checked ~ span.slot::after {
+    left: 0;
+  }
+
+  /* Switch label colors for two-way */
+  .two-way input[type=checkbox]:not(:checked) ~ span:last-of-type {
+    color: var(--off-color);
+  }
+
+  .two-way input[type=checkbox]:checked ~ span:first-of-type {
+    color: var(--off-color);
+  }
+
+  /* left checkboxes don't need to be centred... */
+  label.left {
+    justify-content: left;
+  }
+
+  label.left span.slot{
+    margin-left: 0;
+  }
+
+  /* .left .pre and .right .post spans should not exist.
+    Hide them if they do.
+  */
+  label.left span.pre,
+  label.right span.post {
+    display: none;
+  }
+
+  /* ... and nor do checkboxes with the label to the left */
+  label.left span.post,
+  label.right span.pre {
+      width: auto;
+  }
+
+  label.right {
+    justify-content: right;
+  }
+
+  label.right span.slot{
+    margin-right: 0;
+  }
+}
+
+/* //// SLIDER-TYPE CHECKBOXES //// SLIDER-TYPE CHECKBOXES >>>> */

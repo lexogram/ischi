@@ -11,6 +11,9 @@
   --darkly: rgba(var(--r), var(--g), var(--b), var(--a));
   --disabled: #999;
   --disabled-bg: #666;
+  --primary: #060;
+  --primary-border: #363;
+  --primary-active: #030;
 
   --menu-width: min(15em, 50vw);
   --fixed-width: calc(100vw - var(--menu-width));
@@ -23,6 +26,8 @@ body {
   min-height: 100vh;
   background-color: var(--dark);
   color: var(--light);
+
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 
@@ -31,11 +36,20 @@ body {
 
 button,
 .button {
+  padding: 0.25em 0.5em;
+
   border: 1px outset #888;
   border-radius: 0.25em;
-  background-color: var(--dark);
+  background-color: inherit;
   color: var(--light);
+  font-size: inherit;
+  font-family: inherit;
   text-decoration: none;
+
+  /* don't allow text selection */
+  -webkit-user-select: none; /* Safari */
+  user-select: none;
+
   pointer-events: all;
 }
 
@@ -54,6 +68,7 @@ a.here {
 
 button:not(:disabled):active,
 .button:not(:disabled):active,
+button.pressed,
 a.here {
   background-color: #000;
   border-style: inset;
@@ -62,4 +77,14 @@ a.here {
 button:not(:disabled),
 .button {
   cursor: pointer
+}
+
+button.primary,
+.button.primary {
+  background-color: var(--primary);
+  border-color: var(--primary-border);
+
+  &:active {
+    background-color: var(--primary-active);
+  }
 }

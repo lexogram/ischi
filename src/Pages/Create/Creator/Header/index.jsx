@@ -17,7 +17,7 @@ export const Header = (props) => {
 
 
   return (
-    <div id="titlebar">
+    <div className="header">
       <Title />
       <div className="buttons">
         {!columns && <Tab
