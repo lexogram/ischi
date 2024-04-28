@@ -1,0 +1,64 @@
+#creator .creator-panels {
+  div.dialog {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    height: auto;
+    padding: 1em;
+    transform: translate(-50%, -50%);
+    background-color: #333e;
+    box-sizing: border-box;
+    border: var(--border);
+    border-style: outset;
+    border-radius: 1em;
+    z-index: 33;
+
+    button.x {
+      position: absolute;
+      top: 0;
+      right: 0;
+      font-size: inherit;
+      width: 1.75em;
+      height: 1.75em;
+      border-top-right-radius: 1em;
+      border: 1px solid transparent;
+      box-sizing: border-box;
+    }
+
+    button.x:hover {
+      border-style: outset;
+      border-color: #666;
+    }
+
+    button.x:active {
+      border-style: inset;
+    }
+
+    h1 {
+      margin-top: 0;
+      text-align: center;
+      text-decoration: underline;
+    }
+
+    p {
+      margin-bottom: 0.25em;
+    }
+
+    div.disabled {
+      opacity: 0.25
+    }
+
+    .settings {
+      width: 18em;
+    }
+
+    .file {
+      & .open {
+        min-height: 30vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+    }
+  }
+}

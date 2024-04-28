@@ -1,0 +1,82 @@
+#creator .file-picker {
+  --color: #ddd;
+  --bg-color: transparent;
+  --hover-color: #fff;
+  --active-bg-color: #000;
+  --border-color: #888;
+  --scroll-width: 12px;
+  --preview-edge: 1em;
+  --border-width: 1px;
+  --preview-size: max(
+    min(
+      80vw,
+      calc(
+        100vw
+      - 2 * (var(--preview-edge) + var(--border-width))
+      - var(--scroll-width)
+    )),
+    16.25em
+  );
+  --columns: 2;
+  --image-size: calc((var(--preview-size) / var(--columns)) - 8px);
+
+  & {
+    text-align: center;
+    background-color: #333;
+    padding: var(--preview-edge);
+    border-radius: 1em;
+  }
+
+  @media (min-width: 600px) {
+    & {
+      --columns: 3;
+    }
+  }
+
+  @media (min-width: 800px) {
+    & {
+      --columns: 4;
+    }
+  }
+
+  @media (min-width: 1000px) {
+    & {
+      --columns: 5;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    & {
+      --columns: 6;
+    }
+  }
+
+  input[type=file] {
+    width: 0;
+    opacity: 0;
+  }
+
+  span.button {
+    margin-bottom: 0.5em;
+  }
+
+  div {
+    border: var(--border-width) solid var(--border-color);
+    height: 40vh;
+    overflow-y: auto;
+    width: var(--preview-size);
+  }
+
+  button {
+    margin-top: 1em;
+  }
+
+  img {
+    width: var(--image-size);
+    height: var(--image-size);
+    box-sizing: border-box;
+    object-fit: contain;
+    border: 0.25px solid #0003;
+    vertical-align: top;
+  }
+}

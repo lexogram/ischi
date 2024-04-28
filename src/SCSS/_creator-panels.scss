@@ -1,0 +1,19 @@
+@use './creator-dialog';
+
+#creator {
+  div.creator-panels {
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: 100%;
+
+    & > div {
+      flex: 1;
+      height: 100%;
+    }
+
+    div.gallery {
+      border-right: 1px solid #fff6;
+    }
+  }
+}
