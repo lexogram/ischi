@@ -118,10 +118,9 @@ export const Menu = () => {
 
       <a href="https://nevzorovyh.lexogram.com/echo-req">Get Origin</a>
 
-      <label htmlFor="fix-menu">
+      <label>
         <input
           type="checkbox"
-          id="fix-menu"
           name="fix_menu"
           onChange={toggleFixMenu}
           checked={fixMenu}
