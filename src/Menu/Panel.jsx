@@ -18,6 +18,7 @@ import { usePage } from '../Hooks/usePage'
 import { Icon } from './Icon'
 import { PageTracker } from './PageTracker'
 import { PlayActions } from '../Pages/Play/Components/PlayActions'
+import { Languages } from '../Components/Languages'
 
 
 
@@ -114,11 +115,10 @@ export const Menu = () => {
           toggleOpen={toggleOpen}
           page={page}
         />
+        <Languages />
       </div>
 
-      <a href="https://nevzorovyh.lexogram.com/echo-req">Get Origin</a>
-
-      <label>
+      <label htmlFor="fix-menu">
         <input
           type="checkbox"
           name="fix_menu"

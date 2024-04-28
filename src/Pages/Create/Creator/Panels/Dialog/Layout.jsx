@@ -4,11 +4,13 @@
 
 
 import React, { useContext } from 'react'
+import { useTranslation } from 'react-i18next';
 import { Toggle } from './Toggle'
 import { LayoutContext } from '../../../../../Contexts'
 
 
-export const Settings = (props) => {
+export const Layout = () => {
+  const { t } = useTranslation()
 
   const {
     customLayout,
@@ -27,37 +29,37 @@ export const Settings = (props) => {
 
   return (
     <div className="settings">
-      <h1>Card Layout</h1>
+      <h1>{t("layout-title")}</h1>
       <Toggle
         prop="custom"
-        title="The layout for each card is..."
-        offText="Identical"
-        onText="Different"
+        title={t("layout-is")}
+        offText={t("identical")}
+        onText={t("different")}
         checked={customLayout}
         action={setCustomLayout}
       />
       <Toggle
         prop="rotation"
-        title="The rotation of each image is..."
-        offText="Free"
-        onText="Fixed"
+        title={t("rotation-is")}
+        offText={t("free")}
+        onText={t("fixed")}
         checked={turnConstraint}
         action={setTurnConstraint}
       />
       <Toggle
         className={turnOutClass}
         prop="direction"
-        title="Each image is..."
-        offText="Upright"
-        onText="Facing outwards"
+        title={t("fixed-as")}
+        offText={t("upright")}
+        onText={t("outward")}
         checked={turnOut}
         action={setTurnOut}
       />
       <Toggle
         prop="crop"
-        title="Crop all images by default?"
-        offText="No"
-        onText="Yes"
+        title={t("crop-by-default")}
+        offText={t("no")}
+        onText={t("yes")}
         checked={defaultCrop}
         action={setDefaultCrop}
       />

@@ -7,7 +7,7 @@ import React, { useContext } from 'react'
 import { LayoutContext } from '../../../../../Contexts'
 import { File } from './File'
 import { Images } from './Images'
-import { Settings } from './Settings'
+import { Layout } from './Layout'
 import { CloseBox } from './CloseBox'
 
 
@@ -24,7 +24,7 @@ export const Dialog = () => {
       case "images":
         return <Images />
       case "layout":
-        return <Settings />
+        return <Layout />
     }
   })()
 

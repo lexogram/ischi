@@ -7,17 +7,20 @@
 
 
 import React from 'react'
+import { useTranslation } from 'react-i18next';
 import { Section } from './Section'
 
 
 export const PageTracker = (props) => {
+  const { t } = useTranslation()
+
   const items = [
-    { text: "Home",        type: "link",     to: "/"          },
-    { text: "Play",        type: "link",     to: "/play"      },
-    { text: "Create",      type: "link",     to: "/create"    },
-    { text: "community",   type: "divider"},
-    { text: "Log in / Register",type: "link",to: "/login"     },
-    { text: "Account",     type: "link",     to: "/o/account" },
+    { text: t("home"),      type: "link",     to: "/"          },
+    { text: t("play"),      type: "link",     to: "/play"      },
+    { text: t("create"),    type: "link",     to: "/create"    },
+    { text: t("community"), type: "divider"},
+    { text: t("connect"),   type: "link",to: "/login"     },
+    { text: t("account"),   type: "link",     to: "/o/account" },
     // { text: "information", type: "divider"},
     // { text: "About",       type: "link",     to: "/about"     },
     // { text: "Contact",     type: "link",     to: "/contact"   },
@@ -27,6 +30,7 @@ export const PageTracker = (props) => {
 
   const actions = {
     section: "pages",
+    title: t("pages"),
     ...props, // { open, toggleOpen, page }
     items
   }

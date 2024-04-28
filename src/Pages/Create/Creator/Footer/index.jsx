@@ -5,6 +5,7 @@
 
 import React, { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next';
 import { LayoutContext } from '../../../../Contexts'
 import { UserContext } from '../../../../Contexts'
 import { Button } from './Button'
@@ -12,6 +13,7 @@ import { Button } from './Button'
 
 export const Footer = (props) => {
   const navigate = useNavigate()
+  const { t } = useTranslation()
   const {
     activeTab,
     setActiveTab,
@@ -60,12 +62,12 @@ export const Footer = (props) => {
     <div className="footer">
       <div>
       <Button
-          text="File..."
+          text={t("choose-file")}
           role="file"
           action={showFile}
         />
         <Button
-          text="Images..."
+          text={t("choose-images")}
           role="images"
           action={selectImages}
         />
@@ -73,23 +75,23 @@ export const Footer = (props) => {
       <div>
         { user
         ? <Button
-            text="Save..."
+            text={t("choose-save")}
             action={save}
           />
         : <Button
             className="primary"
-            text="Sign In..."
+            text={t("choose-sign-in")}
             action={goToLogin}
           />
         }
         <Button
-          text="Print..."
+          text={t("choose-print")}
           action={print}
         />
       </div>
       <div>
         <Button
-          text="Layout..."
+          text={t("choose-layout")}
           role="layout"
           action={showSettings}
         />

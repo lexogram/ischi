@@ -4,6 +4,7 @@
 
 
 import React, { useContext, useState, useEffect } from 'react'
+import { useTranslation, Trans } from 'react-i18next';
 import {
   CreateContext,
   LayoutContext
@@ -23,6 +24,7 @@ const REG_EXT = /\.\w+$/
 
 
 export const Images = () => {
+  const { t } = useTranslation()
   const { addImages } = useContext(CreateContext)
   const {
     images,
@@ -73,9 +75,15 @@ export const Images = () => {
 
 
   const updateCountMessage = (count=images.length) => {
-    const one = count === 1
-    count = count ? count : "No"
-    setCountMessage(`${count} image${one ? "" : "s"} to import`)
+    const message = count
+      ? <Trans
+          i18nKey="import-count"
+          values={{ count }}
+        />
+      : t("no-images-chosen")
+
+
+    setCountMessage(message)
   }
 
 
@@ -95,19 +103,25 @@ export const Images = () => {
   })
 
 
-  const buttonName = `Import ${images.length || ""} images`
+  const buttonName = <Trans
+    i18nKey="import-button"
+    values= {{
+      count: images.length,
+      s: images.length === 1 ? "" : "s"
+    }}
+  />
 
   useEffect(updateCountMessage, [images.length])
 
   return (
     <div className="file-picker">
-      <h1>Import images</h1>
+      <h1>{t("images-title")}</h1>
       <label
         className="file"
       >
         {filePicker}
         <span className="button">
-          Browse Images...
+        {t("browse-button")}
         </span>
       </label>
       <label
@@ -118,9 +132,9 @@ export const Images = () => {
           checked={useDirectory}
           onChange={toggleFolder}
         />
-        <span className="pre">Choose separate images</span>
+        <span className="pre">{t("separately")}</span>
         <span className="slot" />
-        <span className="post">Choose contents of folder</span>
+        <span className="post">{t("by-folder")}</span>
       </label>
       <p>{countMessage}</p>
       <div>
