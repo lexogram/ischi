@@ -3,8 +3,11 @@
  */
 
 
-import React, { useContext, useState } from 'react'
-import { CreateContext } from '../../../../../Contexts'
+import React, { useContext, useState, useEffect } from 'react'
+import {
+  CreateContext,
+  LayoutContext
+} from '../../../../../Contexts'
 
 const types = [
   "image/apng",
@@ -21,14 +24,25 @@ const REG_EXT = /\.\w+$/
 
 export const Images = () => {
   const { addImages } = useContext(CreateContext)
-  const [ directory, setDirectory ] = useState(false)
-  const [ files, setFiles ] = useState([])
-  const [ countMessage, setcountMessage ] = useState(
-    "No images selected"
+  const {
+    images,
+    setImages,
+    setDialog,
+    useDirectory,
+    setUseDirectory
+  } = useContext(LayoutContext)
+  const [ countMessage, setCountMessage ] = useState(
+    "No images to import"
   )
 
 
-  const filePicker = directory
+  const importImages = () => {
+    addImages(images)
+    setImages([])
+    setDialog()
+  }
+
+  const filePicker = useDirectory
   ? <input
       type="file"
       name="fileList"
@@ -45,7 +59,7 @@ export const Images = () => {
 
 
   const toggleFolder = ({ target }) => {
-    setDirectory(target.checked)
+    setUseDirectory(target.checked)
   }
 
 
@@ -54,16 +68,18 @@ export const Images = () => {
     files = Array.from(files).filter (
       data => types.indexOf(data.type) > -1
     )
-    setFiles(files)
-
-    let count = files.length
-    const one = count === 1
-    count = count ? count : "No"
-    setcountMessage(`${count} image${one ? "" : "s"} selected`)
+    setImages(files) // will trigger updateCountMessage
   }
 
 
-  const thumbnails = files.map( file => {
+  const updateCountMessage = (count=images.length) => {
+    const one = count === 1
+    count = count ? count : "No"
+    setCountMessage(`${count} image${one ? "" : "s"} to import`)
+  }
+
+
+  const thumbnails = images.map( file => {
     const src = URL.createObjectURL(file)
     const { name } = file
     const alt = name.replace(REG_EXT, "")
@@ -79,8 +95,9 @@ export const Images = () => {
   })
 
 
-  const buttonName = `Import ${files.length || ""} images`
+  const buttonName = `Import ${images.length || ""} images`
 
+  useEffect(updateCountMessage, [images.length])
 
   return (
     <div className="file-picker">
@@ -98,20 +115,20 @@ export const Images = () => {
       >
         <input
           type="checkbox"
-          checked={directory}
+          checked={useDirectory}
           onChange={toggleFolder}
         />
         <span className="pre">Choose separate images</span>
         <span className="slot" />
-        <span className="post">Choose all images in one directory</span>
+        <span className="post">Choose contents of folder</span>
       </label>
       <p>{countMessage}</p>
       <div>
         {thumbnails}
       </div>
       <button
-        disabled={!files.length}
-        onClick={addImages}
+        disabled={!images.length}
+        onClick={importImages}
       >
         {buttonName}
       </button>

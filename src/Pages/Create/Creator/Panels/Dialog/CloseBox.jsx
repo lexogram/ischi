@@ -9,14 +9,24 @@ import { LayoutContext } from '../../../../../Contexts'
 
 export const CloseBox = (props) => {
   const {
-    setDialog
-  } = useContext(LayoutContext)
+    dialog,
+    setDialog,
+    setImages
+  } = useContext(LayoutContext)  
+
+
+  const closeDialog = () => {
+    if (dialog === "images"){
+      setImages([])
+    }
+    setDialog()
+  }
 
 
   return (
     <button
       className="x"
-      onClick={() => setDialog()}
+      onClick={closeDialog}
     >
       ✕
     </button>

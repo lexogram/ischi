@@ -20,6 +20,11 @@
   --columns: 2;
   --image-size: calc((var(--preview-size) / var(--columns)) - 8px);
 
+  & label {
+    --span-width: min(16em, 40vw);
+    text-align: left;
+  }
+
   & {
     text-align: center;
     background-color: #333;

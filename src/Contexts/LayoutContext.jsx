@@ -20,6 +20,10 @@ export const LayoutProvider = ({ children }) => {
   const [ turnConstraint, setTurnConstraint ] = useState(false)
   const [ turnOut, setTurnOut ] = useState(true)
   const [ defaultCrop, setDefaultCrop ] = useState(true)
+  const [ images, setImages ] = useState([])
+  const [ useDirectory, setUseDirectory ] = useState(false)
+  
+  
   
 
   const [ width, height ] = useResize()
@@ -43,7 +47,11 @@ export const LayoutProvider = ({ children }) => {
         turnOut,
         setTurnOut,
         defaultCrop,
-        setDefaultCrop
+        setDefaultCrop,
+        images,
+        setImages,
+        useDirectory,
+        setUseDirectory
       }}
     >
       {children}
