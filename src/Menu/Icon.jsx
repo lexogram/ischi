@@ -14,7 +14,26 @@ export const Icon = ({ open, setOpen }) => {
   }
 
   const openMenu = () => {
-    setOpen(!open)
+    open = !open
+    setOpen(open)
+
+    if (open) {
+      // Prepare to close the menu automatically if the next
+      // click is not on the menu
+      const close = ({ target }) => {
+        console.log("target:", target);
+        if (target.closest("#menu")) {
+          return
+        }
+
+        setOpen(false)
+        document.body.removeEventListener("mousedown", close)
+        document.body.removeEventListener("touchstart", close)
+      }
+
+      document.body.addEventListener("mousedown", close)
+      document.body.addEventListener("touchstart", close)
+    }
   }
 
   const openLeft = "calc(var(--menu-width) - var(--icon-size))"
