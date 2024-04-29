@@ -6,20 +6,27 @@
  */
 
 
-import React from 'react'
+import React, { useContext } from 'react'
+import { UserContext } from '../Contexts/';
 import { useTranslation } from 'react-i18next';
 import { Section } from './Section'
 
 
 export const PageTracker = (props) => {
   const { t } = useTranslation()
+  const { user, signOut } = useContext(UserContext)
+
+
+  const connection = user
+    ? { text: t("sign.out"),  type: "action", callback: signOut}
+    : { text: t("connect"),   type: "link",   to: "/login"     }
 
   const items = [
     { text: t("home"),      type: "link",     to: "/"          },
     { text: t("play"),      type: "link",     to: "/play"      },
     { text: t("create"),    type: "link",     to: "/create"    },
     { text: t("community"), type: "divider"},
-    { text: t("connect"),   type: "link",to: "/login"     },
+    connection,
     { text: t("account"),   type: "link",     to: "/o/account" },
     // { text: "information", type: "divider"},
     // { text: "About",       type: "link",     to: "/about"     },

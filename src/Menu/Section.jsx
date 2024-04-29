@@ -43,7 +43,7 @@ export const Section = ({
 
 
   /** Called by list mapper if type === "page" */
-  const getLink = ({ text, type, to }) => {
+  const getLink = ({ text, to }) => {
     // Add .here class to the link to the current page
     const className = to === page ? "button here" : "button"
     return (
@@ -90,9 +90,10 @@ export const Section = ({
             <span>{text}</span>
             <span><hr/></span>
           </>
-        // >>> <<< Request from PlayActions
-        case "play":
-          return getButton(data)
+        // >>>
+        // <<< Request from PlayActions or Sign Out in PageTracker
+        case "action":
+            return getButton(data)
         // >>>
       }
     })()

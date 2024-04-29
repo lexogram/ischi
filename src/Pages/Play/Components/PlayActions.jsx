@@ -57,27 +57,27 @@ export const PlayActions = (props) => {
 
   const level = ADMIN
   const items = [
-    { text: "Share...",               callback: showLink,
-      type: "play",  level: USER,     colour: "#060"}, 
-    { text: "Show Scores",            callback: showScore,
-      type: "play",  level: USER,     colour: "#060"},
+    { text: "Share...",                callback: showLink,
+      type: "action", level: USER,     colour: "#060"}, 
+    { text: "Show Scores",             callback: showScore,
+      type: "action", level: USER,     colour: "#060"},
     // Hide scores
-    { text: "Reset Scores",           callback: resetScore,
-      type: "play",  level: ADMIN,    colour: "#660"}, 
-    { text: "Set Host...",            callback: setHost,
-      type: "play",  level: HOST,     colour: "#660"},
+    { text: "Reset Scores",            callback: resetScore,
+      type: "action", level: ADMIN,    colour: "#660"}, 
+    { text: "Set Host...",             callback: setHost,
+      type: "action", level: HOST,     colour: "#660"},
     // Reclaim host
-    { text: "Create Teams...",        callback: createTeams,
-      type: "play",  level: ADMIN,    colour: "#660"},
-    { text: "Set Voting Strategy...", callback: setUpVoting,
-      type: "play",  level: ADMIN,    colour: "#660"},
-    { text: "Set Team Colours...",    callback: setTeamColours,
-      type: "play",  level: TEAM,     colour: "#630"},
-    { text: "Set Team Sound...",      callback: setTeamSound,
-      type: "play",  level: TEAM,     colour: "#630"},
+    { text: "Create Teams...",         callback: createTeams,
+      type: "action", level: ADMIN,    colour: "#660"},
+    { text: "Set Voting Strategy... ", callback: setUpVoting,
+      type: "action", level: ADMIN,    colour: "#660"},
+    { text: "Set Team Colours...",     callback: setTeamColours,
+      type: "action", level: TEAM,     colour: "#630"},
+    { text: "Set Team Sound...",       callback: setTeamSound,
+      type: "action", level: TEAM,     colour: "#630"},
 
-    { text: "Leave Room",            callback: leaveRoom,
-      type: "play",  level: USER,     colour: "#600"}, 
+    { text: "Leave Room",              callback: leaveRoom,
+      type: "action", level: USER,     colour: "#600"}, 
   ].filter( item => ( item.level <= level
                    && !(level === TEAM && item.level === HOST)
                     ))

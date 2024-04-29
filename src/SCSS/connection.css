@@ -1,0 +1,232 @@
+
+
+form#connection {
+  --pad: 1em;
+  --half-pad: calc(0.5 * var(--pad));
+  --form-top: calc(5 * var(--pad));
+  --bright: #080;
+  --dull: #242;
+  --buttons-width: calc(100% - 2 * var(--pad));
+  display: flex;
+  flex-direction: column;
+  position: relative;
+
+  width: 100vw;
+  max-width: 20em;
+  min-height: 32em;
+  font-size: 5vw;
+
+  background-color: #444;
+  box-sizing: border-box;
+  padding: var(--pad);
+  padding-top: var(--form-top);
+  border-radius: var(--pad);
+
+  * {
+    font-size: inherit;
+  }
+
+  .switcher {
+    display: flex;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
+  
+  .switcher button {
+    flex: 1;
+    border-radius: 0;
+    padding: var(--half-pad);
+  
+    color: var(--bright);
+    font-size: 1.2em;
+    font-weight: bold;
+  
+    background-color: var(--dull);
+    border: 1px inset var(--dull);
+    border-bottom: 1px solid var(--bright);
+  
+    cursor: pointer;
+  }
+  
+  .switcher button:first-child {
+    border-top-left-radius: var(--pad);
+  }
+  
+  .switcher button:last-child {
+    border-top-right-radius: var(--pad);
+  }
+  
+  .switcher .active {
+    color: var(--light);
+    border: none;
+    background-color: var(--bright);
+  
+    cursor: default;
+  }
+
+  span {
+    margin-top: 1em;
+    display: block;
+  }
+
+  input {
+    box-sizing: border-box;
+    display: inline-block;
+    width: 100%;
+    padding: 0.0625em 0.125em;
+  }
+
+  [for=business] {
+    display: flex;
+    justify-content: flex-start;
+    align-items: top;
+    cursor: pointer;
+  }
+
+  [for=business] input {
+    width: 1em;
+    height: 1em;
+    margin: 1.25em 0.5em 0 0;
+  }
+
+  [for=password] div {
+    display: flex;
+  }
+
+  [for=password] button {
+    flex: 1;
+    height: 1.80em;
+    margin: 0;
+    cursor: pointer;
+  }
+
+  img {
+    height: 1.5em;
+  }
+
+  div.buttons {
+    position: absolute;
+    bottom: var(--pad);
+    width: var(--buttons-width);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  div.buttons button {
+    border-radius: var(--half-pad);
+    cursor: pointer;
+    height: 2em;
+    flex-grow: 1;
+  }
+
+  #submit {
+    border: 1px outset var(--bright);
+    background-color: var(--bright);
+  }
+
+  #submit:hover {
+    color: var(--dull);
+  }
+
+  #submit:active {
+    color: var(--light);
+    border-style: inset;
+    background-color: var(--dull);
+  }
+
+  #connection:invalid #submit {
+    opacity: 0.25;
+    pointer-events: none;
+    cursor: pointer;
+  }
+
+  .logInstead,
+  .fail-message {
+    font-size: 0.785em;
+    color: #fe9;
+    overflow: hidden;
+    overflow-x: auto;
+  }
+
+  .fail-message {
+    font-size: 0.8333em;
+    color: #f90;
+  }
+
+  .logInstead span{
+    display: inline;
+    white-space: nowrap;
+    margin: 0;
+  }
+
+  .logInstead button {
+    display: inline-block;
+    box-sizing: border-box;
+    padding: 0 0.25em;
+    background-color: var(--bright);
+    color: #000;
+    border: 1px solid transparent;
+    cursor: pointer;
+  }
+
+  .logInstead button:hover {
+    color: var(--dull);
+    border: 1px outset var(--bright);
+  }
+
+  .logInstead button:active {
+    background-color: var(--dull);
+    color: var(--light);
+    border-style: inset;
+  }
+
+  label.storage div {
+    display: flex;
+    align-items: start;
+  }
+
+  label.storage span {
+    margin-top: 0.5em;
+  }
+
+  input#is_private:checked ~ span::before {
+    content: "⚠️";
+    margin-right: 0.25em
+  }
+
+  label.storage input {
+    font-size: inherit;
+    width: 1em;
+    margin-top: 0.75em;
+    margin-right: 0.5em;
+  }
+
+  label.storage > label input {
+    margin-left: 1.5em;
+  }
+
+  label.storage > label > label input {
+    margin-left: 3em;
+  }
+
+  label.storage div.disabled {
+    cursor: default;
+    pointer-events: none;
+    opacity: 0.25
+  }
+
+  button.open {
+    background-color: var(--light);
+  }
+
+  @media (min-width: 320px) {
+    & {
+      font-size: 1rem;
+    }
+    label.storage {
+      margin-top: 2em;
+    }
+  }
+}

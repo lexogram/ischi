@@ -10,7 +10,7 @@ import React, {
   useEffect,
   useRef,
 } from 'react'
-import { IS_DEPLOYED, HOSTNAME, PORT } from '../Constants'
+import { HOSTNAME, PORT } from '../Constants'
 import {
   addMessageListener,
   removeMessageListener,
@@ -18,15 +18,8 @@ import {
 } from '../Utilities/messages'
 
 // Determine the URL to use for WebSocket
-const [ SOCKET_URL, BASE_URL ] = (function (){
-  const wsProtocol = IS_DEPLOYED ? "wss" : "ws"
-  const httProtocol = IS_DEPLOYED ? "https" : "http"
-
-  return [
-    `${wsProtocol}://${HOSTNAME}${PORT}`,  // no trailing slash
-    `${httProtocol}://${HOSTNAME}${PORT}/` // trailing slash
-  ]
-})()
+const SOCKET_URL = `wss://${HOSTNAME}${PORT}` // no trailing slash
+const BASE_URL = `https://${HOSTNAME}${PORT}/`   // trailing slash
 
 
 export const WSContext = createContext()

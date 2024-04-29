@@ -4,7 +4,7 @@
 
 
 import React from 'react'
-import { SignUp } from '../Pages/OnBoard/SignUp'
+import { Connection } from '../Pages/OnBoard/'
 import "../SCSS/onboard.scss"
 
 
@@ -12,6 +12,6 @@ export const OnBoard = (props) => {
 
 
   return (
-    <SignUp />
+    <Connection />
   )
 }
