@@ -38,7 +38,7 @@ export const Footer = (props) => {
 
 
   const goToLogin = () => {
-    navigate('/login')
+    navigate('/connection')
   }
 
 

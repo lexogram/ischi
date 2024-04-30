@@ -19,7 +19,7 @@ export const PageTracker = (props) => {
 
   const connection = user
     ? { text: t("sign.out"),  type: "action", callback: signOut}
-    : { text: t("connect"),   type: "link",   to: "/login"     }
+    : { text: t("connect"),   type: "link",   to: "/connection"     }
 
   const items = [
     { text: t("home"),      type: "link",     to: "/"          },

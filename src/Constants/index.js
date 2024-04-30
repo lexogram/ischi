@@ -27,4 +27,4 @@ export const SIGNUP   = `${BACKEND}/signup`
 export const SIGNIN   = `${BACKEND}/signin`
 export const SIGNOUT  = `${BACKEND}/signout`
 export const SIGNEDIN = `${BACKEND}/signedin`
-export const CONNECTION_PATH = "/login"
+export const CONNECTION_PATH = "/connection"

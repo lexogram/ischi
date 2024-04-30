@@ -15,7 +15,7 @@ import {
   Details,
   Frame,
   Home,
-  OnBoard,
+  Connection,
   NotFound,
   Play,
   RequireLogin
@@ -51,7 +51,7 @@ function App() {
             <Route path="create" element={<Create />} />
             <Route path="credits" element={<Credits />} />
             <Route path="details" element={<Details />} />
-            <Route path="login" element={<OnBoard />} />
+            <Route path="connection" element={<Connection />} />
             {/* Allow /play route to specify room and user */}
             <Route path="play">
               <Route
@@ -71,12 +71,12 @@ function App() {
             {/*  CATCHALL FOR ALL UNLISTED PATHS */}
             <Route path="not-found/*" element={<NotFound />} />
 
-            {/* PRIVATE "onboard" ROUTES */}
+            {/* PRIVATE "Connection" ROUTES */}
             <Route
               path="o/*"
               element={
                 <RequireLogin
-                  redirectTo="../login"
+                  redirectTo="../connection"
                 >
                   <Routes>
                     <Route

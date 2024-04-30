@@ -7,7 +7,7 @@ import { Credits } from './Credits'
 import { Details } from './Details'
 import { Frame } from './Frame'
 import { Home } from './Home'
-import { OnBoard } from './OnBoard'
+import { Connection } from './Connection'
 import { NotFound } from './NotFound'
 import { Play } from './Play'
 import { RequireLogin } from './RequireLogin'
@@ -22,7 +22,7 @@ export {
   Details,
   Frame,
   Home,
-  OnBoard,
+  Connection,
   NotFound,
   Play,
   RequireLogin

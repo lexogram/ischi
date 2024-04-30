@@ -16,22 +16,23 @@ import { useLocation } from 'react-router-dom'
 
 export const usePage = () => {
   const usedLocation = useLocation() // triggers useEffect but...
+  
   // console.log("usedLocation:", usedLocation);
   // {
-  //   pathname: "/login",
+  //   pathname: "/play",
   //   search: "",
   //   hash: "",
   //   state: null,
   //   key: "ercmy6ha"
   // }
-  // for location = "http://127.0.0.1:5173/ischi/signup#/login"
+  // for location = "http://127.0.0.1:5173/ischi/#/play"
 
   const showHere = (dontSet) => {
     // ... the built-in location actually provides access to .hash
     // perhaps because we're using HashRouter
-    const hash = location.hash // "#/login"
+    const hash = location.hash // "#/play"
     const page = (/#(\/\w+)/.exec(hash) || [])[1] || "/"
-    // "/login" || "/"
+    // "/play" || "/"
 
     if (dontSet) {
       return page

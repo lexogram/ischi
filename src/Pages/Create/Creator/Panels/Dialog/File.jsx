@@ -23,7 +23,7 @@ export const File = () => {
             defaults="Please <link>log in</link> first"
             components={{
               "link": <a
-                href="/login-out"
+                href="/connection-out"
                 className="primary button"
                 draggable="false"
               />

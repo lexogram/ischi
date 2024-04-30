@@ -25,12 +25,11 @@ export const SignIn = (props) => {
   return (
     <>
       <label>
-        <span>{texts.id}:</span>
+        <span>{texts.user_id}:</span>
         <input
           type="text"
-          id="id"
-          name="id"
-          value={formData.id}
+          name="user_id"
+          value={formData.user_id}
           required
           onChange={onChange}
         />
@@ -43,7 +42,6 @@ export const SignIn = (props) => {
         <div>
           <input
             type="checkbox"
-            id="is_private"
             name="is_private"
             checked={storageData.is_private}
             onChange={onChange}
@@ -58,7 +56,6 @@ export const SignIn = (props) => {
           >
             <input
               type="checkbox"
-              id="auto_login"
               name="auto_login"
               checked={auto_login}
               onChange={onChange}

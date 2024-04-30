@@ -30,7 +30,7 @@ export const UserProvider = ({ children }) => {
   const navigate = useNavigate()
 
 
-  // If the user went directly to the /login route when visiting
+  // If the user went directly to the /connection route when visiting
   // this site, then the Sign In page should navigate to
   // Home ("/") after a successful sign in. Otherwise it should
   // go to the page from which the link to the Sign In page was

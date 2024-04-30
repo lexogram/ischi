@@ -66,13 +66,16 @@ export const I18nProvider = ({ children }) => {
 
       setLanguages(languages)
 
-      if (!languages[language]) {
+      let lang = language
+
+      if (!languages[lang]) {
         // language may be "co-DE". Try "co"
-        language = language.replace(/-.+/, "")
+        lang = language.replace(/-.+/, "")
       }
 
-      if (languages[language]) {
-        changeLanguage(language)
+      if (languages[lang]) {
+        changeLanguage(lang)
+
       } else {
         // "co" wasn't found either. Use default.
         changeLanguage(Object.keys(languages)[0])

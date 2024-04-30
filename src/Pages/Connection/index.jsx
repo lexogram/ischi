@@ -47,11 +47,11 @@ export const Connection = () => {
   )
 
   const [ formData, setFormData ] = useState({
-    id: storageData.is_private ? storageData.id : "",
+    user_id: storageData.is_private ? storageData.user_id : "",
     username: "",
-    organisation: "",
+    organization: "",
     email: "",
-    password: "jazyx",
+    password: "museum",
     auto_login: storageData.auto_login
   })
 
@@ -72,12 +72,12 @@ export const Connection = () => {
     username:   t("sign.username"),
     email:      t("sign.email"),
     password:   t("sign.password"),
-    id:         t("sign.id"),
+    user_id:    t("sign.user_id"),
     passTitle: hidePassword
             ?   t("sign.show-password")
             :   t("sign.hide-password"),
     business: forBusiness
-            ?   t("sign.organisation")
+            ?   t("sign.organization")
             :   t("sign.business-account"),
     is_private: t("sign.device-is-private"),
     auto_login: t("sign.remember-me"),
@@ -104,9 +104,9 @@ export const Connection = () => {
 
   const reducer = (key, value) => {
     const notNeeded = !value
-    || key === "organisation" && !forBusiness
+    || key === "organization" && !forBusiness
     || ( action === "signUp"
-      && key === "id"
+      && key === "user_id"
        )
     || ( action === "signIn"
       && ( key === "username"
@@ -186,14 +186,14 @@ export const Connection = () => {
 
   function showSignIn() {
     setAction("signIn")
-    const id = logInstead[1]
-    setFormData({ ...formData, id })
+    const user_id = logInstead[1]
+    setFormData({ ...formData, user_id })
     setLogInstead(false)
   }
 
 
   function completeSignUp(user) {
-    setFormData({ ...formData, id: user.email })
+    setFormData({ ...formData, user_id: user.email })
     setAction("signIn")
   }
 
@@ -209,7 +209,7 @@ export const Connection = () => {
     const storageOptions = {
       is_private,
       auto_login,
-      id: is_private ? formData.id : undefined
+      user_id: is_private ? formData.user_id : undefined
     }
 
     storage.set(storageOptions)

@@ -55,8 +55,8 @@ export const SignUp = (props) => {
 
       {forBusiness && <input
         type="text"
-        name="organisation"
-        value={formData.organisation}
+        name="organization"
+        value={formData.organization}
         onChange={onChange}
       />}
     </>
