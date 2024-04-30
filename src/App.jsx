@@ -83,6 +83,10 @@ function App() {
                       path="account/:user_id/*"
                       element={<Account />}
                     />
+                    <Route
+                      path="account"
+                      element={<Account />}
+                    />
 
                     {/* REDIRECT FOR UNLISTED PRIVATE PATHS */}
                     <Route

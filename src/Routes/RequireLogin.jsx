@@ -7,7 +7,7 @@ import { Navigate } from 'react-router-dom'
 import { UserContext } from '../Contexts';
 
 export const RequireLogin = ({ children, redirectTo }) => {
-  const { idData } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   
   // console.log("idData:", idData);
   // {}
@@ -16,7 +16,7 @@ export const RequireLogin = ({ children, redirectTo }) => {
   //   email:    "me@example.com",
   // }
      
-  return idData.username
+  return user?.username
     ? children
     : <Navigate to={redirectTo} />;
 }
