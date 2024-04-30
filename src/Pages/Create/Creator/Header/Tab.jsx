@@ -4,7 +4,7 @@
 
 
 import React, { useContext } from 'react'
-import { LayoutContext } from '../../../../Contexts'
+import { CreatorContext } from '../../../../Contexts'
 
 
 export const Tab = ({ content, role }) => {
@@ -13,7 +13,7 @@ export const Tab = ({ content, role }) => {
     setActiveTab,
     columns,
     setDialog
-  } = useContext(LayoutContext)
+  } = useContext(CreatorContext)
   const className = activeTab === role ? "selected" : ""
 
 

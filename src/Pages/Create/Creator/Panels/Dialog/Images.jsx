@@ -7,7 +7,7 @@ import React, { useContext, useState, useEffect } from 'react'
 import { useTranslation, Trans } from 'react-i18next';
 import {
   CreateContext,
-  LayoutContext
+  CreatorContext
 } from '../../../../../Contexts'
 
 const types = [
@@ -32,7 +32,7 @@ export const Images = () => {
     setDialog,
     useDirectory,
     setUseDirectory
-  } = useContext(LayoutContext)
+  } = useContext(CreatorContext)
   const [ countMessage, setCountMessage ] = useState(
     "No images to import"
   )

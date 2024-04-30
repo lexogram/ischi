@@ -10,7 +10,7 @@ import { WSProvider, WSContext } from './WSContext'
 import { I18nProvider, I18nContext } from './I18nContext'
 import { UserProvider, UserContext } from './UserContext'
 import { CreateProvider, CreateContext } from './CreateContext'
-import { LayoutProvider, LayoutContext } from './LayoutContext'
+import { CreatorProvider, CreatorContext } from './CreatorContext'
 import { GameProvider, GameContext } from './GameContext'
 
 
@@ -21,13 +21,13 @@ const Provider = ({ children }) => {
       <WSProvider>
         <I18nProvider>
           <UserProvider>
-            <LayoutProvider>
+            <CreatorProvider>
               <CreateProvider>
                 <GameProvider>
                   {children}
                 </GameProvider>
               </CreateProvider>
-            </LayoutProvider>
+            </CreatorProvider>
           </UserProvider>
         </I18nProvider>
       </WSProvider>
@@ -42,7 +42,7 @@ export {
   WSContext,
   I18nContext,
   UserContext,
-  LayoutContext,
+  CreatorContext,
   CreateContext,
   GameContext
 }

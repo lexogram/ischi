@@ -4,7 +4,7 @@
 
 
 import React, { useContext } from 'react'
-import { LayoutContext } from '../../../../../Contexts'
+import { CreatorContext } from '../../../../../Contexts'
 import { File } from './File'
 import { Images } from './Images'
 import { Layout } from './Layout'
@@ -14,7 +14,7 @@ import { CloseBox } from './CloseBox'
 export const Dialog = () => {
   const {
     dialog
-  } = useContext(LayoutContext)
+  } = useContext(CreatorContext)
 
 
   const children = (() => {

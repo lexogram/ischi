@@ -4,7 +4,7 @@
 
 
 import React, { useContext } from 'react'
-import { LayoutContext } from '../../../../Contexts'
+import { CreatorContext } from '../../../../Contexts'
 
 import { Title } from './Title'
 import { Tab } from './Tab'
@@ -13,7 +13,7 @@ import card from '../../../../Assets/card.png'
 
 
 export const Header = (props) => {
-  const { columns } = useContext(LayoutContext)
+  const { columns } = useContext(CreatorContext)
 
 
   return (

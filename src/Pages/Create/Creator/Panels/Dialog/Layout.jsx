@@ -6,7 +6,7 @@
 import React, { useContext } from 'react'
 import { useTranslation } from 'react-i18next';
 import { Toggle } from './Toggle'
-import { LayoutContext } from '../../../../../Contexts'
+import { CreatorContext } from '../../../../../Contexts'
 
 
 export const Layout = () => {
@@ -21,7 +21,7 @@ export const Layout = () => {
     setTurnOut,
     defaultCrop,
     setDefaultCrop
-  } = useContext(LayoutContext)
+  } = useContext(CreatorContext)
 
   
   const turnOutClass = turnConstraint ? "" : "disabled"

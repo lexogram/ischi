@@ -27,10 +27,10 @@ export const CreateProvider = ({ children }) => {
   const [ state, dispatch ] = useReducer(reducer, initialState)
   const {
     // Data to save
-    customLayout,
-    cropByDefault,
-    useSunburst,
-    images,
+    customLayout,  // in CreatorContext
+    cropByDefault, // in CreatorContext
+    useSunburst,   // in CreatorContext
+    images,        // in CreatorContext
     layouts,
     cardData,
 

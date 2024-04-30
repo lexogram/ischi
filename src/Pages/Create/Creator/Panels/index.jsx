@@ -4,7 +4,7 @@
 
 
 import React, { useContext } from 'react'
-import { LayoutContext } from '../../../../Contexts'
+import { CreatorContext } from '../../../../Contexts'
 import { Gallery } from './Gallery'
 import { Dialog } from './Dialog'
 import { Cards } from './Cards'
@@ -15,7 +15,7 @@ export const Panels = () => {
     columns,
     activeTab,
     dialog
-  } = useContext(LayoutContext)
+  } = useContext(CreatorContext)
 
   const showGallery = columns || activeTab === "gallery"
   const showCards = columns || activeTab === "cards"

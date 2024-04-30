@@ -6,7 +6,7 @@
 import React, { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next';
-import { LayoutContext } from '../../../../Contexts'
+import { CreatorContext } from '../../../../Contexts'
 import { UserContext } from '../../../../Contexts'
 import { Button } from './Button'
 
@@ -18,7 +18,7 @@ export const Footer = (props) => {
     activeTab,
     setActiveTab,
     setDialog
-  } = useContext(LayoutContext)
+  } = useContext(CreatorContext)
   const { user } = useContext(UserContext)
 
 

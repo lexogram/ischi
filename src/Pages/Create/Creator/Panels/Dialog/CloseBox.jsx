@@ -4,7 +4,7 @@
 
 
 import React, { useContext } from 'react'
-import { LayoutContext } from '../../../../../Contexts'
+import { CreatorContext } from '../../../../../Contexts'
 
 
 export const CloseBox = (props) => {
@@ -12,7 +12,7 @@ export const CloseBox = (props) => {
     dialog,
     setDialog,
     setImages
-  } = useContext(LayoutContext)  
+  } = useContext(CreatorContext)
 
 
   const closeDialog = () => {

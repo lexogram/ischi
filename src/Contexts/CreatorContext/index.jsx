@@ -1,38 +1,38 @@
 /**
- * LayoutContext.jsx
+ * CreatorContext.jsx
  *
  * description
  */
 
 import React, { createContext, useState } from 'react'
-import { useResize } from '../Hooks/useResize'
+import { useResize } from '../../Hooks/useResize'
 
 
 
-export const LayoutContext = createContext()
+export const CreatorContext = createContext()
 
 
 
-export const LayoutProvider = ({ children }) => {
-  const [ activeTab, setActiveTab ] = useState("help")
+export const CreatorProvider = ({ children }) => {
+  const [ activeTab, setActiveTab ] = useState("gallery")
   const [ dialog, setDialog ] = useState()
+
   const [ customLayout, setCustomLayout ] = useState(true)
   const [ turnConstraint, setTurnConstraint ] = useState(false)
   const [ turnOut, setTurnOut ] = useState(true)
   const [ defaultCrop, setDefaultCrop ] = useState(true)
   const [ images, setImages ] = useState([])
+
   const [ useDirectory, setUseDirectory ] = useState(false)
-  
-  
   
 
   const [ width, height ] = useResize()
   const ratio = width / height
-  const columns = ratio > 3/4
+  const columns = ratio > 3/4 // <<< HARD-CODED
 
 
   return (
-    <LayoutContext.Provider
+    <CreatorContext.Provider
       value ={{
         ratio,
         columns,
@@ -40,6 +40,7 @@ export const LayoutProvider = ({ children }) => {
         setActiveTab,
         dialog,
         setDialog,
+
         customLayout,
         setCustomLayout,
         turnConstraint,
@@ -50,11 +51,12 @@ export const LayoutProvider = ({ children }) => {
         setDefaultCrop,
         images,
         setImages,
+        
         useDirectory,
         setUseDirectory
       }}
     >
       {children}
-    </LayoutContext.Provider>
+    </CreatorContext.Provider>
   )
 }

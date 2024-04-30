@@ -4,11 +4,11 @@
 
 
 import React, { useContext } from 'react'
-import { LayoutContext } from '../../../../Contexts'
+import { CreatorContext } from '../../../../Contexts'
 
 
 export const Button = ({ text, role, action, className }) => {
-  const { dialog, setDialog } = useContext(LayoutContext)
+  const { dialog, setDialog } = useContext(CreatorContext)
   const doToggle = role && role === dialog
   // If className is "primary" (for Sign In), this takes priority
   // If this button opened a dialog, show it in its pressed state
