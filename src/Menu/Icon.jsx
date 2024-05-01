@@ -19,9 +19,8 @@ export const Icon = ({ open, setOpen }) => {
 
     if (open) {
       // Prepare to close the menu automatically if the next
-      // click is not on the menu
+      // click is not on the menu itself
       const close = ({ target }) => {
-        console.log("target:", target);
         if (target.closest("#menu")) {
           return
         }

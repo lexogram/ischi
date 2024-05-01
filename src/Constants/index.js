@@ -28,4 +28,5 @@ export const SIGNIN   = `${BACKEND}/signin`
 export const SIGNOUT  = `${BACKEND}/signout`
 export const SIGNEDIN = `${BACKEND}/signedin`
 export const GETPACKS = `${BACKEND}/packs/owned`
+export const ISCHI    = `${BACKEND}/ischi`
 export const CONNECTION_PATH = "/connection"

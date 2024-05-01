@@ -53,11 +53,40 @@
     }
 
     .file {
-      & .open {
-        min-height: 30vh;
+      width: 90vw;
+      max-width: 320px;
+
+      & h3 {
+        margin: 0.5em 0;
+      }
+
+      & ul {
+        list-style-type: none;
+        padding: 0;
+        margin-top: 0;
+        max-height: 16em;
+        overflow-y: auto;
+      }
+
+      & li {
         display: flex;
-        flex-direction: column;
-        justify-content: center;
+        align-items: center;
+        margin: 0.25em 0;
+
+        & img {
+          width: 3em;
+          height: 3em;
+        }
+
+        & div {
+          padding-left: 1em;
+          display: flex;
+          flex-direction: column;
+        }
+
+        & h3 {
+          margin: 0;
+        }
       }
     }
   }

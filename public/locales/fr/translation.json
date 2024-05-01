@@ -87,5 +87,14 @@
   "crop-by-default": "Recadrer toutes les images par défaut ?",
   "yes": "Oui",
   "no": "Non",
+  "pack": {
+    "for": {
+      "organization": "Jeux de cartes créer pour {{owner}}",
+      "user": "Jeux de cartes créer par {{owner}}"
+    },
+    "none": "Vous n'avez pas encore enregistrer un jeu de cartes",
+    "count": "({{count}} cartes)",
+    "sampler": "Échantillon"
+  },
   "xxx": "xxx"
 }

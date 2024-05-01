@@ -87,5 +87,14 @@
   "crop-by-default": "Crop all images by default?",
   "yes": "Yes",
   "no": "No",
+  "pack": {
+    "for": {
+      "organization": "Packs created for {{owner}}",
+      "user": "Packs created by {{owner}}"
+    },
+    "none": "You haven't saved any packs yet",
+    "count": "({{count}} cards)",
+    "sampler": "Sampler Pack"
+  },
   "xxx": "xxx"
 }

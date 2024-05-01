@@ -18,7 +18,7 @@
     "up": "SIGN UP",
     "in": "SIGN IN",
     "out": "SIGN OUT",
-    "connecT": "SIGN UP | SIGN IN",
+    "connect": "SIGN UP | SIGN IN",
     "username": "USERNAME",
     "email": "EMAIL",
     "password": "PASSWORD",
@@ -87,5 +87,14 @@
   "crop-by-default": "CROP ALL IMAGES BY DEFAULT?",
   "yes": "Иә",
   "no": "Жоқ",
+  "pack": {
+    "for": {
+      "organization": "PACKS CREATED FOR {{owner}}",
+      "user": "PACKS CREATED BY {{owner}}"
+    },
+    "none": "YOU HAVEN'T SAVED ANY PACKS YET",
+    "count": "({{count}} CARDS)",
+    "sampler": "SAMPLER PACK"
+  },
   "xxx": "xxx"
 }

@@ -4,26 +4,44 @@
 
 
 import React, { useContext } from 'react'
-// import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useTranslation, Trans } from 'react-i18next';
-import { UserContext } from '../../../../../Contexts'
+import {
+  CreatorContext
+} from '../../../../../Contexts'
+import { OpenPack } from './OpenPack';
 
 
 export const File = () => {
-  const { user } = useContext(UserContext)
   const { t } = useTranslation()
+  const { packs } = useContext(CreatorContext)
+  // { name:  <undefined | username>,
+  //   owner: <undefined | username | organization >,
+  //   type: <undefined | "user" | "organization" >,
+  //   packs: [ {<as sampler>}, ... ], // may be empty
+  //   samplers: [
+  //     { name: "Sampler",
+  //       folder: "sample",
+  //       thumbnail: "thumbnail.webp",
+  //       count: 31,
+  //       owner_type: "Sampler"
+  //     }
+  //   ]
+  // }
 
-
-  const open = user
-    ? <div>Open Saved File</div>
+  const open = packs.name
+    ? <OpenPack
+        {...packs}
+        source="packs"
+      />
     : <div>
         <p>
           <Trans
             i18nKey="must-sign-in"
             defaults="Please <link>log in</link> first"
             components={{
-              "link": <a
-                href="/connection-out"
+              "link": <Link
+                to="/connection"
                 className="primary button"
                 draggable="false"
               />
@@ -35,11 +53,14 @@ export const File = () => {
 
   return (
     <div className="file">
-      <h1>File</h1>
+      <h1>{t("file-title")}</h1>
 
       <button>{t("new-file")}</button>
-      <div className="open">{open}</div>
-      <button>{t("open-sampler")}</button>
+      {open}
+      <OpenPack
+        {...packs}
+        source="sampler"
+      />
     </div>
 
   )

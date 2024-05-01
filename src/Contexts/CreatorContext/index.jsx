@@ -25,9 +25,8 @@ export const CreatorProvider = ({ children }) => {
   // <<< Required for switching packs
   const { user } = useContext(UserContext) 
   const page = usePage()
-  const [ userName, setUserName ] = useState("") // not undefined
   // >>>
-  const [ packs, setPacks ] = useState([])
+  const [ packs, setPacks ] = useState({ name: "" })
 
 
   const [ activeTab, setActiveTab ] = useState("gallery")
@@ -54,14 +53,29 @@ export const CreatorProvider = ({ children }) => {
         return console.log("getUserPacks error:", error);
       }
 
+      const [ name, owner, type ] = user
+        ? user.organization
+          ? [ user.username, user.organization, "organization" ]
+          : [ user.username, user.username, "user" ]
+        : []
+
+      packs = packs.reduce(( result, pack ) => {
+        if (pack.owner_type === "Sampler") {
+          result.samplers.push(pack)
+        } else {
+          result.packs.push(pack)
+        }
+
+        return result
+      }, { name, owner, type, packs: [], samplers: [] })
+
       console.log("packs:", packs);
 
       setPacks(packs)
-      setUserName(user?.username)
     }
 
 
-    if (page === "/create" && user?.username !== userName) {
+    if (page === "/create" && user?.username !== packs.name) {
       const headers = {
         "Content-Type": "application/json"
       }
@@ -106,7 +120,9 @@ export const CreatorProvider = ({ children }) => {
         setImages,
 
         useDirectory,
-        setUseDirectory
+        setUseDirectory,
+
+        packs
       }}
     >
       {children}
