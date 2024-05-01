@@ -7,7 +7,7 @@ import React, { useContext } from 'react'
 import { CreatorContext } from '../../../../Contexts'
 
 
-export const Tab = ({ content, role }) => {
+export const Tab = ({ content, role, title }) => {
   const {
     activeTab,
     setActiveTab,
@@ -48,6 +48,7 @@ export const Tab = ({ content, role }) => {
       name={role}
       className={className}
       onClick={selectTab}
+      title={title}
     >
       {content}
     </button>
