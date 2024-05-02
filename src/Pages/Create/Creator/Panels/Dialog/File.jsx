@@ -15,7 +15,8 @@ export const File = () => {
   const {
     packs,
     openPack,
-    packFolder
+    packFolder,
+    setDialog
   } = useContext(CreatorContext)
   // { name:  <undefined | username>,
   //   owner: <undefined | username | organization >,
@@ -36,7 +37,7 @@ export const File = () => {
     ? <OpenPack
         {...packs}
         source="packs"
-        openPack={openPack}
+        openPack={selectPack}
         packFolder={packFolder}
       />
     : <div>
@@ -56,6 +57,12 @@ export const File = () => {
       </div>
 
 
+  function selectPack(pack) {
+    setDialog()
+    openPack(pack)
+  }
+
+
   return (
     <div className="file">
       <h1>{t("file-title")}</h1>
@@ -65,7 +72,7 @@ export const File = () => {
       <OpenPack
         {...packs}
         source="sampler"
-        openPack={openPack}
+        openPack={selectPack}
         packFolder={packFolder}
       />
     </div>

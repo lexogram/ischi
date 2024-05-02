@@ -104,6 +104,31 @@ export const CreatorProvider = ({ children }) => {
   const columns = ratio > 3/4
   // HARD-CODED >>>
 
+  const setLineCount = () => {
+    const lineCount = (() => {
+      switch (imagesPerCard) {
+        case 3:
+        case 6:
+        case 9:
+          return 3
+        case 4:
+        case 8:
+        case 12:
+          return 4
+        case 5:
+        case 10:
+          return 5
+      }
+    })()
+
+    document.documentElement.style.setProperty(
+      '--line-count', lineCount
+    );
+  }
+
+  useEffect(setLineCount, [imagesPerCard])
+
+
 
   const openPack = pack => {
     // {
@@ -142,6 +167,7 @@ export const CreatorProvider = ({ children }) => {
     .then(json => callback(null, json))
     .catch(callback)
   }
+
 
 
   const getUserPacks = () => {

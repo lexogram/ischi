@@ -201,7 +201,7 @@ export const Gallery = () => {
 
 
   return (
-    <div id="image-store">
+    <div className="gallery">
 
       <div id="images-in-cards">
         {cards}
