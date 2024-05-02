@@ -12,7 +12,11 @@ import { OpenPack } from './OpenPack';
 
 export const File = () => {
   const { t } = useTranslation()
-  const { packs, openPack } = useContext(CreatorContext)
+  const {
+    packs,
+    openPack,
+    packFolder
+  } = useContext(CreatorContext)
   // { name:  <undefined | username>,
   //   owner: <undefined | username | organization >,
   //   type: <undefined | "user" | "organization" >,
@@ -23,6 +27,7 @@ export const File = () => {
   //       thumbnail: "thumbnail.webp",
   //       count: 31,
   //       owner_type: "Sampler"
+  //       owner_id: <undefined | id-string>
   //     }
   //   ]
   // }
@@ -32,6 +37,7 @@ export const File = () => {
         {...packs}
         source="packs"
         openPack={openPack}
+        packFolder={packFolder}
       />
     : <div>
         <p>
@@ -60,6 +66,7 @@ export const File = () => {
         {...packs}
         source="sampler"
         openPack={openPack}
+        packFolder={packFolder}
       />
     </div>
 

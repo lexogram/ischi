@@ -215,7 +215,7 @@ function addImages( state, imageFiles ) {
 // TODO: SANITIZE payload.packDate // SANITIZE payload.packDate //
 const httpRegex = /^https?:\/\//
 function loadPack(state, payload) {
-  const { packData, path } = payload
+  let { packData, path, packFolder } = payload
   let {
     // customLayout,
     // cropByDefault,
@@ -252,7 +252,15 @@ function loadPack(state, payload) {
   // state = adoptLayouts(state, layouts, imagesPerCard)
   // state = setCardData(state, cardData)
 
-  return { ...state, packData, images, imagesPerCard, total }
+  return {
+    ...state,
+    path,
+    packData,
+    images,
+    imagesPerCard,
+    total,
+    packFolder
+  }
 }
 
 
@@ -303,20 +311,20 @@ function setImagesPerCard( state, imagesPerCard ) {
 // }
 
 
-// function setImageSet( state, imageSet ) {
-//   const images = getImageSet(imageSet) // [ <url>, ... ]
-//     .map( source => createDisplay(source))
-//   const { sets } = getSets(images.length)
-//   const imagesPerCard = sets[0].length
+function setImageSet( state, imageSet ) {
+  const images = getImageSet(imageSet) // [ <url>, ... ]
+    .map( source => createDisplay(source))
+  const { sets } = getSets(images.length)
+  const imagesPerCard = sets[0].length
 
-//   state = setImagesPerCard( state, imagesPerCard )
+  state = setImagesPerCard( state, imagesPerCard )
 
-//   return {
-//     ...state,
-//     images,
-//     imageSet
-//   }
-// }
+  return {
+    ...state,
+    images,
+    imageSet
+  }
+}
 
 
 

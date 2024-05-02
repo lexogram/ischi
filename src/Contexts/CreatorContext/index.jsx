@@ -44,6 +44,7 @@ export const CreatorProvider = ({ children }) => {
     // // Author-time data
     total,
     imagesPerCard,
+    packFolder
     // layoutNames,
     // layoutName,
     // cardNumber,
@@ -109,18 +110,17 @@ export const CreatorProvider = ({ children }) => {
     //   count:        <integec>,
     //   folder:       <string>,
     //   name:         <string>,
-    //   owner_id:     <undefined | id string>,
     //   owner_type:   <"None", "Sampler", User, "Organization">,
     //   thumbnail:    "thumbnail.webp",
     //   last_updated: <date>,
     //   last_loadeed: <date>
     // }
 
-    const owner = pack.owner_id ? `/${pack.owner_id}/` : "/"
-    const folder = `${ISCHI}${owner}${pack.folder}`
-    const url  = `${folder}/index.json`
-    const path  = `${folder}/images`
-    const options = { ...FETCH_OPTIONS, method: "GET" }
+    const packFolder = pack.folder
+    const folder     = `${ISCHI}/${packFolder}`
+    const url        = `${folder}/index.json`
+    const path       = `${folder}/images`
+    const options    = { ...FETCH_OPTIONS, method: "GET" }
 
     const callback = (error, packData) => {
       if (error) {
@@ -131,7 +131,8 @@ export const CreatorProvider = ({ children }) => {
         type: "LOAD_PACK",
         payload: {
           packData,
-          path
+          path,
+          packFolder
         }
       })
     }
@@ -222,7 +223,8 @@ export const CreatorProvider = ({ children }) => {
         setUseDirectory,
 
         packs,
-        openPack
+        openPack,
+        packFolder
 
         // addImages,
         // showSaveDialog,

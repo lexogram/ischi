@@ -69,6 +69,7 @@ a.here {
 button:not(:disabled):active,
 .button:not(:disabled):active,
 button.pressed,
+.button.pressed,
 a.here {
   background-color: #000;
   border-style: inset;

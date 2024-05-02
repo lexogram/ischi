@@ -9,21 +9,22 @@ import { ISCHI } from '../../../../../Constants';
 
 
 export const OpenPack = ({
-  name,     // <username>, // used only by CreatorContext
-  owner,    // <undefined | username | organization >,
-  type,     // <"user" | "organization" >,
-  packs,    // [ {<as sampler>}, ... ], // may be empty
-  samplers, // [
-            //   { name: "Sampler",
-            //     folder: "sample",
-            //     thumbnail: "thumbnail.webp",
-            //     count: 31,
-            //     owner_type: "Sampler"
-            //   }
-            // ]
+  name,      // <username>, // used only by CreatorContext
+  owner,     // <undefined | username | organization >,
+  type,      // <"user" | "organization" >,
+  packs,     // [ {<as sampler>}, ... ], // may be empty
+  samplers,  // [
+             //   { name: <string>,
+             //     folder: </owner_id/folder>,
+             //     thumbnail: "thumbnail.webp",
+             //     count: <integer>,
+             //     owner_type: "Sampler"
+             //   }
+             // ]
   source,    // <"packs" | "sampler">
-  openPack
-}) => {
+  openPack,  // <function>
+  packFolder // <folder of current pack>
+}) => {  
   
   const { t } = useTranslation()
 
@@ -42,10 +43,13 @@ export const OpenPack = ({
   const packList = packs.map( pack => {
     const { name, folder, thumbnail, count } = pack
     const src = `${ISCHI}/${folder}/${thumbnail}`
+    const className = pack.folder === packFolder
+      ? "button pressed"
+      : "button"
     return (
       <li
         key={pack.name}
-        className="button"
+        className={className}
         onClick={() => openPack(pack)}
       >
         <img src={src} alt="name" title="name" />

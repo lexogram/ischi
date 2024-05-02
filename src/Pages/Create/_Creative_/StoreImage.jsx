@@ -5,6 +5,7 @@
 
 import React, { useContext } from 'react'
 import { CreateContext } from '../../../Contexts'
+import pin from '../../../Assets/pin.svg'
 
 const IS_FIRST_CLASS = /\bon-all-preview-cards\b/
 
@@ -127,7 +128,7 @@ export const StoreImage = ({ src, name, className, gapClass, index }) => {
       />)}
 
       { pinned && (<img
-        src={tweakForLocalHost('ui/pin.svg')}
+        src={pin}
         alt="pinned"
         className="pin"
       />)}
