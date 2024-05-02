@@ -17,14 +17,14 @@ export const Layout = () => {
     setCustomLayout,
     turnConstraint,
     setTurnConstraint,
-    turnOut,
-    setTurnOut,
-    defaultCrop,
-    setDefaultCrop
+    useSunburst,
+    setUseSunburst,
+    cropByDefault,
+    setCropByDefault
   } = useContext(CreatorContext)
 
   
-  const turnOutClass = turnConstraint ? "" : "disabled"
+  const useSunburstClass = turnConstraint ? "" : "disabled"
   
 
   return (
@@ -47,21 +47,21 @@ export const Layout = () => {
         action={setTurnConstraint}
       />
       <Toggle
-        className={turnOutClass}
+        className={useSunburstClass}
         prop="direction"
         title={t("fixed-as")}
         offText={t("upright")}
         onText={t("outward")}
-        checked={turnOut}
-        action={setTurnOut}
+        checked={useSunburst}
+        action={setUseSunburst}
       />
       <Toggle
         prop="crop"
         title={t("crop-by-default")}
         offText={t("no")}
         onText={t("yes")}
-        checked={defaultCrop}
-        action={setDefaultCrop}
+        checked={cropByDefault}
+        action={setCropByDefault}
       />
     </div>
   )

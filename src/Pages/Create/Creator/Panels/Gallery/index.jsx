@@ -20,6 +20,7 @@
 
 import React, { useContext } from 'react'
 import { CreateContext } from '../../../../../Contexts'
+import { CreatorContext } from '../../../../../Contexts'
 import { StoreImage } from './StoreImage'
 
 
@@ -30,7 +31,7 @@ export const Gallery = () => {
     total,
     getURL,
     cropByDefault
-  } = useContext(CreateContext)
+  } = useContext(CreatorContext)
 
   /**
    * imageMapper creates a `store` array  from an array with with
@@ -91,7 +92,7 @@ export const Gallery = () => {
     const trimmedName = name.replace(/\.\w+$/, "")
     // Use the function imported from Context to convert either
     // type of data to a usable value for src
-    const src = getURL(source)
+    const src = source // getURL(source)
 
     // The first image (index === 0) will appear (in a different
     // place) on all the preview cards. Show it with a thin border

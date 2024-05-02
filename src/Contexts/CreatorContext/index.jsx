@@ -7,13 +7,21 @@
 import React, {
   createContext,
   useContext,
+  useReducer,
   useState,
   useEffect
 } from 'react'
 import { UserContext } from '../UserContext'
+import { reducer, initialState } from './Reducer'
 import { useResize } from '../../Hooks/useResize'
 import { usePage } from '../../Hooks/usePage'
-import { GETPACKS } from '../../Constants'
+import { GETPACKS, ISCHI } from '../../Constants'
+
+const FETCH_OPTIONS = {
+  headers: { "Content-Type": "application/json" },
+  method: "POST",
+  credentials: "include"
+}
 
 
 
@@ -22,8 +30,35 @@ export const CreatorContext = createContext()
 
 
 export const CreatorProvider = ({ children }) => {
+  const [ state, dispatch ] = useReducer(reducer, initialState)
+  const {
+    // Data to save
+    customLayout,
+    turnConstraint,
+    useSunburst,
+    cropByDefault,
+    images,
+    layouts,
+    cardData,
+
+    // // Author-time data
+    total,
+    imagesPerCard,
+    // layoutNames,
+    // layoutName,
+    // cardNumber,
+
+    // imageSet,
+    // imageSets,
+
+    // tweakIndices,
+    // activeImage,
+
+    // showSaveDialog
+  } = state
+
   // <<< Required for switching packs
-  const { user } = useContext(UserContext) 
+  const { user } = useContext(UserContext)
   const page = usePage()
   // >>>
   const [ packs, setPacks ] = useState({ name: "" })
@@ -32,11 +67,33 @@ export const CreatorProvider = ({ children }) => {
   const [ activeTab, setActiveTab ] = useState("gallery")
   const [ dialog, setDialog ] = useState()
 
-  const [ customLayout, setCustomLayout ] = useState(true)
-  const [ turnConstraint, setTurnConstraint ] = useState(false)
-  const [ turnOut, setTurnOut ] = useState(true)
-  const [ defaultCrop, setDefaultCrop ] = useState(true)
-  const [ images, setImages ] = useState([])
+  const setCustomLayout = value => {
+    dispatch({
+      type: "SET_CUSTOM_LAYOUT",
+      payload: value
+    })
+  }
+
+  const setTurnConstraint = value => {
+    dispatch({
+      type: "SET_TURN_CONSTRAINT",
+      payload: value
+    })
+  }
+
+  const setUseSunburst = value => {
+    dispatch({
+      type: "SET_USE_SUNBURST",
+      payload: value
+    })
+  }
+
+  const setCropByDefault = value => {
+    dispatch({
+      type: "SET_CROP_BY_DEFAULT",
+      payload: value
+    })
+  }
 
   const [ useDirectory, setUseDirectory ] = useState(false)
 
@@ -47,8 +104,47 @@ export const CreatorProvider = ({ children }) => {
   // HARD-CODED >>>
 
 
+  const openPack = pack => {
+    // {
+    //   count:        <integec>,
+    //   folder:       <string>,
+    //   name:         <string>,
+    //   owner_id:     <undefined | id string>,
+    //   owner_type:   <"None", "Sampler", User, "Organization">,
+    //   thumbnail:    "thumbnail.webp",
+    //   last_updated: <date>,
+    //   last_loadeed: <date>
+    // }
+
+    const owner = pack.owner_id ? `/${pack.owner_id}/` : "/"
+    const folder = `${ISCHI}${owner}${pack.folder}`
+    const url  = `${folder}/index.json`
+    const path  = `${folder}/images`
+    const options = { ...FETCH_OPTIONS, method: "GET" }
+
+    const callback = (error, packData) => {
+      if (error) {
+        return console.log("openPack error:", error);
+      }
+
+      dispatch({
+        type: "LOAD_PACK",
+        payload: {
+          packData,
+          path
+        }
+      })
+    }
+
+    fetch(url, options)
+    .then(response => response.json())
+    .then(json => callback(null, json))
+    .catch(callback)
+  }
+
+
   const getUserPacks = () => {
-    const callback = (error, packs) => {
+    const callback = (error, packData) => {
       if (error) {
         return console.log("getUserPacks error:", error);
       }
@@ -59,7 +155,7 @@ export const CreatorProvider = ({ children }) => {
           : [ user.username, user.username, "user" ]
         : []
 
-      packs = packs.reduce(( result, pack ) => {
+      packData = packData.reduce(( result, pack ) => {
         if (pack.owner_type === "Sampler") {
           result.samplers.push(pack)
         } else {
@@ -69,26 +165,19 @@ export const CreatorProvider = ({ children }) => {
         return result
       }, { name, owner, type, packs: [], samplers: [] })
 
-      console.log("packs:", packs);
+      setPacks(packData)
 
-      setPacks(packs)
+      // Display the most recently-used pack by default
+      if (packData.packs.length) {
+        openPack(packData.packs[0])
+      } else {
+        openPack(packData.samplers[0])
+      }
     }
 
 
     if (page === "/create" && user?.username !== packs.name) {
-      const headers = {
-        "Content-Type": "application/json"
-      }
-      const method = "POST"
-      const credentials = "include"
-
-      const options = {
-        headers,
-        method,
-        credentials,
-      }
-
-      fetch(GETPACKS, options)
+      fetch(GETPACKS, FETCH_OPTIONS)
       .then(response => response.json())
       .then(json => callback(null, json.packs))
       .catch(callback)
@@ -98,9 +187,11 @@ export const CreatorProvider = ({ children }) => {
   useEffect(getUserPacks, [page, user?.username])
 
 
+
   return (
     <CreatorContext.Provider
       value ={{
+        // New for Creator
         ratio,
         columns,
         activeTab,
@@ -108,21 +199,62 @@ export const CreatorProvider = ({ children }) => {
         dialog,
         setDialog,
 
+        // Legacy
         customLayout,
         setCustomLayout,
-        turnConstraint,
-        setTurnConstraint,
-        turnOut,
-        setTurnOut,
-        defaultCrop,
-        setDefaultCrop,
+        turnConstraint,    // also new for Creator
+        setTurnConstraint, // also new for Creator
+        useSunburst,
+        setUseSunburst,
+        cropByDefault,
+        setCropByDefault,
+
+        imagesPerCard,
+        total,
         images,
-        setImages,
+        cardData,
+        layouts,
+        // layoutNames,
+        // layoutName,
+        // setLayoutName,
 
         useDirectory,
         setUseDirectory,
 
-        packs
+        packs,
+        openPack
+
+        // addImages,
+        // showSaveDialog,
+        // toggleSaveDialog,
+        // loadFrom,
+        // setImagesPerCard,
+
+        // imageSet,
+        // imageSets,
+        // setImageSet,
+
+        // getURL,
+        // getSunburstAngle,
+
+        // VIEW_WIDTH,
+        // VIEW_HEIGHT,
+        // STROKE_WIDTH,
+        // PADDING,
+        // SPACING,
+        // RADIUS,
+
+        // swapImages,
+        // clearImages,
+
+        // tweakIndices,
+        // showTweaker,
+        // tweakImage,
+        // activeImage,
+        // setActiveImage,
+
+        // tweakForLocalHost,
+        // getHREF
       }}
     >
       {children}

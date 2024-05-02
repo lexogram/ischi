@@ -6,15 +6,13 @@
 import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { useTranslation, Trans } from 'react-i18next';
-import {
-  CreatorContext
-} from '../../../../../Contexts'
+import { CreatorContext } from '../../../../../Contexts'
 import { OpenPack } from './OpenPack';
 
 
 export const File = () => {
   const { t } = useTranslation()
-  const { packs } = useContext(CreatorContext)
+  const { packs, openPack } = useContext(CreatorContext)
   // { name:  <undefined | username>,
   //   owner: <undefined | username | organization >,
   //   type: <undefined | "user" | "organization" >,
@@ -29,10 +27,11 @@ export const File = () => {
   //   ]
   // }
 
-  const open = packs.name
+  const ownedPacks = packs.name
     ? <OpenPack
         {...packs}
         source="packs"
+        openPack={openPack}
       />
     : <div>
         <p>
@@ -56,10 +55,11 @@ export const File = () => {
       <h1>{t("file-title")}</h1>
 
       <button>{t("new-file")}</button>
-      {open}
+      {ownedPacks}
       <OpenPack
         {...packs}
         source="sampler"
+        openPack={openPack}
       />
     </div>
 

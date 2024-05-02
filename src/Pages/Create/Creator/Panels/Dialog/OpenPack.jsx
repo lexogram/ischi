@@ -21,16 +21,11 @@ export const OpenPack = ({
             //     owner_type: "Sampler"
             //   }
             // ]
-  source    // < "packs" | "sampler" >
+  source,    // <"packs" | "sampler">
+  openPack
 }) => {
   
   const { t } = useTranslation()
-
-
-  const open = pack => {
-    console.log("Open pack:", pack);
-    
-  }
 
   let title
   if (source === "sampler") {
@@ -51,7 +46,7 @@ export const OpenPack = ({
       <li
         key={pack.name}
         className="button"
-        onClick={() => open(pack)}
+        onClick={() => openPack(pack)}
       >
         <img src={src} alt="name" title="name" />
         <div>
