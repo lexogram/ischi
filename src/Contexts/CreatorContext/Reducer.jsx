@@ -38,7 +38,9 @@ const initialState =  {
   cropByDefault: false,
   images: [],
   layouts: {},
-  cardData: []
+  cardData: [],
+  layoutNames: [],
+  cardNumber: 0,
 }
 // (() => {
 //   // Preload animals while developing
@@ -222,12 +224,13 @@ function loadPack(state, payload) {
     // turnConstraint,
     // useSunburst,
     images,
-    // layouts,
+    layouts,
     cardData
   } = packData
 
   const imagesPerCard = cardData[0].images.length
   const total = cardData.length
+  const layoutNames = Object.keys(layouts)
   images = images.map( imageData => {
     // Provide the full url to the image
     const { source } = imageData
@@ -236,6 +239,7 @@ function loadPack(state, payload) {
     }
     return imageData
   })
+  const cardNumber = 0
 
   // state.imagesPerCard = imagesPerCard
   // state.customLayout  = !!customLayout
@@ -254,11 +258,13 @@ function loadPack(state, payload) {
 
   return {
     ...state,
+    ...packData,
     path,
-    packData,
     images,
     imagesPerCard,
     total,
+    cardNumber,
+    layoutNames,
     packFolder
   }
 }
@@ -445,7 +451,12 @@ function setCrop (state, { cardIndex, slotIndex, index }) {
 
 function setCardNumber(state, cardNumber) {
   const { cardData } = state
-  const { layoutName } = cardData[cardNumber]
+  const card = cardData[cardNumber]
+  if (!card) {
+    return state
+  }
+
+  const { layoutName } = card
   return { ...state, cardNumber, layoutName }
 }
 

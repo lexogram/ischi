@@ -44,10 +44,10 @@ export const CreatorProvider = ({ children }) => {
     // // Author-time data
     total,
     imagesPerCard,
-    packFolder
-    // layoutNames,
+    packFolder,
+    layoutNames,
     // layoutName,
-    // cardNumber,
+    cardNumber,
 
     // imageSet,
     // imageSets,
@@ -58,6 +58,8 @@ export const CreatorProvider = ({ children }) => {
     // showSaveDialog
   } = state
 
+  console.log("layoutNames:", layoutNames);
+  
   // <<< Required for switching packs
   const { user } = useContext(UserContext)
   const page = usePage()
@@ -92,6 +94,13 @@ export const CreatorProvider = ({ children }) => {
   const setCropByDefault = value => {
     dispatch({
       type: "SET_CROP_BY_DEFAULT",
+      payload: value
+    })
+  }
+
+  const setCardNumber = value => {
+    dispatch ({
+      type: "SET_CARD_NUMBER",
       payload: value
     })
   }
@@ -240,10 +249,12 @@ export const CreatorProvider = ({ children }) => {
         total,
         images,
         cardData,
+        cardNumber,
         layouts,
-        // layoutNames,
+        layoutNames,
         // layoutName,
         // setLayoutName,
+        setCardNumber,
 
         useDirectory,
         setUseDirectory,

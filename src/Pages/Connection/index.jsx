@@ -17,7 +17,7 @@ const SIGNIN_DEFAULTS = {
 
 
 
-import '../../SCSS/connection.css'
+import '../../SCSS/connection.scss'
 
 
 import { Switcher } from "./Switcher";
