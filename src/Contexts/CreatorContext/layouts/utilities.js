@@ -148,11 +148,19 @@ export const getSets = imageCount => {
 // CARDS & DISPLAY // CARDS & DISPLAY // CARDS & DISPLAY //
 
 export const createDisplay = (source) => {
-  return {
-    source,
+  const display = {
     crop: 0,
-    selfScale: 1 // not used yet
+    selfScale: 1 // not used yet}
   }
+
+  if (source instanceof File) {
+    display.file = source
+    source = URL.createObjectURL(source)
+  }
+
+  display.source = source
+
+  return display
 }
 
 

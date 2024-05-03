@@ -56,6 +56,7 @@ export const CreatorProvider = ({ children }) => {
     tweakIndices,
     activeImage,
 
+    importedFiles // array of new File objects that must be saved
     // showSaveDialog
   } = state
 
@@ -351,6 +352,7 @@ export const CreatorProvider = ({ children }) => {
 
         // tweakForLocalHost,
         // getHREF
+        importedFiles
       }}
     >
       {children}

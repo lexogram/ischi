@@ -41,6 +41,7 @@ const initialState =  {
   cardData: [],
   layoutNames: [],
   cardNumber: 0,
+  importedFiles: []
 }
 // (() => {
 //   // Preload animals while developing
@@ -219,7 +220,7 @@ function loadFromJSON(state, payload) {
 
 
 function addImages( state, imageFiles ) {
-  let { images } = state
+  let { images, importedImages } = state
   // console.log("addImages imageFiles:", imageFiles);
   // [ File {
   //     lastModified: <integer timestamp>,
@@ -236,13 +237,17 @@ function addImages( state, imageFiles ) {
     // already been added. There is a small chance of a false
     // match, if two different images with the same name happen
     // to have exactly the same size and modification time.
+    //
+    // This only applies to files imported in this session,
+    // because images read from the server will not be included
+    // in importedImages
     .filter( imageFile => {
       const { lastModified, name, size, type } = imageFile
-      const match = images.find(({ source }) => (
-           source.name         === name
-        && source.lastModified === lastModified
-        && source.size         === size
-        && source.type         === type
+      const match = importedImages.find( file => (
+           file.name         === name
+        && file.lastModified === lastModified
+        && file.size         === size
+        && file.type         === type
       ))
 
       if (match) {
@@ -252,6 +257,7 @@ function addImages( state, imageFiles ) {
       // Ignore files that are not images (like .DS_Store)
       return IMAGE_REGEX.test(name)
     })
+    .forEach( imageFile => importedImages.push( imageFile ))
     .map( imageFile => createDisplay(imageFile))
 
   const imagesAdded = imageFiles.length
@@ -262,9 +268,9 @@ function addImages( state, imageFiles ) {
 
   } else {
     state.status = "No images added"
-  }
+  }  
 
-  return { ...state, images }
+  return { ...state, images, importedImages }
 }
 
 
