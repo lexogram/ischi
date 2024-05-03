@@ -2,6 +2,14 @@
 #creator {
   div.creator-panels {
     --gallery-width: 100%;
+    --maker-width: 100%;
+    --tool-width: min(
+      calc(var(--maker-width) / 2),
+      max(
+        14em,
+        calc(var(--maker-width) / 4)
+      ));
+    --one-card-margin: 0.25em;
 
     div.gallery {
       display: inline-block;
@@ -145,15 +153,42 @@
     }
   }
 
-  div.cards {
-    width: 100%;
+  div.card-maker {
+    width: var(--maker-width);
+    overflow: auto;
+
+    .card-tools {
+      position: fixed;
+      right: var(--scroll-size);
+      // width: var(--tool-width);
+
+      select {
+        width: 100%;
+      }
+
+      h2 {
+        text-align: right;
+      }
+    }
+
+    svg {
+      vertical-align: top; /* to remove gaps between cards */
+    }
+
+    .crop-circle {
+      opacity: 0;
+    }
   }
 
   @media (min-aspect-ratio: 3/4) {
     div.creator-panels {
       --gallery-width: max(
         calc(37.5vh - var(--scroll-size)),
-        calc(100vw - var(--panel-height))
+        calc(100vw - var(--panel-height) - 2 * var(--scroll-size))
+      );
+      --maker-width: calc(
+        100vw
+        - var(--gallery-width)
       );
 
       div.gallery { 

@@ -26,7 +26,7 @@ export const CardTools = () => {
 
 
   return (
-    <div id="card-tools">
+    <div className="card-tools">
       { layoutNames.length > 1 && customLayout && <Selector
         selected={layoutName}
         selection={layoutNames}

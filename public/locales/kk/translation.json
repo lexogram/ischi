@@ -97,5 +97,6 @@
     "count": "({{count}} CARDS)",
     "sampler": "SAMPLER PACK"
   },
+  "card-number": "CARD N°",
   "xxx": "xxx"
 }

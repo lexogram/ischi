@@ -57,8 +57,6 @@ export const CreatorProvider = ({ children }) => {
 
     // showSaveDialog
   } = state
-
-  console.log("layoutNames:", layoutNames);
   
   // <<< Required for switching packs
   const { user } = useContext(UserContext)
@@ -222,6 +220,22 @@ export const CreatorProvider = ({ children }) => {
 
   useEffect(getUserPacks, [page, user?.username])
 
+  const getSunburstAngle = ({ cx, cy }, { offsetX, offsetY }) => {
+    const x = cx + offsetX
+    const y = cy + offsetY
+
+    let angle = x || y
+      ? (Math.atan(y / x) / Math.PI * 180) - 90
+      : 0
+
+    // Tweak for images on the left
+    if (x < 0) {
+      angle += 180
+    }
+
+    return angle
+  }
+
 
 
   return (
@@ -261,7 +275,7 @@ export const CreatorProvider = ({ children }) => {
 
         packs,
         openPack,
-        packFolder
+        packFolder,
 
         // addImages,
         // showSaveDialog,
@@ -274,7 +288,7 @@ export const CreatorProvider = ({ children }) => {
         // setImageSet,
 
         // getURL,
-        // getSunburstAngle,
+        getSunburstAngle,
 
         // VIEW_WIDTH,
         // VIEW_HEIGHT,
