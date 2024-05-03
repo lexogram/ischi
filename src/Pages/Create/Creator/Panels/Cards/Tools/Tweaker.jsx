@@ -36,7 +36,7 @@ export const Tweaker = ({
   slotIndex
 }) => {
   const {
-    useSunburst,
+    turnConstraint,
     customLayout,
     tweakImage,
     showTweaker,
@@ -65,7 +65,7 @@ export const Tweaker = ({
     resizeArrows: NO_STROKE
   })
 
-  const allowRotation = customLayout && !useSunburst
+  const allowRotation = customLayout && !turnConstraint
   const rotateRingStyle = allowRotation
     ? styleFor.rotate
     : { fill: "#f003" }

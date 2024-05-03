@@ -46,14 +46,14 @@ export const CreatorProvider = ({ children }) => {
     imagesPerCard,
     packFolder,
     layoutNames,
-    // layoutName,
+    layoutName,
     cardNumber,
 
     // imageSet,
     // imageSets,
 
-    // tweakIndices,
-    // activeImage,
+    tweakIndices,
+    activeImage,
 
     // showSaveDialog
   } = state
@@ -101,6 +101,35 @@ export const CreatorProvider = ({ children }) => {
       type: "SET_CARD_NUMBER",
       payload: value
     })
+  }
+
+  const setLayoutName = value => {
+    dispatch({
+      type: "SET_LAYOUT_NAME",
+      payload: value
+    })
+  }
+
+  const showTweaker = value => {
+    dispatch({
+      type: "SHOW_TWEAKER",
+      payload: value
+    })
+  }
+
+  const tweakImage = value => {
+    dispatch({
+      type: "TWEAK_IMAGE",
+      payload: value
+    })
+  }
+
+  const setActiveImage = value => {
+    const action = {
+      type: "SET_ACTIVE_IMAGE",
+      payload: value
+    }
+    dispatch(action)
   }
 
   const [ useDirectory, setUseDirectory ] = useState(false)
@@ -266,8 +295,8 @@ export const CreatorProvider = ({ children }) => {
         cardNumber,
         layouts,
         layoutNames,
-        // layoutName,
-        // setLayoutName,
+        layoutName,
+        setLayoutName,
         setCardNumber,
 
         useDirectory,
@@ -300,11 +329,11 @@ export const CreatorProvider = ({ children }) => {
         // swapImages,
         // clearImages,
 
-        // tweakIndices,
-        // showTweaker,
-        // tweakImage,
-        // activeImage,
-        // setActiveImage,
+        tweakIndices,
+        showTweaker,
+        tweakImage,
+        activeImage,
+        setActiveImage,
 
         // tweakForLocalHost,
         // getHREF

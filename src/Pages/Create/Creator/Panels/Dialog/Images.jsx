@@ -5,10 +5,7 @@
 
 import React, { useContext, useState, useEffect } from 'react'
 import { useTranslation, Trans } from 'react-i18next';
-import {
-  CreateContext,
-  CreatorContext
-} from '../../../../../Contexts'
+import { CreatorContext } from '../../../../../Contexts'
 
 const types = [
   "image/apng",
@@ -25,7 +22,7 @@ const REG_EXT = /\.\w+$/
 
 export const Images = () => {
   const { t } = useTranslation()
-  const { addImages } = useContext(CreateContext)
+  const { addImages } = useContext(CreatorContext)
   const {
     images,
     setImages,

@@ -72,8 +72,7 @@ export const Cards = () => {
     target.scrollTo({ top, behavior: "smooth" })
   }
 
-console.log("cards:", cardData);
-
+  
   const cards = cardData.map(( card, index ) => {
     // console.log("card:", card);
     // { images; [{

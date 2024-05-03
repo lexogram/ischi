@@ -24,7 +24,12 @@ export const Layout = () => {
   } = useContext(CreatorContext)
 
   
-  const useSunburstClass = turnConstraint ? "" : "disabled"
+  const turnConstraintClass = customLayout
+    ? ""
+    : "disabled"
+  const useSunburstClass = turnConstraint && customLayout
+    ? ""
+    : "disabled"
   
 
   return (
@@ -39,11 +44,12 @@ export const Layout = () => {
         action={setCustomLayout}
       />
       <Toggle
+        className={turnConstraintClass}
         prop="rotation"
         title={t("rotation-is")}
         offText={t("free")}
         onText={t("fixed")}
-        checked={turnConstraint}
+        checked={turnConstraint || !customLayout}
         action={setTurnConstraint}
       />
       <Toggle

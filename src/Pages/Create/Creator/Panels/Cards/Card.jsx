@@ -16,6 +16,7 @@ export const Card = ({ card, cardIndex, dimensions, isPreview }) => {
     getURL,
     customLayout,
     cropByDefault,
+    turnConstraint,
     useSunburst,
     getSunburstAngle,
     tweakIndices
@@ -65,8 +66,10 @@ export const Card = ({ card, cardIndex, dimensions, isPreview }) => {
       // console.log("layoutData", layoutData);
       // { "cx": 17.054, "cy": 34.442, "r": 11.566, fill: #080 }
 
-      const rotation = (useSunburst || !customLayout)
-        ? getSunburstAngle(layoutData, imageData)
+      const rotation = (turnConstraint || !customLayout)
+        ? useSunburst
+          ? getSunburstAngle(layoutData, imageData)
+          : 0
         : imageData.rotation
 
       const crop = imageCrop === 0

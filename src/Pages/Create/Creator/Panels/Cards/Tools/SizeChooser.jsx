@@ -4,7 +4,7 @@
 
 
 import React, { useContext } from 'react'
-import { CreateContext } from '../../../../Contexts'
+import { CreatorContext } from '../../../../Contexts'
 
 export const SizeChooser = () => {
   const {
@@ -13,7 +13,7 @@ export const SizeChooser = () => {
     setImagesPerCard,
     total,
     clearImages
-  } = useContext(CreateContext)
+  } = useContext(CreatorContext)
 
 
   const setPerCard = event => {

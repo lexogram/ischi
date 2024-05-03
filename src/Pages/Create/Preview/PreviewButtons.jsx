@@ -4,7 +4,7 @@
 
 
 import React, { useContext, useRef } from 'react'
-import { CreateContext } from '../../../Contexts';
+import { CreatorContext } from '../../../Contexts';
 
 import { SaveDialog } from "../Widget/SaveDialog";
 import { sanitize } from '../../../api/data/file';
@@ -14,7 +14,7 @@ export const PreviewButtons = () => {
   const {
     toggleSaveDialog,
     loadFrom
-  } = useContext(CreateContext)
+  } = useContext(CreatorContext)
   const inputRef = useRef()
   
 

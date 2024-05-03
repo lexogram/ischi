@@ -4,7 +4,7 @@
 
 
 import React, { useContext } from 'react'
-import { CreateContext } from '../../../../../Contexts'
+import { CreatorContext } from '../../../../../Contexts'
 import pin from '../../../../../Assets/pin.svg'
 
 const IS_FIRST_CLASS = /\bon-all-preview-cards\b/
@@ -15,7 +15,7 @@ export const StoreImage = ({ src, name, className, gapClass, index }) => {
   const {
     swapImages,
     tweakImage
-  } = useContext(CreateContext)
+  } = useContext(CreatorContext)
 
   const pinned = IS_FIRST_CLASS.test(className)
 
