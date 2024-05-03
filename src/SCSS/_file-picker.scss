@@ -24,12 +24,12 @@
     --span-width: min(20em, 40vw);
     text-align: left;
   }
+  & label.file {
+    margin: 0 auto 0.5em;
+  }
 
   & {
     text-align: center;
-    background-color: #333;
-    padding: var(--preview-edge);
-    border-radius: 1em;
   }
 
   @media (min-width: 600px) {
@@ -59,10 +59,6 @@
   input[type=file] {
     width: 0;
     opacity: 0;
-  }
-
-  span.button {
-    margin-bottom: 0.5em;
   }
 
   div {

@@ -58,7 +58,7 @@ export const CreatorProvider = ({ children }) => {
 
     // showSaveDialog
   } = state
-  
+
   // <<< Required for switching packs
   const { user } = useContext(UserContext)
   const page = usePage()
@@ -66,6 +66,7 @@ export const CreatorProvider = ({ children }) => {
   const [ packs, setPacks ] = useState({ name: "" })
 
 
+  const [ imagefiles, setImageFiles ] = useState([])
   const [ activeTab, setActiveTab ] = useState("gallery")
   const [ dialog, setDialog ] = useState()
 
@@ -131,6 +132,14 @@ export const CreatorProvider = ({ children }) => {
       payload: value
     }
     dispatch(action)
+  }
+
+
+  const addImages = imageFiles => {
+    dispatch({
+      type: "ADD_IMAGES",
+      payload: imageFiles
+    })
   }
 
   const [ useDirectory, setUseDirectory ] = useState(false)
@@ -273,19 +282,19 @@ export const CreatorProvider = ({ children }) => {
     <CreatorContext.Provider
       value ={{
         // New for Creator
-        name,
-        ratio,
-        columns,
-        activeTab,
+        name,         // to show as title
+        ratio,        // aspect-ratio of viewport
+        columns,      // true if both Gallery and Cards are showing
+        activeTab,    // "gallery" | "cards" | "help"
         setActiveTab,
-        dialog,
+        dialog,       // "file" | "images" | "layout"
         setDialog,
 
         // Legacy
         customLayout,
         setCustomLayout,
-        turnConstraint,    // also new for Creator
-        setTurnConstraint, // also new for Creator
+        turnConstraint,    // true for upright or sunburst images
+        setTurnConstraint,
         useSunburst,
         setUseSunburst,
         cropByDefault,
@@ -309,7 +318,9 @@ export const CreatorProvider = ({ children }) => {
         openPack,
         packFolder,
 
-        // addImages,
+        imagefiles,    // images to be uploaded
+        setImageFiles,
+        addImages,
         // showSaveDialog,
         // toggleSaveDialog,
         // loadFrom,
