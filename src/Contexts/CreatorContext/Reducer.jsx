@@ -106,11 +106,11 @@ const reducer = (state, action) => {
   const { type, payload } = action
 
   switch (type) {
+    case "LOAD_FROM_JSON":
+      return loadFromJSON(state, payload)
+
     case "ADD_IMAGES":
       return addImages(state, payload)
-
-    case "LOAD_PACK":
-      return loadPack(state, payload)
 
     case "SET_IMAGES_PER_CARD":
       return setImagesPerCard(state, payload)
@@ -154,11 +154,65 @@ const reducer = (state, action) => {
     case "TOGGLE_SAVE_DIALOG":
       return toggleSaveDialog(state, payload)
 
-    case "LOAD_FROM_JSON":
-      return loadFromJSON(state, payload)
-
     default:
       return {...state}
+  }
+}
+
+
+// TODO: SANITIZE payload.packData // SANITIZE payload.packDate //
+const httpRegex = /^https?:\/\//
+function loadFromJSON(state, payload) {
+  let { name, packData, path, packFolder } = payload
+  let {
+    // customLayout,
+    // cropByDefault,
+    // turnConstraint,
+    // useSunburst,
+    images,
+    layouts,
+    cardData
+  } = packData
+
+  const imagesPerCard = cardData[0].images.length
+  const total = cardData.length
+  const layoutNames = Object.keys(layouts)
+  images = images.map( imageData => {
+    // Provide the full url to the image
+    const { source } = imageData
+    if (!(httpRegex.test(source))) {
+      imageData.source = `${path}/${source}`
+    }
+    return imageData
+  })
+  const cardNumber = 0
+
+  // state.imagesPerCard = imagesPerCard
+  // state.customLayout  = !!customLayout
+  // state.imagesPerCard = imagesPerCard
+  // state.imagesPerCard = imagesPerCard
+  // state.imagesPerCard = imagesPerCard
+  // state.imagesPerCard = imagesPerCard
+
+  // state = setCustomLayout(state, customLayout)
+  // state = setCropByDefault(state, cropByDefault)
+  // state = setTurnConstraint(state, turnConstraint)
+  // state = setUseSunburst(state, useSunburst)
+  // state = setImages(state, images, path)
+  // state = adoptLayouts(state, layouts, imagesPerCard)
+  // state = setCardData(state, cardData)
+
+  return {
+    ...state,
+    ...packData,
+    name,
+    path,
+    images,
+    imagesPerCard,
+    total,
+    cardNumber,
+    layoutNames,
+    packFolder
   }
 }
 
@@ -211,62 +265,6 @@ function addImages( state, imageFiles ) {
   }
 
   return { ...state, images }
-}
-
-
-// TODO: SANITIZE payload.packDate // SANITIZE payload.packDate //
-const httpRegex = /^https?:\/\//
-function loadPack(state, payload) {
-  let { packData, path, packFolder } = payload
-  let {
-    // customLayout,
-    // cropByDefault,
-    // turnConstraint,
-    // useSunburst,
-    images,
-    layouts,
-    cardData
-  } = packData
-
-  const imagesPerCard = cardData[0].images.length
-  const total = cardData.length
-  const layoutNames = Object.keys(layouts)
-  images = images.map( imageData => {
-    // Provide the full url to the image
-    const { source } = imageData
-    if (!(httpRegex.test(source))) {
-      imageData.source = `${path}/${source}`
-    }
-    return imageData
-  })
-  const cardNumber = 0
-
-  // state.imagesPerCard = imagesPerCard
-  // state.customLayout  = !!customLayout
-  // state.imagesPerCard = imagesPerCard
-  // state.imagesPerCard = imagesPerCard
-  // state.imagesPerCard = imagesPerCard
-  // state.imagesPerCard = imagesPerCard
-
-  // state = setCustomLayout(state, customLayout)
-  // state = setCropByDefault(state, cropByDefault)
-  // state = setTurnConstraint(state, turnConstraint)
-  // state = setUseSunburst(state, useSunburst)
-  // state = setImages(state, images, path)
-  // state = adoptLayouts(state, layouts, imagesPerCard)
-  // state = setCardData(state, cardData)
-
-  return {
-    ...state,
-    ...packData,
-    path,
-    images,
-    imagesPerCard,
-    total,
-    cardNumber,
-    layoutNames,
-    packFolder
-  }
 }
 
 
@@ -479,11 +477,6 @@ function showTweaker( state, tweakIndices ) {
 
 function toggleSaveDialog(state, showSaveDialog) {
   return { ...state, showSaveDialog }
-}
-
-
-function loadFromJSON(state, json) {
-  return { ...state, ...json }
 }
 
 

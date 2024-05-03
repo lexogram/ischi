@@ -3,13 +3,14 @@
  */
 
 
-import React from 'react'
+import React, { useContext } from 'react'
+import { CreatorContext } from '../../../../Contexts'
 
-
-export const Title = (props) => {
+export const Title = () => {
+  const { name } = useContext(CreatorContext)
 
 
   return (
-    <h1 className="title">Title goes here</h1>
+    <h1 className="title">{name}</h1>
   )
 }

@@ -42,6 +42,7 @@ export const CreatorProvider = ({ children }) => {
     cardData,
 
     // // Author-time data
+    name,
     total,
     imagesPerCard,
     packFolder,
@@ -177,11 +178,11 @@ export const CreatorProvider = ({ children }) => {
     //   last_loadeed: <date>
     // }
 
-    const packFolder = pack.folder
-    const folder     = `${ISCHI}/${packFolder}`
-    const url        = `${folder}/index.json`
-    const path       = `${folder}/images`
-    const options    = { ...FETCH_OPTIONS, method: "GET" }
+    const { name, folder: packFolder } = pack
+    const folder  = `${ISCHI}/${packFolder}`
+    const url     = `${folder}/index.json`
+    const path    = `${folder}/images`
+    const options = { ...FETCH_OPTIONS, method: "GET" }
 
     const callback = (error, packData) => {
       if (error) {
@@ -189,8 +190,9 @@ export const CreatorProvider = ({ children }) => {
       }
 
       dispatch({
-        type: "LOAD_PACK",
+        type: "LOAD_FROM_JSON",
         payload: {
+          name,
           packData,
           path,
           packFolder
@@ -271,6 +273,7 @@ export const CreatorProvider = ({ children }) => {
     <CreatorContext.Provider
       value ={{
         // New for Creator
+        name,
         ratio,
         columns,
         activeTab,
