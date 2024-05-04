@@ -11,7 +11,7 @@ import React, {
 } from 'react'
 
 import { WSContext } from './WSContext'
-import { PACK_SOURCE, DELAY_ARRAY } from '../Constants'
+import { GETPACKS, DELAY_ARRAY } from '../Constants'
 const DEFAULT_DELAY = DELAY_ARRAY[2][0]
 
 
@@ -46,7 +46,6 @@ export const GameProvider = ({ children }) => {
   const fetchPackData = () => {
     ;(async() => {
       const query = { owner_type: "None" }
-      const GETPACKS = `${BASE_URL}packs/get`
       const headers = {
         "Content-Type": "application/json"
       }
@@ -93,11 +92,12 @@ export const GameProvider = ({ children }) => {
   }
 
 
-  const select = (pack_name, delay) => {
+  const select = (pack, delay) => {
+    const { folder } = pack
     const message = {
       recipient_id: "game",
       subject: "select_pack",
-      content: { pack_name, room, delay }
+      content: { folder, room, delay }
     }
 
     setDelay(delay)

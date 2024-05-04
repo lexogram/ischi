@@ -25,7 +25,7 @@ export const PackCard = ({
   thumbnail = `${url}${folder}/${thumbnail}`
 
   const selectPack = () => {
-    select(pack.name, delay)
+    select(pack, delay)
   }
 
   return (

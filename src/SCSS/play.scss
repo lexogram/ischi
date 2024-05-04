@@ -248,6 +248,15 @@
 
   .shadow {
     -webkit-filter: drop-shadow( 0px 0px 5px #006);
-    filter: drop-shadow( 30x 0px 5px #fff);
+    filter: drop-shadow( 0px 0px 5px #006 );
+  }
+
+  .dimmed {
+    /* For unselected cropped images, where a drop shadow will
+       be trimmed by the crop path. When such an image is 
+       selected, it will become crisper and brighter. This works
+       both with flat colours and black and white images.
+    */
+    filter:  blur(0.1px) grayscale(30%);
   }
 }

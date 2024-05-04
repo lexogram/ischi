@@ -43,7 +43,13 @@ export const Picture = ({
                     || found
                      )
   const opacity = imageClicked ? "1" : "0.8"
-  const className = imageClicked ? "shadow" : ""
+  const className = imageClicked
+    ? crop
+      ? ""
+      : "shadow"
+    : crop
+      ? "dimmed"
+      : ""
   const style = found
     ? { pointerEvents: "none", cursor: "default" }
     : { cursor: "pointer" }

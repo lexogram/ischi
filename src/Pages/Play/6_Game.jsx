@@ -57,17 +57,6 @@ export const Game = () => {
     match = images[imageIndex].source
   }
 
-
-  // return (
-  //   <>
-  //     <Board
-  //       indices={indices}
-  //       match={match}
-  //       showScore={showScore}
-  //     />
-  //   </>
-  // )
-
   return (
     <div id="board">
       <Card
