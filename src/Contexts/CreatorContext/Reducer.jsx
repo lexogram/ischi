@@ -222,7 +222,7 @@ function loadFromJSON(state, payload) {
 function newPack( state, payload ) {
   const { packs } = state
 
-  const { name, imagesPerCard, total } = payload
+  const { name, imagesPerCard, total, imageFiles } = payload
   const { sets } = getSets(total)
   const layouts = allLayouts[imagesPerCard]
   const layoutNames = Object.keys(layouts)
@@ -265,7 +265,7 @@ function newPack( state, payload ) {
     packs
   }
 
-  return state
+  return addImages( state, imageFiles )
 }
 
 

@@ -11,13 +11,13 @@ export const CloseBox = (props) => {
   const {
     dialog,
     setDialog,
-    setImages
+    setImageFiles
   } = useContext(CreatorContext)
 
 
   const closeDialog = () => {
-    if (dialog === "images"){
-      setImages([])
+    if ((dialog === "images") || dialog?.packName){
+      setImageFiles([])
     }
     setDialog()
   }

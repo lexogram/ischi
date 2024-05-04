@@ -16,7 +16,6 @@ export const SizeChooser = (props) => {
     setImagesPerCard, // function to set imagesPerCard
     total,            // exact number of images currently required
     adviceOnly,       // if true, don't show warnings
-    getImagesTotal    // converts imagesPerCard to total images
   } = props
 
 
@@ -56,11 +55,10 @@ export const SizeChooser = (props) => {
 
 
   const advisory = () => {
-    const required = getImagesTotal(imagesPerCard)
     return <Trans
       i18nKey="card.total-images"
-      values={{ required }}
-      defaults="Needs {{required}} images"
+      values={{ total }}
+      defaults="Needs {{total}} images"
     />
   }
 

@@ -28,6 +28,16 @@ export const Dialog = () => {
         return <Images />
       case "layout":
         return <Layout />
+
+      default:
+        const Component = dialog?.component
+        if (Component) {
+          return (
+            <Component
+              {...dialog}
+            />
+          )
+        }
     }
   })()
 

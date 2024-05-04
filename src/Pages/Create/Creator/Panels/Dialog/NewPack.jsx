@@ -11,8 +11,8 @@ import React, {
 } from 'react'
 import { CreatorContext } from '../../../../../Contexts';
 import { SizeChooser } from '../../../../../Components/SizeChooser';
-import { useTranslation } from 'react-i18next';
-
+import { useTranslation, Trans } from 'react-i18next';
+import { Images } from './Images';
 
 
 
@@ -21,7 +21,6 @@ export const NewPack = () => {
   const { t } = useTranslation()
   const {
     getImagesTotal,
-    newPack,
     packs,
     setDialog
   } = useContext(CreatorContext)
@@ -53,14 +52,17 @@ export const NewPack = () => {
   }
 
 
+  const total = getImagesTotal(count)
+
+
   const createNewPack = () => {
-    const payload = {
-      name: packName,
-      imagesPerCard: count,
-      total: getImagesTotal(count)
+    const dialog = {
+      component: Images,
+      packName,
+      count,
+      total
     }
-    newPack(payload)
-    setDialog("images")
+    setDialog(dialog)
   }
 
 
@@ -94,14 +96,18 @@ export const NewPack = () => {
         imagesPerCard={count}
         setImagesPerCard={setCount}
         adviceOnly={true}
-        getImagesTotal={getImagesTotal}
+        total={total}
       />
       <button
         className="primary"
         onClick={createNewPack}
         disabled={disabled}
       >
-        {t("new.button")}
+        {<Trans
+          i18nKey="new.import-images"
+          values={{ total }}
+          defaults="Import {{total}} images"
+        />}
       </button>
     </form>
   )

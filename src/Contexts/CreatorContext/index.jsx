@@ -383,7 +383,6 @@ export const CreatorProvider = ({ children }) => {
         // tweakForLocalHost,
         // getHREF
         getImagesTotal,
-        packs,
         newPack,
 
         importedFiles

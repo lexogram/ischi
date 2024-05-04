@@ -4,6 +4,7 @@
     "404": "404 NOT FOUND",
     "": "SOMETHING WENT WRONG"
   },
+  "cancel": "CANCEL",
   "pages": "PAGES",
   "sections": "SECTIONS",
   "home": "HOME",
@@ -100,14 +101,15 @@
   "card": {
     "number": "CARD N°",
     "images-per-card": "IMAGES PER CARD:",
-    "total-images": "REQUIRES {{required}} IMAGES"
+    "total-images": "REQUIRES {{total}} IMAGES"
   },
   "new": {
     "title": "NEW PACK",
     "name": "NAME OF YOUR NEW PACK:",
     "untitled": "UNTITLED",
     "name-placeholder": "NAME OF NEW PACK",
-    "button": "CREATE NEW PACK"
+    "import-images": "IMPORT {{total}} IMAGES",
+    "create-pack": "CREATE PACK «{{packName}}»"
   },
   "xxx": "xxx"
 }

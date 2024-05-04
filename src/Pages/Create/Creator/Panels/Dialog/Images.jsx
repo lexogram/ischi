@@ -20,7 +20,7 @@ const accept = types.join(", ")
 const REG_EXT = /\.\w+$/
 
 
-export const Images = () => {
+export const Images = (props) => {
   const { t } = useTranslation()
   const {
     imageFiles,     // images selected for upload
@@ -28,18 +28,77 @@ export const Images = () => {
     addImages, // upload
     setDialog,
     useDirectory,
-    setUseDirectory
+    setUseDirectory,
+    newPack
   } = useContext(CreatorContext)
   const [ countMessage, setCountMessage ] = useState(
     "No images to import"
   )
 
+  const { count, total, packName } = props
 
-  const importImages = () => {
-    addImages(imageFiles)
+
+
+  const close = () => {
     setImageFiles([])
     setDialog()
   }
+
+
+  const createNewPack = () => {
+    const payload = {
+      name: packName,
+      imagesPerCard: count,
+      total,
+      imageFiles
+    }
+
+    newPack(payload)
+    close()
+  }
+
+
+  const importImages = () => {
+    addImages(imageFiles)
+    close()
+  }
+
+
+  const thumbnails = imageFiles.map( file => {
+    const src = URL.createObjectURL(file)
+    const { name } = file
+    const alt = name.replace(REG_EXT, "")
+
+    return (
+      <img
+        key={name}
+        src={src}
+        alt={alt}
+        title={alt}
+      />
+    )
+  })
+
+
+  const action = packName
+    ? createNewPack
+    : importImages
+
+
+  const buttonName = packName
+    ? <Trans
+        i18nKey="new.create-pack"
+        values={{ packName }}
+        defaults='Create "{{packName}}"'
+      />
+    : <Trans
+        i18nKey="import-button"
+        values= {{
+          count: imageFiles.length,
+          s: imageFiles.length === 1 ? "" : "s"
+        }}
+      />
+
 
   const filePicker = useDirectory
   ? <input
@@ -79,34 +138,8 @@ export const Images = () => {
         />
       : t("no-images-chosen")
 
-
     setCountMessage(message)
   }
-
-
-  const thumbnails = imageFiles.map( file => {
-    const src = URL.createObjectURL(file)
-    const { name } = file
-    const alt = name.replace(REG_EXT, "")
-
-    return (
-      <img
-        key={name}
-        src={src}
-        alt={alt}
-        title={alt}
-      />
-    )
-  })
-
-
-  const buttonName = <Trans
-    i18nKey="import-button"
-    values= {{
-      count: imageFiles.length,
-      s: imageFiles.length === 1 ? "" : "s"
-    }}
-  />
 
   useEffect(updateCountMessage, [imageFiles.length])
 
@@ -138,8 +171,14 @@ export const Images = () => {
         {thumbnails}
       </div>
       <button
+        onClick={close}
+      >
+        {t("cancel")}
+      </button>
+      <button
+        className="primary"
         disabled={!imageFiles.length}
-        onClick={importImages}
+        onClick={action}
       >
         {buttonName}
       </button>

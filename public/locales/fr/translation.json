@@ -4,6 +4,7 @@
     "404": "404 Introuvable",
     "": "Une erreur est survenue"
   },
+  "cancel": "Annuler",
   "pages": "Pages",
   "sections": "Sections",
   "home": "Accueil",
@@ -100,14 +101,15 @@
   "card": {
     "number": "Carte N°",
     "images-per-card": "Images sur chaque carte :",
-    "total-images": "Nécessite {{required}} images"
+    "total-images": "Nécessite {{total}} images"
   },
   "new": {
     "title": "Nouveau jeu de cartes",
     "name": "Titre de votre nouveau jeu de cartes :",
     "untitled": "sans titre",
     "name-placeholder": "titre du jeu de cartes",
-    "button": "Créer un nouveau jeu de cartes"
+    "import-images": "Importer {{total}} images",
+    "create-pack": "Créer {{packName}}"
   },
   "xxx": "xxx"
 }
