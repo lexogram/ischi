@@ -70,7 +70,7 @@
   "separately": "Choisir des images séparément",
   "by-folder": "Choisir le contenu d'un dossier",
   "no-images-chosen": "Pas d'images à importer",
-  "import-count": "Images à importer: {{count}}",
+  "import-count": "Images à importer: {{imageCount}}",
   "import-button": "Importer {{count}} image{{s}}",
   "choose-sign-in": "Se connecter...",
   "choose-save": "Enregistrer...",
@@ -109,6 +109,9 @@
     "untitled": "sans titre",
     "name-placeholder": "titre du jeu de cartes",
     "import-images": "Importer {{total}} images",
+    "missing": "Il manque encore {{missing}} image{{s}}",
+    "enough": "{{total}} images sélectionnées",
+    "extra": "{{extra}} image{{s}} supplémentaires sélectionnées",
     "create-pack": "Créer {{packName}}"
   },
   "xxx": "xxx"

@@ -24,6 +24,7 @@ export const Images = (props) => {
   const { t } = useTranslation()
   const {
     imageFiles,     // images selected for upload
+    addImageFiles,
     setImageFiles,
     addImages, // upload
     setDialog,
@@ -34,6 +35,7 @@ export const Images = (props) => {
   const [ countMessage, setCountMessage ] = useState(
     "No images to import"
   )
+  const [ countClass, setCountClass ] = useState("")
 
   const { count, total, packName } = props
 
@@ -99,6 +101,9 @@ export const Images = (props) => {
         }}
       />
 
+  const disabled = packName
+    ? total > imageFiles.length
+    : !imageFiles.length
 
   const filePicker = useDirectory
   ? <input
@@ -123,25 +128,78 @@ export const Images = (props) => {
 
   function chooseFiles({ target }) {
     let { files } = target
-    files = Array.from(files).filter (
-      data => types.indexOf(data.type) > -1
-    )
-    setImageFiles(files) // will trigger updateCountMessage
+    files = Array
+      .from(files)
+      .filter (
+        file => types.indexOf(file.type) > -1
+      )
+      .filter( file => {
+        const { lastModified, name, size, type } = file
+
+        const match = imageFiles.find( file => (
+             file.name         === name
+          && file.lastModified === lastModified
+          && file.size         === size
+          && file.type         === type
+        ))
+
+        return !match
+      })
+
+    if (files.length) {
+      addImageFiles(files) // will trigger updateCountMessage
+    }
   }
 
 
-  const updateCountMessage = (count=imageFiles.length) => {
-    const message = count
-      ? <Trans
-          i18nKey="import-count"
-          values={{ count }}
+  const updateCountMessage = () => {
+    let countClass = ""
+
+    const imageCount = imageFiles.length
+    let message
+
+    if (packName) {
+      const missing = total - imageCount
+      if (missing > 0) {
+        countClass = "not-enough"
+        const s = missing === 1 ? "" : "s"
+        message = <Trans
+          i18nKey="new.missing"
+          values={{ missing, s }}
+          defaults="Add {{missing}} image{{s}}"
         />
-      : t("no-images-chosen")
+      } else if (!missing) {
+        countClass = "enough"
+        message = <Trans
+          i18nKey="new.enough"
+          values={{ total }}
+          defaults="{{total}} images selected"
+        />
+      } else {
+        countClass = "too-many"
+        const s = missing === -1 ? "" : "s"
+        message = <Trans
+          i18nKey="new.too-many"
+          values={{ extra: -missing, s }}
+          defaults="{{extra}} extra image{{s}} selected"
+        />
+      }
+
+    } else if (imageCount) {
+      message = <Trans
+          i18nKey="import-count"
+          values={{ imageCount }}
+        />
+    } else {
+      message = t("no-images-chosen")
+    }
 
     setCountMessage(message)
+    setCountClass(countClass)
   }
 
   useEffect(updateCountMessage, [imageFiles.length])
+
 
   return (
     <div className="file-picker">
@@ -166,7 +224,11 @@ export const Images = (props) => {
         <span className="slot" />
         <span className="post">{t("by-folder")}</span>
       </label>
-      <p>{countMessage}</p>
+      <p
+        className={countClass}
+      >
+        {countMessage}
+      </p>
       <div>
         {thumbnails}
       </div>
@@ -177,7 +239,7 @@ export const Images = (props) => {
       </button>
       <button
         className="primary"
-        disabled={!imageFiles.length}
+        disabled={disabled}
         onClick={action}
       >
         {buttonName}

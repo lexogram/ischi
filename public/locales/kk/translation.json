@@ -70,7 +70,7 @@
   "separately": "CHOOSE SEPARATE IMAGES",
   "by-folder": "CHOOSE THE CONTENTS OF A FOLDER",
   "no-images-chosen": "NO IMAGES TO IMPORT",
-  "import-count": "IMAGES TO IMPORT: {{count}}",
+  "import-count": "IMAGES TO IMPORT: {{imageCount}}",
   "import-button": "IMPORT {{count}} IMAGE{{s}}",
   "choose-sign-in": "SIGN IN...",
   "choose-save": "SAVE...",
@@ -109,6 +109,9 @@
     "untitled": "UNTITLED",
     "name-placeholder": "NAME OF NEW PACK",
     "import-images": "IMPORT {{total}} IMAGES",
+    "missing": "{{missing}} MORE IMAGE{{s}} REQUIRED",
+    "enough": "{{total}} IMAGES SELECTED",
+    "extra": "{{extra}} EXTRA IMAGE{{s}} SELECTED",
     "create-pack": "CREATE PACK «{{packName}}»"
   },
   "xxx": "xxx"

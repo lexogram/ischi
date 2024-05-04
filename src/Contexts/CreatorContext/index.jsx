@@ -74,6 +74,12 @@ export const CreatorProvider = ({ children }) => {
   const [ activeTab, setActiveTab ] = useState("gallery")
   const [ dialog, setDialog ] = useState()
 
+
+  const addImageFiles = newImageFiles => {
+    setImageFiles([ ...imageFiles, ...newImageFiles])
+  }
+
+
   const setCustomLayout = value => {
     dispatch({
       type: "SET_CUSTOM_LAYOUT",
@@ -350,6 +356,7 @@ export const CreatorProvider = ({ children }) => {
         packFolder,
 
         imageFiles,    // images to be uploaded
+        addImageFiles,
         setImageFiles,
         addImages,
         // showSaveDialog,

@@ -89,5 +89,17 @@
         }
       }
     }
+
+    .file-picker {
+      .enough {
+        color: #090;
+      }
+      .not-enough {
+        color: #c00;
+      }
+      .too-many {
+        color: #fc9;
+      }
+    }
   }
 }
