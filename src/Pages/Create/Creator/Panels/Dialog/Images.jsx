@@ -23,7 +23,7 @@ const REG_EXT = /\.\w+$/
 export const Images = () => {
   const { t } = useTranslation()
   const {
-    imagefiles,     // images selected for upload
+    imageFiles,     // images selected for upload
     setImageFiles,
     addImages, // upload
     setDialog,
@@ -36,7 +36,7 @@ export const Images = () => {
 
 
   const importImages = () => {
-    addImages(imagefiles)
+    addImages(imageFiles)
     setImageFiles([])
     setDialog()
   }
@@ -71,7 +71,7 @@ export const Images = () => {
   }
 
 
-  const updateCountMessage = (count=imagefiles.length) => {
+  const updateCountMessage = (count=imageFiles.length) => {
     const message = count
       ? <Trans
           i18nKey="import-count"
@@ -84,7 +84,7 @@ export const Images = () => {
   }
 
 
-  const thumbnails = imagefiles.map( file => {
+  const thumbnails = imageFiles.map( file => {
     const src = URL.createObjectURL(file)
     const { name } = file
     const alt = name.replace(REG_EXT, "")
@@ -103,12 +103,12 @@ export const Images = () => {
   const buttonName = <Trans
     i18nKey="import-button"
     values= {{
-      count: imagefiles.length,
-      s: imagefiles.length === 1 ? "" : "s"
+      count: imageFiles.length,
+      s: imageFiles.length === 1 ? "" : "s"
     }}
   />
 
-  useEffect(updateCountMessage, [imagefiles.length])
+  useEffect(updateCountMessage, [imageFiles.length])
 
   return (
     <div className="file-picker">
@@ -138,7 +138,7 @@ export const Images = () => {
         {thumbnails}
       </div>
       <button
-        disabled={!imagefiles.length}
+        disabled={!imageFiles.length}
         onClick={importImages}
       >
         {buttonName}

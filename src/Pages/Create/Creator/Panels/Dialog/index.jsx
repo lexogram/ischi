@@ -6,6 +6,7 @@
 import React, { useContext } from 'react'
 import { CreatorContext } from '../../../../../Contexts'
 import { File } from './File'
+import { NewPack } from './NewPack.jsx'
 import { Images } from './Images'
 import { Layout } from './Layout'
 import { CloseBox } from './CloseBox'
@@ -21,6 +22,8 @@ export const Dialog = () => {
     switch (dialog) {
       case "file":
         return <File />
+      case "new":
+        return <NewPack />
       case "images":
         return <Images />
       case "layout":

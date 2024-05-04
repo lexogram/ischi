@@ -23,6 +23,10 @@ const FETCH_OPTIONS = {
   credentials: "include"
 }
 
+const getImagesTotal = imagesPerCard => {
+  return imagesPerCard * (imagesPerCard - 1) + 1
+}
+
 
 
 export const CreatorContext = createContext()
@@ -56,6 +60,7 @@ export const CreatorProvider = ({ children }) => {
     tweakIndices,
     activeImage,
 
+    packs,
     importedFiles // array of new File objects that must be saved
     // showSaveDialog
   } = state
@@ -64,10 +69,8 @@ export const CreatorProvider = ({ children }) => {
   const { user } = useContext(UserContext)
   const page = usePage()
   // >>>
-  const [ packs, setPacks ] = useState({ name: "" })
 
-
-  const [ imagefiles, setImageFiles ] = useState([])
+  const [ imageFiles, setImageFiles ] = useState([])
   const [ activeTab, setActiveTab ] = useState("gallery")
   const [ dialog, setDialog ] = useState()
 
@@ -135,11 +138,24 @@ export const CreatorProvider = ({ children }) => {
     dispatch(action)
   }
 
-
   const addImages = imageFiles => {
     dispatch({
       type: "ADD_IMAGES",
       payload: imageFiles
+    })
+  }
+
+  const setPacks = payload => {
+    dispatch({
+      type: "SET_PACKS",
+      payload
+    })
+  }
+
+  const newPack = payload => {
+    dispatch({
+      type: "NEW_PACK",
+      payload
     })
   }
 
@@ -219,47 +235,61 @@ export const CreatorProvider = ({ children }) => {
 
 
   const getUserPacks = () => {
-    const callback = (error, packData) => {
-      if (error) {
-        return console.log("getUserPacks error:", error);
-      }
-
-      const [ name, owner, type ] = user
-        ? user.organization
-          ? [ user.username, user.organization, "organization" ]
-          : [ user.username, user.username, "user" ]
-        : []
-
-      packData = packData.reduce(( result, pack ) => {
-        if (pack.owner_type === "Sampler") {
-          result.samplers.push(pack)
-        } else {
-          result.packs.push(pack)
+    if (page === "/create" && user?.username !== packs.name) {
+      const callback = (error, packData) => {
+        if (error) {
+          return console.log("getUserPacks error:", error);
         }
 
-        return result
-      }, { name, owner, type, packs: [], samplers: [] })
+        // If the user has opted to stay logged in, the request
+        // for packs/owned will send a JWT token identifying the
+        // user before the request to /signedin returns a `user`
+        // object. As a result, `user` will be undefined, but the
+        // packData may contain custom packs. Ignore this for now;
+        // the request for packs/owned will be repeated as soon as
+        // the `user` object is set.
+        if (packData.length > 1 && !user?.username) {
+          return // console.log("Waiting for user to be populated")
+        }
 
-      setPacks(packData)
+        const [ name, owner, type ] = user
+          ? user.organization
+            ? [ user.username, user.organization, "Organization" ]
+            : [ user.username, user.username, "User" ]
+          : []
 
-      // Display the most recently-used pack by default
-      if (packData.packs.length) {
-        openPack(packData.packs[0])
-      } else {
-        openPack(packData.samplers[0])
+        packData = packData.reduce(( result, pack ) => {
+          if (pack.owner_type === "Sampler") {
+            result.samplers.push(pack)
+          } else {
+            result.packs.push(pack)
+          }
+
+          result.names.push(pack.name.toLowerCase())
+
+          return result
+        }, { name, owner, type, packs: [], samplers: [], names: [] })
+
+        setPacks(packData)
+
+        // Display the most recently-used pack by default
+        if (packData.packs.length) {
+          openPack(packData.packs[0])
+        } else {
+          openPack(packData.samplers[0])
+        }
       }
-    }
 
-
-    if (page === "/create" && user?.username !== packs.name) {
       fetch(GETPACKS, FETCH_OPTIONS)
-      .then(response => response.json())
-      .then(json => callback(null, json.packs))
-      .catch(callback)
+       .then(response => response.json())
+       .then(json => callback(null, json.packs))
+       .catch(callback)
     }
   }
 
   useEffect(getUserPacks, [page, user?.username])
+
+
 
   const getSunburstAngle = ({ cx, cy }, { offsetX, offsetY }) => {
     const x = cx + offsetX
@@ -319,7 +349,7 @@ export const CreatorProvider = ({ children }) => {
         openPack,
         packFolder,
 
-        imagefiles,    // images to be uploaded
+        imageFiles,    // images to be uploaded
         setImageFiles,
         addImages,
         // showSaveDialog,
@@ -352,6 +382,10 @@ export const CreatorProvider = ({ children }) => {
 
         // tweakForLocalHost,
         // getHREF
+        getImagesTotal,
+        packs,
+        newPack,
+
         importedFiles
       }}
     >

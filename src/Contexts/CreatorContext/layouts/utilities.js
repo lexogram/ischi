@@ -130,9 +130,9 @@ setLengths.push(9999)
 // images per card =  3, 4,  5,  6,  8.  9, 10 ]
 
 
-export const getSets = imageCount => {
+export const getSets = totalImages => {
   const setIndex = setLengths.findIndex(
-    setLength => setLength > imageCount
+    setLength => setLength > totalImages
   ) - 1
 
   const set = sets[setIndex]
@@ -209,8 +209,6 @@ export const createCards = (
     const layoutName = getRandomItem(layoutNames, random)
     return fillCard(imageIndices, layoutName, random)
   })
-
-  console.log("cardUtilities createCards", JSON.stringify(cards, null, '  '));
   
   return cards
 }

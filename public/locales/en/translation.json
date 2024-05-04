@@ -97,6 +97,17 @@
     "count": "({{count}} cards)",
     "sampler": "Sampler Pack"
   },
-  "card-number": "Card N°",
+  "card": {
+    "number": "Card N°",
+    "images-per-card": "Images per card:",
+    "total-images": "Requires {{required}} images"
+  },
+  "new": {
+    "title": "New pack",
+    "name": "Name of your new pack:",
+    "untitled": "untitled",
+    "name-placeholder": "name of new pack",
+    "button": "Create New Pack"
+  },
   "xxx": "xxx"
 }

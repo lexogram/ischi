@@ -67,7 +67,11 @@ export const File = () => {
     <div className="file">
       <h1>{t("file-title")}</h1>
 
-      <button>{t("new-file")}</button>
+      <button
+        onClick={() => setDialog("new")}
+      >
+        {t("new-file")}
+      </button>
       {ownedPacks}
       <OpenPack
         {...packs}

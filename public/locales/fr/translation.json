@@ -97,6 +97,17 @@
     "count": "({{count}} cartes)",
     "sampler": "Échantillon"
   },
-  "card-number": "Carte N°",
+  "card": {
+    "number": "Carte N°",
+    "images-per-card": "Images sur chaque carte :",
+    "total-images": "Nécessite {{required}} images"
+  },
+  "new": {
+    "title": "Nouveau jeu de cartes",
+    "name": "Titre de votre nouveau jeu de cartes :",
+    "untitled": "sans titre",
+    "name-placeholder": "titre du jeu de cartes",
+    "button": "Créer un nouveau jeu de cartes"
+  },
   "xxx": "xxx"
 }

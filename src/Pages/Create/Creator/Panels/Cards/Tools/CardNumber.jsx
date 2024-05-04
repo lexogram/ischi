@@ -14,7 +14,7 @@ export const CardNumber = () => {
 
   return (
     <h2>
-      {t("card-number")} {cardNumber + 1}/{total}
+      {t("card.number")} {cardNumber + 1}/{total}
     </h2>
   )
 }

@@ -41,7 +41,11 @@ const initialState =  {
   cardData: [],
   layoutNames: [],
   cardNumber: 0,
-  importedFiles: []
+  importedFiles: [],
+  packs: {
+    /*name, owner, type,*/
+    packs: [], samplers: [], names: []
+  }
 }
 // (() => {
 //   // Preload animals while developing
@@ -107,8 +111,14 @@ const reducer = (state, action) => {
   const { type, payload } = action
 
   switch (type) {
+    case "SET_PACKS":
+      return setPacks(state, payload)
+
     case "LOAD_FROM_JSON":
       return loadFromJSON(state, payload)
+
+    case "NEW_PACK":
+        return newPack(state, payload)
 
     case "ADD_IMAGES":
       return addImages(state, payload)
@@ -136,7 +146,7 @@ const reducer = (state, action) => {
 
     case "SET_CROP_BY_DEFAULT":
       return setCropByDefault(state, payload)
-      
+
     case "TWEAK_IMAGE":
       return tweakImage(state, payload)
 
@@ -158,6 +168,12 @@ const reducer = (state, action) => {
     default:
       return {...state}
   }
+}
+
+
+function setPacks(state, packs) {
+  // { name, owner, type, packs: [], samplers: [], names: [] }
+  return { ...state, packs }
 }
 
 
@@ -188,21 +204,6 @@ function loadFromJSON(state, payload) {
   })
   const cardNumber = 0
 
-  // state.imagesPerCard = imagesPerCard
-  // state.customLayout  = !!customLayout
-  // state.imagesPerCard = imagesPerCard
-  // state.imagesPerCard = imagesPerCard
-  // state.imagesPerCard = imagesPerCard
-  // state.imagesPerCard = imagesPerCard
-
-  // state = setCustomLayout(state, customLayout)
-  // state = setCropByDefault(state, cropByDefault)
-  // state = setTurnConstraint(state, turnConstraint)
-  // state = setUseSunburst(state, useSunburst)
-  // state = setImages(state, images, path)
-  // state = adoptLayouts(state, layouts, imagesPerCard)
-  // state = setCardData(state, cardData)
-
   return {
     ...state,
     ...packData,
@@ -218,9 +219,59 @@ function loadFromJSON(state, payload) {
 }
 
 
+function newPack( state, payload ) {
+  const { packs } = state
+
+  const { name, imagesPerCard, total } = payload
+  const { sets } = getSets(total)
+  const layouts = allLayouts[imagesPerCard]
+  const layoutNames = Object.keys(layouts)
+  const cardData = createCards(
+    total,
+    layoutNames,
+    lcg()
+  )
+  packs.names.push(name.toLowerCase())
+  packs.packs.push({
+    name,
+    count: imagesPerCard,
+    ///<<< WON'T BE FINALIZED UNTIL THE PACK IS SAVED
+    owner_type: packs.type // will be undefined for first pack
+    // folder: "",
+    // thumbnail: ""
+    ///>>>
+  })
+
+  state = {
+    ...state,
+    name,
+    imagesPerCard,
+    total,
+    sets,
+    layouts,
+    layoutNames,
+    cardData,
+
+    path: "",
+    cardNumber: 0,
+    images: [],
+    importedFiles: [],
+    // Optimum liberties
+    customLayout: true,
+    turnConstraint: true,
+    useSunburst: false,
+    cropByDefault: true,
+
+    packs
+  }
+
+  return state
+}
+
+
 
 function addImages( state, imageFiles ) {
-  let { images, importedImages } = state
+  let { images, importedFiles } = state
   // console.log("addImages imageFiles:", imageFiles);
   // [ File {
   //     lastModified: <integer timestamp>,
@@ -231,6 +282,8 @@ function addImages( state, imageFiles ) {
   //   }, ...
   // ]
 
+  const filesToImport = []
+
   imageFiles = Array
     .from(imageFiles)
     // Check if an image with the same name and statistics has
@@ -240,10 +293,16 @@ function addImages( state, imageFiles ) {
     //
     // This only applies to files imported in this session,
     // because images read from the server will not be included
-    // in importedImages
+    // in importedFiles
     .filter( imageFile => {
       const { lastModified, name, size, type } = imageFile
-      const match = importedImages.find( file => (
+
+      // Ignore files that are not images (like .DS_Store)
+      if (!IMAGE_REGEX.test(name)) {
+        return false
+      }
+
+      const match = importedFiles.find( file => (
            file.name         === name
         && file.lastModified === lastModified
         && file.size         === size
@@ -254,23 +313,25 @@ function addImages( state, imageFiles ) {
         return false
       }
 
-      // Ignore files that are not images (like .DS_Store)
-      return IMAGE_REGEX.test(name)
+      // BENIGN SIDE EFFECT: importedFiles may be updated later //
+      filesToImport.push( imageFile )
+
+      return true
     })
-    .forEach( imageFile => importedImages.push( imageFile ))
     .map( imageFile => createDisplay(imageFile))
 
   const imagesAdded = imageFiles.length
   if (imagesAdded) {
     images = [ ...images, ...imageFiles ]
+    importedFiles = [ ...importedFiles, ...filesToImport ]
 
     state.status = `${imagesAdded} images added`
 
   } else {
     state.status = "No images added"
-  }  
+  }
 
-  return { ...state, images, importedImages }
+  return { ...state, images, importedFiles }
 }
 
 

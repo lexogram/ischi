@@ -1,0 +1,96 @@
+/* <<<< RADIO BUTTON SET / RADIO BUTTON SET / RADIO BUTTON SET */
+
+/*
+ * Edit the custom CSS properties to suit your taste, or override
+ * the default values with your own CSS selectors (see custom.css)
+ */
+ #creator {
+  .new-pack {
+    position: relative;;
+    width: 80vw;
+    max-width: 26em;
+    min-width: 18em;
+
+    label {
+      display: block;
+    }
+
+    input[type=text] {
+      width: 100%;
+      font-size: inherit;
+      box-sizing: border-box;
+    }
+
+    & > button {
+      width: 100%;
+    }
+  }
+  .size-chooser {
+    margin: 2em 0;
+  }
+
+  /* Custom dimensions and colours for radio set */
+  .radio-set {
+    --button-size: 2.5em;
+    --color: #999;
+    --hover-color: #fff;
+    --bg-color: #222;
+    --checked-color: #131;
+    --pressed-color: #020;
+    --border-size: 2px;
+    --border-color: #666;
+    --checked-border: #363;
+    --border-radius: 0.75em;
+    --glow: inset 0 0 0.1em 0.1em #393;
+
+    display: flex;
+    justify-content: space-between;
+    margin: 0.5em 0;
+  }
+
+  /* Hide the radio buttons themselves */
+  .radio-set input {
+    position: absolute;
+    width: 0;
+    opacity: 0;
+  }
+
+  /* Style the sibling spans to look like buttons */
+  .radio-set span {
+    display: inline-block; /* so that width and height will apply*/
+    width: var(--button-size);
+    height: var(--button-size);
+    color: var(--color);
+    background-color: var(--bg-color);
+    border: var(--border-size) outset var(--border-color);
+    border-radius: var(--border-radius);
+    /* Centre the text along both axes */
+    text-align: center;
+    line-height: var(--button-size);
+    /* Prevent user from selecting the text (when dragging) */
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  .radio-set span:hover {
+    color: var(--hover-color);
+  }
+
+  .radio-set input:checked ~ span {
+    border-style: inset;
+    border-color: var(--checked-border);
+    background-color: var(--checked-color);
+    color: var(--hover-color);
+
+    -webkit-box-shadow: var(--glow);
+    -moz-box-shadow: var(--glow);
+    box-shadow: var(--glow);
+  }
+
+  .radio-set input ~ span:active:hover {
+    border-style: inset;
+    background-color: var(--pressed-color);
+  }
+ }
+
+/* RADIO BUTTON SET / RADIO BUTTON SET / RADIO BUTTON SET >>>> */
