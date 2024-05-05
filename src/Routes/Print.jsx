@@ -4,7 +4,7 @@
 
 
 import React from 'react'
-import { Preview } from '../Pages/Create/Preview'
+import { Preview } from '../Pages/Preview'
 
 export const Print = () => {
   return (
