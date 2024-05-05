@@ -11,7 +11,7 @@ import { Picture } from "./Picture"
 export const Card = ({ card, cardIndex, dimensions, isPreview }) => {
   const {
     total, // required for crop-circle-XXX defId
-    images, // [ ..., { source, selfScale }, ...]
+    imageSources, // [ ..., { source, selfScale }, ...]
     layouts, // { <layoutName>: [ {...card position...}, ...]}
     getURL,
     customLayout,
@@ -24,15 +24,15 @@ export const Card = ({ card, cardIndex, dimensions, isPreview }) => {
   const { cx: cardX, cy: cardY, r: cardR } = dimensions
   const ratio = cardR / 50 // 1 for Creator | 9.8 for Preview
 
-  const { images: cardImages, cardScale, layoutName } = card
+  const { images, cardScale, layoutName } = card
   const layout = customLayout
     ? layouts[layoutName]
     : layouts[Object.keys(layouts)[0]]
 
   let tweakIndex
-  const pictures = cardImages.map(( imageData, slotIndex ) => {
+  const pictures = images.map(( imageData, slotIndex ) => {
     const { imageIndex, specificScale } = imageData
-    const display = images[imageIndex]
+    const display = imageSources[imageIndex]
 
     if (display) {
       // { source: <string | File object>, selfcale: <number> }

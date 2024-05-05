@@ -23,7 +23,7 @@ export const Game = () => {
     nextIndex,
     randomIndices,
     cardData,
-    images
+    imageSources
   } = gameData
 
 
@@ -38,7 +38,7 @@ export const Game = () => {
     if (index === -1) {
       // This user is joining at a time when the game is paused,
       // waiting for the host to click "Next"
-      index = isNaN(nextIndex) ? images.length - 2 : nextIndex - 1
+      index = isNaN(nextIndex) ? imageSources.length - 2 : nextIndex - 1
     }
 
     indices = randomIndices.slice(index, index + 2)
@@ -54,7 +54,7 @@ export const Game = () => {
     const imageIndex = images1.find(
       index => images2.indexOf(index) + 1
     )
-    match = images[imageIndex].source
+    match = imageSources[imageIndex].source
   }
 
   return (

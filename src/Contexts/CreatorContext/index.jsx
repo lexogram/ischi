@@ -54,7 +54,7 @@ export const CreatorProvider = ({ children }) => {
     turnConstraint,
     useSunburst,
     cropByDefault,
-    images,
+    imageSources,
     layouts,
     cardData,
 
@@ -352,7 +352,7 @@ export const CreatorProvider = ({ children }) => {
 
         imagesPerCard,
         total,
-        images,
+        imageSources,
         cardData,
         cardNumber,
         layouts,

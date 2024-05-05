@@ -13,7 +13,7 @@ export const Card = ({ index, top, d, x, y, match }) => {
   const {
     root,
     cardData,
-    images,
+    imageSources,
     layouts,
     useSunburst,
     cropByDefault,
@@ -36,13 +36,13 @@ export const Card = ({ index, top, d, x, y, match }) => {
   }
 
   const {
-    images: cardImages,
+    images,
     layoutName,
     cardScale
   } = cardData[index]
 
-  const imageURLs = cardImages.map( imageData => (
-    images[imageData.imageIndex].source
+  const imageURLs = images.map( imageData => (
+    imageSources[imageData.imageIndex].source
   ))
   const layout = customLayout
     ? layouts[Object.keys(layouts)[0]]
@@ -52,7 +52,7 @@ export const Card = ({ index, top, d, x, y, match }) => {
   const pictures = imageURLs.map(( href, index ) => {
     const position = layout[index]
     const { cx, cy, r } = position
-    const imageData = cardImages[index]
+    const imageData = images[index]
     let {
       specificScale,
       rotation,

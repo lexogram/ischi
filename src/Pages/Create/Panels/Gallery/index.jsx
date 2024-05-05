@@ -25,7 +25,7 @@ import { StoreImage } from './StoreImage'
 
 export const Gallery = () => {
   const {
-    images,
+    imageSources,
     imagesPerCard,
     total,
     getURL,
@@ -46,7 +46,7 @@ export const Gallery = () => {
    * This will be one long array, not yet divided up into cards.
    */
   const imageMapper = (_, index) => {
-    const display = images[index]
+    const display = imageSources[index]
 
     if (!display) {
       // If there is no image (neither File object nor string URL)
@@ -124,7 +124,7 @@ export const Gallery = () => {
     )
   }
 
-  const slotCount = Math.max(total, images.length)
+  const slotCount = Math.max(total, imageSources.length)
   const store = Array.from({length: slotCount}, imageMapper)
   const colours = [
     "yellow",
@@ -178,7 +178,7 @@ export const Gallery = () => {
   // If there are any images which were not assigned to a card,
   // show them at the end, in a div.extra. The images will be
   // made semi-transparent.
-  const extra = images.length - total
+  const extra = imageSources.length - total
   if (extra > 0) {
     cards.push(
       <h1

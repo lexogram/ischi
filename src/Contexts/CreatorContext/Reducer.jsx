@@ -36,7 +36,7 @@ const initialState =  {
   turnConstraint: false,
   useSunburst: false,
   cropByDefault: false,
-  images: [],
+  imageSources: [],
   layouts: {},
   cardData: [],
   layoutNames: [],
@@ -71,7 +71,7 @@ const initialState =  {
 //   //    useUseSunburst
 //   //
 //   // // Image data
-//   //    images: { source, selfScale, crop }
+//   //    imageSources: { source, selfScale, crop }
 //   //
 //   //    layouts { <Name>: [ { cx, cy, r }, ... ], ... }
 //   //
@@ -186,7 +186,7 @@ function loadFromJSON(state, payload) {
     // cropByDefault,
     // turnConstraint,
     // useSunburst,
-    images,
+    imageSources,
     layouts,
     cardData
   } = packData
@@ -194,7 +194,7 @@ function loadFromJSON(state, payload) {
   const imagesPerCard = cardData[0].images.length
   const total = cardData.length
   const layoutNames = Object.keys(layouts)
-  images = images.map( imageData => {
+  imageSources = imageSources.map( imageData => {
     // Provide the full url to the image
     const { source } = imageData
     if (!(httpRegex.test(source))) {
@@ -209,7 +209,7 @@ function loadFromJSON(state, payload) {
     ...packData,
     name,
     path,
-    images,
+    imageSources,
     imagesPerCard,
     total,
     cardNumber,
@@ -254,7 +254,7 @@ function newPack( state, payload ) {
 
     path: "",
     cardNumber: 0,
-    images: [],
+    imageSources: [],
     importedFiles: [],
     // Optimum liberties
     customLayout: true,
@@ -271,7 +271,7 @@ function newPack( state, payload ) {
 
 
 function addImages( state, imageFiles ) {
-  let { images, importedFiles } = state
+  let { imageSources, importedFiles } = state
   // console.log("addImages imageFiles:", imageFiles);
   // [ File {
   //     lastModified: <integer timestamp>,
@@ -288,16 +288,16 @@ function addImages( state, imageFiles ) {
     .from(imageFiles)
     // Check if an image with the same name and statistics has
     // already been added. There is a small chance of a false
-    // match, if two different images with the same name happen
+    // match, if two different imageSources with the same name happen
     // to have exactly the same size and modification time.
     //
     // This only applies to files imported in this session,
-    // because images read from the server will not be included
+    // because imageSources read from the server will not be included
     // in importedFiles
     .filter( imageFile => {
       const { lastModified, name, size, type } = imageFile
 
-      // Ignore files that are not images (like .DS_Store)
+      // Ignore files that are not imageSources (like .DS_Store)
       if (!IMAGE_REGEX.test(name)) {
         return false
       }
@@ -322,16 +322,16 @@ function addImages( state, imageFiles ) {
 
   const imagesAdded = imageFiles.length
   if (imagesAdded) {
-    images = [ ...images, ...imageFiles ]
+    imageSources = [ ...imageSources, ...imageFiles ]
     importedFiles = [ ...importedFiles, ...filesToImport ]
 
-    state.status = `${imagesAdded} images added`
+    state.status = `${imagesAdded} imageSources added`
 
   } else {
-    state.status = "No images added"
+    state.status = "No imageSources added"
   }
 
-  return { ...state, images, importedFiles }
+  return { ...state, imageSources, importedFiles }
 }
 
 
@@ -356,15 +356,15 @@ function setImagesPerCard( state, imagesPerCard ) {
 }
 
 
-// function setImages( state, images, path ) {
-//   images = images.map( imageData => {
+// function setImages( state, imageSources, path ) {
+//   imageSources = imageSources.map( imageData => {
 //     // Provide the full url to the image
 //     imageData.source = `${path}/${imageData.source}`
 //   })
 
 //   return {
 //     ...state,
-//     images
+//     imageSources
 //   }
 // }
 
@@ -382,38 +382,38 @@ function setImagesPerCard( state, imagesPerCard ) {
 // }
 
 
-function setImageSet( state, imageSet ) {
-  const images = getImageSet(imageSet) // [ <url>, ... ]
-    .map( source => createDisplay(source))
-  const { sets } = getSets(images.length)
-  const imagesPerCard = sets[0].length
+// function setImageSet( state, imageSet ) {
+//   const imageSources = getImageSet(imageSet) // [ <url>, ... ]
+//     .map( source => createDisplay(source))
+//   const { sets } = getSets(imageSources.length)
+//   const imagesPerCard = sets[0].length
 
-  state = setImagesPerCard( state, imagesPerCard )
+//   state = setImagesPerCard( state, imagesPerCard )
 
-  return {
-    ...state,
-    images,
-    imageSet
-  }
-}
+//   return {
+//     ...state,
+//     imageSources,
+//     imageSet
+//   }
+// }
 
 
 
 //!!! NOT IDEMPOTENT !!!  NOT IDEMPOTENT !!!  NOT IDEMPOTENT !!!//
 function swapImages(state, {dragIndex, dropIndex}) {
-  const { images } = state
-  const dragImage = images[dragIndex]
-  const dropImage = images.splice(dropIndex, 1, dragImage)[0]
+  const { imageSources } = state
+  const dragImage = imageSources[dragIndex]
+  const dropImage = imageSources.splice(dropIndex, 1, dragImage)[0]
   // We now have two copies of dragImage, so we replace the
   // original with the dropImage that we just spliced out
-  images.splice(dragIndex, 1, dropImage)
+  imageSources.splice(dragIndex, 1, dropImage)
 
-  return { ...state, images }
+  return { ...state, imageSources }
 }
 
 
 function clearImages(state) {
-  return { ...state, images: [] }
+  return { ...state, imageSources: [] }
 }
 
 
@@ -458,7 +458,7 @@ const setActiveImage = (state, activeImage) => {
 
 function setRotation( state, { value, cardIndex, slotIndex }) {
   const cardData = state.cardData[cardIndex]
-  const imageData = cardData.images
+  const imageData = cardData.imageSources
   const specificData = imageData[slotIndex]
   specificData.rotation = value
 
@@ -468,7 +468,7 @@ function setRotation( state, { value, cardIndex, slotIndex }) {
 
 function setOffset( state, { value, cardIndex, slotIndex }) {
   const cardData = state.cardData[cardIndex]
-  const imageData = cardData.images
+  const imageData = cardData.imageSources
   const specificData = imageData[slotIndex]
   specificData.offsetX = value.offsetX
   specificData.offsetY = value.offsetY
@@ -479,7 +479,7 @@ function setOffset( state, { value, cardIndex, slotIndex }) {
 
 function setScale( state, { value, cardIndex, slotIndex }) {
   const cardData = state.cardData[cardIndex]
-  const imageData = cardData.images
+  const imageData = cardData.imageSources
   const specificData = imageData[slotIndex]
   specificData.specificScale = value
 
@@ -488,18 +488,18 @@ function setScale( state, { value, cardIndex, slotIndex }) {
 
 
 function setCrop (state, { cardIndex, slotIndex, index }) {
-  const { cardData, images } = state
+  const { cardData, imageSources } = state
   let imageData
 
   if (index === undefined) {
     // The call came from the Tweaker
-    const imagesData = cardData[cardIndex].images
+    const imagesData = cardData[cardIndex].imageSources
     const { imageIndex } = imagesData[slotIndex]
-    imageData = images[imageIndex]
+    imageData = imageSources[imageIndex]
 
   } else {
     // The call came from a StoreImage
-    imageData = images[index]
+    imageData = imageSources[index]
   }
 
   let crop = imageData.crop
