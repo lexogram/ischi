@@ -216,7 +216,7 @@ export const Connection = () => {
   }
 
 
-  const switchData = {
+  const switchProps = {
     action,
     setAction,
     actions: {
@@ -296,7 +296,7 @@ export const Connection = () => {
       id="connection"
       onSubmit={onSubmit}
     >
-      <Switcher {...switchData} />
+      <Switcher {...switchProps} />
 
       {component}
       {signUpFeedback}

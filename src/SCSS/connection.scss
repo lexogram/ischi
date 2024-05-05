@@ -47,6 +47,7 @@ form#connection {
     border: 1px inset var(--dull);
     border-bottom: 1px solid var(--bright);
   
+    pointer-events: all;
     cursor: pointer;
   }
   
