@@ -5,8 +5,8 @@
 
 
 import React, { useContext} from "react"
-import { Context } from "../../../api/context/Context";
-import { Card } from "../Creator/Card";
+import { CreatorContext } from "../../../Contexts";
+import { Card } from "../Creator/Panels/Cards/Card"
 
 
 
@@ -19,7 +19,7 @@ export const Page = ({ cards, index }) => {
     SPACING,
     RADIUS,
     imagesPerCard
-  } = useContext(Context)
+  } = useContext(CreatorContext)
 
   cards = cards.map(( card, cardIndex ) => {
     // console.log("card:", card);

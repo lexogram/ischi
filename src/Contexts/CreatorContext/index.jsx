@@ -27,6 +27,19 @@ const getImagesTotal = imagesPerCard => {
   return imagesPerCard * (imagesPerCard - 1) + 1
 }
 
+// PRINT DIMENSIONS //
+const VIEW_WIDTH = 2100
+const pageHeight = 2970
+const STROKE_WIDTH = 1
+// The height of the SVG element needs to be trimmed in order
+// not to trigger the creation of an extra page.
+const pageHeightTweak = 18 // margin of 1.8mm to fit paper
+const VIEW_HEIGHT = pageHeight - pageHeightTweak
+
+const RADIUS = 490
+const PADDING = 2
+const SPACING = RADIUS + PADDING
+
 
 
 export const CreatorContext = createContext()
@@ -371,12 +384,12 @@ export const CreatorProvider = ({ children }) => {
         // getURL,
         getSunburstAngle,
 
-        // VIEW_WIDTH,
-        // VIEW_HEIGHT,
-        // STROKE_WIDTH,
-        // PADDING,
-        // SPACING,
-        // RADIUS,
+        VIEW_WIDTH,
+        VIEW_HEIGHT,
+        STROKE_WIDTH,
+        PADDING,
+        SPACING,
+        RADIUS,
 
         // swapImages,
         // clearImages,

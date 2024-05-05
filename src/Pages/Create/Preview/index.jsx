@@ -3,12 +3,23 @@
  */
 
 
-import React, { useContext } from "react"
-import { Context } from "../../../api/context/Context";
+import React, {
+  useContext,
+  useEffect,
+  useState
+} from "react"
+import { useNavigate } from "react-router-dom"
+import { CreatorContext } from "../../../Contexts"
 import { Page } from "./Page"
 
+
+let timeOut
+
+
 export const Preview = () => {
-  const { cardData } = useContext(Context)
+  const navigate = useNavigate()
+  const { cardData } = useContext(CreatorContext)
+
 
   // Divide the cards up into printable pages
   const pages = cardData.reduce(( pages, card ) => {
@@ -36,6 +47,28 @@ export const Preview = () => {
       cards={page}
     />
   ))
+
+
+  const dialogClosed = () => {
+    navigate(-1)
+  }
+
+
+  useEffect(() =>{
+    // Workaround for StrictMode: create a timeout to start
+    // printing immediately after the component has rendered, but
+    // StrictMode will dismount the component before it is
+    // rendered so the first request for printing will be
+    // cancelled before it is triggered.
+    timeOut = setTimeout(() => {
+      window.addEventListener('focus', dialogClosed, { once: true})
+      window.print()
+    }, 0)
+
+    return () => {
+      clearTimeout(timeOut)
+    }
+  }, [])
 
 
   return (

@@ -11,7 +11,7 @@ import { UserContext } from '../../../../Contexts'
 import { Button } from './Button'
 
 
-export const Footer = (props) => {
+export const Footer = () => {
   const navigate = useNavigate()
   const { t } = useTranslation()
   const {
@@ -43,12 +43,12 @@ export const Footer = (props) => {
 
 
   const save = () => {
-
+    setDialog("save")
   }
 
 
   const print = () => {
-
+    navigate('/print')
   }
 
 

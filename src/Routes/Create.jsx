@@ -7,9 +7,7 @@ import React from 'react'
 import { Creator } from '../Pages/Create'
 
 
-export const Create = (props) => {
-
-
+export const Create = () => {
   return (
     <Creator />
   )

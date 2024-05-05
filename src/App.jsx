@@ -18,6 +18,7 @@ import {
   Connection,
   NotFound,
   Play,
+  Print,
   RequireLogin
 } from "./Routes/"
 import "./SCSS/app.scss"
@@ -52,6 +53,7 @@ function App() {
             <Route path="credits" element={<Credits />} />
             <Route path="details" element={<Details />} />
             <Route path="connection" element={<Connection />} />
+            <Route path="print" element={<Print />} />
             {/* Allow /play route to specify room and user */}
             <Route path="play">
               <Route

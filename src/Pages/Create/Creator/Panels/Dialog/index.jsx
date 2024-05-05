@@ -8,6 +8,7 @@ import { CreatorContext } from '../../../../../Contexts'
 import { File } from './File'
 import { NewPack } from './NewPack.jsx'
 import { Images } from './Images'
+import { Save } from './Save'
 import { Layout } from './Layout'
 import { CloseBox } from './CloseBox'
 
@@ -26,6 +27,8 @@ export const Dialog = () => {
         return <NewPack />
       case "images":
         return <Images />
+      case "save":
+        return <Save />
       case "layout":
         return <Layout />
 

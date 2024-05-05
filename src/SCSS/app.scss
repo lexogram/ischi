@@ -91,3 +91,26 @@ button:disabled,
   background-color: var(--disabled-bg);
   pointer-events: none;
 }
+
+
+/* PRINT // PRINT // PRINT // PRINT // PRINT // PRINT // PRINT */
+
+main {
+  position: absolute;
+  width: 100vw;
+  height: auto;
+  top: 0;
+  background-color: #fff;
+}
+
+@media print {
+  #menu, #menu *, .tweaker
+  {
+    display: none !important;
+  }
+
+  #root {
+    width: 100vw;
+    height: auto !important;
+  }
+}

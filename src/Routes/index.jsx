@@ -10,6 +10,7 @@ import { Home } from './Home'
 import { Connection } from './Connection'
 import { NotFound } from './NotFound'
 import { Play } from './Play'
+import { Print } from './Print'
 import { RequireLogin } from './RequireLogin'
 
 export {
@@ -25,5 +26,6 @@ export {
   Connection,
   NotFound,
   Play,
+  Print,
   RequireLogin
 }
