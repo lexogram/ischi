@@ -5,6 +5,7 @@
 
 import React, { useContext, useEffect } from 'react'
 import { CreatorContext } from '../../../../Contexts'
+import { SAVEPACK } from '../../../../Constants'
 
 let timeOut
 
@@ -44,7 +45,7 @@ export const Save = () => {
      .map(image => image.file)
      .filter(file => !!file)
 
-    const nameMap = {}
+    let nameMap = {}
     const mungedSources = imageSources.map( imageData => {
       // Clone the object, so that it the version used by the
       // app is not altered
@@ -72,7 +73,7 @@ export const Save = () => {
           nameMap[name] = source
         }
 
-        imageData.file.source = source
+        imageData.source = source
         delete imageData.file
 
       } else {
@@ -84,7 +85,8 @@ export const Save = () => {
     })
 
     jsonData.imageSources = mungedSources
-    const packData = JSON.stringify(jsonData, replacer, ' ')
+    const packData = JSON.stringify(jsonData, null, ' ')
+    nameMap = JSON.stringify(nameMap)
 
     console.log("app:", app);
     console.log("packName:", packName);
@@ -108,8 +110,12 @@ export const Save = () => {
       body
     }
 
-    fetch(UPLOAD_URL, options)
-    .then(response => response.json())
+    fetch(SAVEPACK, options)
+    .then(response => response.text())
+    .then(text => {
+      console.log("text:", text)  
+      return JSON.stringify(text)
+    })
     .then(json => callback(null, json))
     .catch(callback)
 
