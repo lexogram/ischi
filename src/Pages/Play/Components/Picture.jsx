@@ -96,7 +96,6 @@ export const Picture = ({
             fontWeight="bold"
             transform={`rotate(${rotation})`}
             transform-origin={origin}
-            zIndex={99}
           >
             {foundBy}
           </text>

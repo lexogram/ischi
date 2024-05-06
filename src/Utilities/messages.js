@@ -79,11 +79,11 @@ const treatMessageListener = (action, listener) => {
 const treatMessage = (data) => {
   const {
     subject,
-    sender_id,
+    // sender_id,
     recipient_id,
-    content
+    // content
   } = data
-  console.log("New message:", data);
+  // console.log("New message:", data);
 
   let listeners = messageListeners.subject[subject]
   if (listeners) {

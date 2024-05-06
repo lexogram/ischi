@@ -180,7 +180,8 @@ function setPacks(state, packs) {
 // TODO: SANITIZE payload.packData // SANITIZE payload.packDate //
 const httpRegex = /^https?:\/\//
 function loadFromJSON(state, payload) {
-  let { name, packData, path, packFolder } = payload
+  let { name,   packData, path,          packFolder } = payload
+  // { "Chess", {...},    `/.../images`, `<owner_id>/chess}
   let {
     // customLayout,
     // cropByDefault,
@@ -253,13 +254,14 @@ function newPack( state, payload ) {
     cardData,
 
     path: "",
+    packFolder: "",
     cardNumber: 0,
     imageSources: [],
     importedFiles: [],
     // Optimum liberties
     customLayout: true,
-    turnConstraint: true,
-    useSunburst: false,
+    turnConstraint: true, // \\
+    useSunburst: false,   // // upright
     cropByDefault: true,
 
     packs
