@@ -255,7 +255,7 @@ export const CreatorProvider = ({ children }) => {
 
   const getUserPacks = () => {
     if (page === "/create" && user?.username !== packs.name) {
-      const callback = (error, packData) => {
+      const callback = (error, packsData) => {
         if (error) {
           return console.log("getUserPacks error:", error);
         }
@@ -267,7 +267,7 @@ export const CreatorProvider = ({ children }) => {
         // packData may contain custom packs. Ignore this for now;
         // the request for packs/owned will be repeated as soon as
         // the `user` object is set.
-        if (packData.length > 1 && !user?.username) {
+        if (packsData.length > 1 && !user?.username) {
           return // console.log("Waiting for user to be populated")
         }
 
@@ -277,7 +277,7 @@ export const CreatorProvider = ({ children }) => {
             : [ user.username, user.username, "User" ]
           : []
 
-        packData = packData.reduce(( result, pack ) => {
+        packsData = packsData.reduce(( result, pack ) => {
           if (pack.owner_type === "Sampler") {
             result.samplers.push(pack)
           } else {
@@ -289,13 +289,13 @@ export const CreatorProvider = ({ children }) => {
           return result
         }, { name, owner, type, packs: [], samplers: [], names: [] })
 
-        setPacks(packData)
+        setPacks(packsData)
 
         // Display the most recently-used pack by default
-        if (packData.packs.length) {
-          openPack(packData.packs[0])
+        if (packsData.packs.length) {
+          openPack(packsData.packs[0])
         } else {
-          openPack(packData.samplers[0])
+          openPack(packsData.samplers[0])
         }
       }
 

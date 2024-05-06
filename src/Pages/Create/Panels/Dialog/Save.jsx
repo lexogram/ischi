@@ -89,16 +89,23 @@ export const Save = () => {
     nameMap = JSON.stringify(nameMap)
 
     console.log("app:", app);
+    console.log("name:", name);
     console.log("packName:", packName);
     console.log("nameMap:", nameMap);
+    console.log("total", total);
     console.log("packData", packData);
+    console.log("thumbnail", "thumbnail.jpg");
     console.log("images:", images);
+
 
     const body = new FormData()
     body.append("app",      app)
+    body.append("name",     name)
     body.append("packName", packName)
     body.append("nameMap",  nameMap)
+    body.append("total",    total)
     body.append("packData", packData)
+    body.append("thumbnail", "thumbnail.jpg")
     images.forEach( file => {
       body.append("images", file)
     })
@@ -111,11 +118,7 @@ export const Save = () => {
     }
 
     fetch(SAVEPACK, options)
-    .then(response => response.text())
-    .then(text => {
-      console.log("text:", text)  
-      return JSON.stringify(text)
-    })
+    .then(response => response.json())
     .then(json => callback(null, json))
     .catch(callback)
 
