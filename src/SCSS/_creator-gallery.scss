@@ -1,7 +1,7 @@
 
 #creator {
   div.creator-panels {
-    --gallery-width: 100%;
+    --gallery-width: calc(100vw - var(--scroll-size));
     --maker-width: 100%;
     --tool-width: min(
       calc(var(--maker-width) / 2),
@@ -19,6 +19,7 @@
       
       --image-size: calc(
         var(--gallery-width) / var(--line-count)
+        - 1px
       );
  
       .one-card {
