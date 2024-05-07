@@ -30,4 +30,5 @@ export const SIGNEDIN = `${BACKEND}/signedin`
 export const GETPACKS = `${BACKEND}/packs/owned`
 export const ISCHI    = `${BACKEND}/ischi`
 export const SAVEPACK = `${BACKEND}/packs/save`
+
 export const CONNECTION_PATH = "/connection"

@@ -17,6 +17,8 @@ import {
   SIGNOUT
 } from '../Constants'
 
+const HOME = "/create" // "/'"
+
 
 
 export const UserContext = createContext()
@@ -29,15 +31,16 @@ export const UserProvider = ({ children }) => {
   const location = useLocation()
   const navigate = useNavigate()
 
-
-  // If the user went directly to the /connection route when visiting
-  // this site, then the Sign In page should navigate to
+/*
+  // If the user went directly to the /connection route when
+  // visiting this site, then the Sign In page should navigate to
   // Home ("/") after a successful sign in. Otherwise it should
   // go to the page from which the link to the Sign In page was
   // made
   const [ goHome, setGoHome ] = useState(
     location.pathname === CONNECTION_PATH
   )
+
   // If the user visits another route before signing in, then that
   // is the route to go to after a successful sign-in.
   useEffect(() => {
@@ -46,7 +49,22 @@ export const UserProvider = ({ children }) => {
     }
   })
 
+*/
+  const is_CONNECTION_PATH = () => {
+    return ( location.pathname === CONNECTION_PATH
+          || location.pathname === "/"
+           )
+  }
 
+  const [ goHome, setGoHome ] = useState(is_CONNECTION_PATH)
+
+  useEffect(() => {
+    if (goHome && !is_CONNECTION_PATH()) {
+      setGoHome(false), [location.pathname]
+    }
+  })
+
+/***************************************************************/
   const [ user, setUser ] = useState()
 
 
@@ -77,7 +95,7 @@ export const UserProvider = ({ children }) => {
     setUser(user)
 
     if (goHome) {
-      navigate("/")
+      navigate(HOME)
     } else {
       navigate(-1)
     }
