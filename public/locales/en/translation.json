@@ -91,11 +91,11 @@
   "no": "No",
   "pack": {
     "for": {
-      "organization": "Packs created for {{owner}}",
-      "user": "Packs created by {{owner}}"
+      "Organization": "Packs created for {{owner}}",
+      "User": "Packs created by {{owner}}"
     },
     "none": "You haven't saved any packs yet",
-    "count": "({{count}} cards)",
+    "total": "({{total}} cards)",
     "sampler": "Sampler Pack"
   },
   "card": {
@@ -112,7 +112,10 @@
     "missing": "{{missing}} more image{{s}} required",
     "enough": "{{total}} images selected",
     "extra": "{{extra}} extra image{{s}} selected",
-    "create-pack": "Create Pack \"{{packName}}\""
+    "create-pack": "Create Pack \"{{packName}}\"",
+    "save-pack": "Save Pack \"{{name}}\"",
+    "thumbnail": "Choose a thumbnail image:",
+    "save": "Save"
   },
   "xxx": "xxx"
 }

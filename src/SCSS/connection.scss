@@ -111,30 +111,6 @@ form#connection {
     position: absolute;
     bottom: var(--pad);
     width: var(--buttons-width);
-    display: flex;
-    justify-content: space-between;
-  }
-
-  div.buttons button {
-    border-radius: var(--half-pad);
-    cursor: pointer;
-    height: 2em;
-    flex-grow: 1;
-  }
-
-  #submit {
-    border: 1px outset var(--bright);
-    background-color: var(--bright);
-  }
-
-  #submit:hover {
-    color: var(--dull);
-  }
-
-  #submit:active {
-    color: var(--light);
-    border-style: inset;
-    background-color: var(--dull);
   }
 
   #connection:invalid #submit {

@@ -34,6 +34,15 @@ body {
 
 // BUTTONS AND LINKS THAT LOOK LIKE BUTTONS //
 
+div.buttons {
+  display: flex;
+  justify-content: space-between;
+
+  & .primary {
+    margin-left: 0.5em;
+    flex: 1
+  }
+}
 
 button,
 .button {
@@ -60,8 +69,8 @@ a.here {
   color: #fff;
 }
 
-button:not(:disabled):active,
-.button:not(:disabled):active,
+button:not(:disabled):active:hover,
+.button:not(:disabled):active:hover,
 button.pressed,
 .button.pressed,
 a.here {
@@ -79,7 +88,7 @@ button.primary,
   background-color: var(--primary);
   border-color: var(--primary-border);
 
-  &:active {
+  &:active:hover {
     background-color: var(--primary-active);
   }
 }

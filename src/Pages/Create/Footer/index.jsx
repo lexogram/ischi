@@ -17,10 +17,14 @@ export const Footer = () => {
   const {
     activeTab,
     setActiveTab,
-    setDialog
+    setDialog,
+    name
   } = useContext(CreatorContext)
   const { user } = useContext(UserContext)
 
+
+  const saveDisabled = name === "Sampler"
+  
 
   const showFile = () => {
     if (activeTab === "help") {
@@ -75,6 +79,7 @@ export const Footer = () => {
       <div>
         { user
         ? <Button
+            disabled={saveDisabled}
             text={t("choose-save")}
             action={save}
           />

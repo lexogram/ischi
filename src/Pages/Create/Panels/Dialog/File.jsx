@@ -68,6 +68,7 @@ export const File = () => {
       <h1>{t("file-title")}</h1>
 
       <button
+        className="primary"
         onClick={() => setDialog("new")}
       >
         {t("new-file")}

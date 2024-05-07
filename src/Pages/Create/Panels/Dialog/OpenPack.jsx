@@ -3,7 +3,7 @@
  */
 
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useTranslation, Trans } from 'react-i18next';
 import { ISCHI } from '../../../../Constants';
 
@@ -41,25 +41,44 @@ export const OpenPack = ({
   }
 
   const packList = packs.map( pack => {
-    const { name, folder, thumbnail, count } = pack
-    const src = `${ISCHI}/${folder}/${thumbnail}`
-    const className = pack.folder === packFolder
+    const { name, folder, thumbnail, total } = pack
+
+    let src
+    if (thumbnail?.source) {
+      src = thumbnail.source
+    } else if (folder) {
+      src = `${ISCHI}/${folder}/images/${thumbnail}`
+    }
+
+    const selected = pack.folder === packFolder
+
+    const className = selected
       ? "button pressed"
       : "button"
+
+
+    // HACK to ensure currently selected button is visible
+    useEffect(() => {
+      const selected = document.querySelector( ".button.pressed")
+      if (selected) {
+        selected.scrollIntoView()
+      }
+    }, [])
+
     return (
       <li
         key={pack.name}
         className={className}
         onClick={() => openPack(pack)}
       >
-        <img src={src} alt="name" title="name" />
+        <img src={src} alt={name} title={name} />
         <div>
           <h3>{name}</h3>
           <span>
             <Trans
-              i18nKey="pack.count"
-              values={{ count }}
-              defaults=" ({{count}} cards)"
+              i18nKey="pack.total"
+              values={{ total }}
+              defaults=" ({{total}} cards)"
             />
           </span>
         </div>

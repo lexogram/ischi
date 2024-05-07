@@ -309,7 +309,7 @@ export const Connection = () => {
           {t("sign.guest")}
         </button>}
         <button
-          id="submit"
+          className="primary"
         >
           {texts[action]}
         </button>

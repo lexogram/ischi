@@ -91,11 +91,11 @@
   "no": "Жоқ",
   "pack": {
     "for": {
-      "organization": "PACKS CREATED FOR {{owner}}",
-      "user": "PACKS CREATED BY {{owner}}"
+      "Organization": "PACKS CREATED FOR {{owner}}",
+      "User": "PACKS CREATED BY {{owner}}"
     },
     "none": "YOU HAVEN'T SAVED ANY PACKS YET",
-    "count": "({{count}} CARDS)",
+    "total": "({{total}} CARDS)",
     "sampler": "SAMPLER PACK"
   },
   "card": {
@@ -112,7 +112,10 @@
     "missing": "{{missing}} MORE IMAGE{{s}} REQUIRED",
     "enough": "{{total}} IMAGES SELECTED",
     "extra": "{{extra}} EXTRA IMAGE{{s}} SELECTED",
-    "create-pack": "CREATE PACK «{{packName}}»"
+    "create-pack": "CREATE PACK «{{packName}}»",
+    "save-pack": "SAVE PACK «{{name}}»",
+    "thumbnail": "CHOOSE A THUMBNAIL IMAGE:",
+    "save": "SAVE"
   },
   "xxx": "xxx"
 }

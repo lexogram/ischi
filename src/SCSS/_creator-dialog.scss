@@ -101,5 +101,40 @@
         color: #fc9;
       }
     }
+
+    div.thumbnails {
+      position: relative;
+      height: 50vmin;
+      overflow-y: auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      width: 50vw;
+      padding: 0;
+
+      & input {
+        width: 0;
+        opacity: 0;
+        position: absolute;
+        left: -999vw;
+      }
+
+      & img {
+        width: 15vmin;
+        height: 15vmin;
+        object-fit: contain;
+        margin: 0 0.4vmin;
+        opacity: 0.8;
+        box-sizing: border-box;
+      }
+
+      & input:checked ~ img {
+        border: 1px inset #fff;
+        border-radius: 1em;
+        opacity: 1;
+        -webkit-box-shadow: inset 0px 0px 2px 2px #000000;
+        box-shadow: inset 0px 0px 2px 2px #000000;
+      }
+    }
   }
 }

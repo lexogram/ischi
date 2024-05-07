@@ -57,6 +57,7 @@ export const CreatorProvider = ({ children }) => {
     imageSources,
     layouts,
     cardData,
+    thumbnail,
 
     // // Author-time data
     name,
@@ -178,6 +179,13 @@ export const CreatorProvider = ({ children }) => {
     })
   }
 
+  const setThumbnail = payload => {
+    dispatch({
+      type: "SET_THUMBNAIL",
+      payload
+    })
+  }
+
   const [ useDirectory, setUseDirectory ] = useState(false)
 
   // <<< HARD-CODED division of Creator into columns
@@ -223,7 +231,7 @@ export const CreatorProvider = ({ children }) => {
     //   last_loadeed: <date>
     // }
 
-    const { name, folder: packFolder } = pack
+    const { name, folder: packFolder, thumbnail } = pack
     const folder  = `${ISCHI}/${packFolder}`
     const url     = `${folder}/index.json`
     const path    = `${folder}/images`
@@ -240,7 +248,8 @@ export const CreatorProvider = ({ children }) => {
           name,
           packData,
           path,
-          packFolder
+          packFolder,
+          thumbnail
         }
       })
     }
@@ -339,6 +348,8 @@ export const CreatorProvider = ({ children }) => {
         setActiveTab,
         dialog,       // "file" | "images" | "layout"
         setDialog,
+        thumbnail,
+        setThumbnail,
 
         // Legacy
         customLayout,

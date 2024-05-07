@@ -56,7 +56,8 @@ export const Images = (props) => {
     }
 
     newPack(payload)
-    close()
+    setImageFiles([])
+    setDialog("save")
   }
 
 

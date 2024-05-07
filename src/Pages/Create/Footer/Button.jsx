@@ -7,7 +7,13 @@ import React, { useContext } from 'react'
 import { CreatorContext } from '../../../Contexts'
 
 
-export const Button = ({ text, role, action, className }) => {
+export const Button = ({
+  text,
+  role,
+  action,
+  className,
+  disabled
+}) => {
   const { dialog, setDialog } = useContext(CreatorContext)
   const doToggle = role && role === dialog
   // If className is "primary" (for Sign In), this takes priority
@@ -28,6 +34,7 @@ export const Button = ({ text, role, action, className }) => {
     <button
       className={className}
       onClick={triggerAction}
+      disabled={disabled}
     >
       {text}
     </button>

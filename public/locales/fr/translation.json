@@ -91,11 +91,11 @@
   "no": "Non",
   "pack": {
     "for": {
-      "organization": "Jeux de cartes créer pour {{owner}}",
-      "user": "Jeux de cartes créer par {{owner}}"
+      "Organization": "Jeux de cartes créer pour {{owner}}",
+      "User": "Jeux de cartes créer par {{owner}}"
     },
     "none": "Vous n'avez pas encore enregistrer un jeu de cartes",
-    "count": "({{count}} cartes)",
+    "total": "({{total}} cartes)",
     "sampler": "Échantillon"
   },
   "card": {
@@ -112,7 +112,10 @@
     "missing": "Il manque encore {{missing}} image{{s}}",
     "enough": "{{total}} images sélectionnées",
     "extra": "{{extra}} image{{s}} supplémentaires sélectionnées",
-    "create-pack": "Créer {{packName}}"
+    "create-pack": "Créer \"{{packName}}\"",
+    "save-pack": "Enregistrer \"{{name}}\"",
+    "thumbnail": "Choisir une image comme onglet :",
+    "save": "Enregistrer"
   },
   "xxx": "xxx"
 }

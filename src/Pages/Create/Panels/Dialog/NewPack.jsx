@@ -16,7 +16,6 @@ import { Images } from './Images';
 
 
 
-
 export const NewPack = () => {
   const { t } = useTranslation()
   const {

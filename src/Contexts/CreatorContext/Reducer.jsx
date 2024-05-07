@@ -44,8 +44,9 @@ const initialState =  {
   importedFiles: [],
   packs: {
     /*name, owner, type,*/
-    packs: [], samplers: [], names: []
-  }
+    packs: [], samplers: [], names: [], name: ""
+  },
+  thumbnail: ""
 }
 // (() => {
 //   // Preload animals while developing
@@ -123,6 +124,9 @@ const reducer = (state, action) => {
     case "ADD_IMAGES":
       return addImages(state, payload)
 
+    case "SET_THUMBNAIL":
+      return setThumbnail(state, payload)
+
     case "SET_IMAGES_PER_CARD":
       return setImagesPerCard(state, payload)
 
@@ -162,8 +166,8 @@ const reducer = (state, action) => {
     case "SET_ACTIVE_IMAGE":
       return setActiveImage(state, payload)
 
-    case "TOGGLE_SAVE_DIALOG":
-      return toggleSaveDialog(state, payload)
+    // case "TOGGLE_SAVE_DIALOG":
+    //   return toggleSaveDialog(state, payload)
 
     default:
       return {...state}
@@ -180,8 +184,8 @@ function setPacks(state, packs) {
 // TODO: SANITIZE payload.packData // SANITIZE payload.packDate //
 const httpRegex = /^https?:\/\//
 function loadFromJSON(state, payload) {
-  let { name,   packData, path,          packFolder } = payload
-  // { "Chess", {...},    `/.../images`, `<owner_id>/chess}
+  let { name, packData, path, packFolder, thumbnail } = payload
+  // { "Chess", {...}, `/.../images`, `<owner_id>/chess`}
   let {
     // customLayout,
     // cropByDefault,
@@ -215,7 +219,8 @@ function loadFromJSON(state, payload) {
     total,
     cardNumber,
     layoutNames,
-    packFolder
+    packFolder,
+    thumbnail
   }
 }
 
@@ -224,6 +229,16 @@ function newPack( state, payload ) {
   const { packs } = state
 
   const { name, imagesPerCard, total, imageFiles } = payload
+
+  // <<< Check for duplicate names
+  const lowerCaseName = name.toLowerCase()
+  if (packs.names.indexOf(lowerCaseName) < 0) {
+    packs.names.push(lowerCaseName)
+  }
+
+  const duplicate = packs.packs.find( pack => pack.name === name)
+  // >>>
+
   const { sets } = getSets(total)
   const layouts = allLayouts[imagesPerCard]
   const layoutNames = Object.keys(layouts)
@@ -232,16 +247,17 @@ function newPack( state, payload ) {
     layoutNames,
     lcg()
   )
-  packs.names.push(name.toLowerCase())
-  packs.packs.push({
-    name,
-    count: imagesPerCard,
-    ///<<< WON'T BE FINALIZED UNTIL THE PACK IS SAVED
-    owner_type: packs.type // will be undefined for first pack
-    // folder: "",
-    // thumbnail: ""
-    ///>>>
-  })
+  if (!duplicate) {
+    packs.packs.push({
+      name,
+      total: imagesPerCard,
+      ///<<< WON'T BE FINALIZED UNTIL THE PACK IS SAVED
+      owner_type: packs.type // will be undefined for first pack
+      // folder: "",
+      // thumbnail: ""
+      ///>>>
+    })
+  }
 
   state = {
     ...state,
@@ -255,6 +271,7 @@ function newPack( state, payload ) {
 
     path: "",
     packFolder: "",
+    thumbnail: "",
     cardNumber: 0,
     imageSources: [],
     importedFiles: [],
@@ -269,7 +286,6 @@ function newPack( state, payload ) {
 
   return addImages( state, imageFiles )
 }
-
 
 
 function addImages( state, imageFiles ) {
@@ -334,6 +350,18 @@ function addImages( state, imageFiles ) {
   }
 
   return { ...state, imageSources, importedFiles }
+}
+
+
+function setThumbnail(state, thumbnail) {
+  const { name, packs } = state
+  const pack = packs.packs.find( pack => pack.name === name)
+  if (!pack) {
+    // Probably Sampler pack
+    return state
+  }
+  pack.thumbnail = thumbnail
+  return { ...state, thumbnail }
 }
 
 
@@ -544,9 +572,9 @@ function showTweaker( state, tweakIndices ) {
   return { ...state, tweakIndices }
 }
 
-function toggleSaveDialog(state, showSaveDialog) {
-  return { ...state, showSaveDialog }
-}
+// function toggleSaveDialog(state, showSaveDialog) {
+//   return { ...state, showSaveDialog }
+// }
 
 
 export { initialState, reducer }

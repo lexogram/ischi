@@ -3,13 +3,22 @@
  */
 
 
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import { useTranslation, Trans } from 'react-i18next';
+import { UserContext } from '../../../../Contexts'
 import { CreatorContext } from '../../../../Contexts'
 import { SAVEPACK } from '../../../../Constants'
+import { Thumbnail } from './Thumbnail'
+
+const URL_REGEX = /^http.*\//
 
 let timeOut
 
 export const Save = () => {
+  const { t } = useTranslation()
+
+  const { user } = useContext(UserContext)
+
   // Re-assemble the data for index.json
   const {
     total,
@@ -20,9 +29,12 @@ export const Save = () => {
     imageSources,
     layouts,
     cardData,
-    // Used for folder name, not saved in index.json
+    // Saved in Pack record, not in index.json
     name,
-    packFolder
+    thumbnail,
+    // Actions
+    setThumbnail,
+    setDialog
    } = useContext(CreatorContext)
 
   const jsonData = {
@@ -36,8 +48,78 @@ export const Save = () => {
     cardData
   }
 
+
+  // "dots.... and    spaces" —> "dots._and_spaces"
+  const munge = (string) => (
+    string
+     .replace(/\s+/g, "_")
+     .replace(/\.+/g, ".")
+  )
+
+
+  // Thumbnail // Thumbnail // Thumbnail // Thumbnail //
+
+  let thumbName
+
+  const [ selected, setSelected ] = useState(() => (
+    thumbnail || imageSources[0]
+  ))
+
+  const selectThumbnail = ({ target }) => {
+    setSelected(imageSources[target.value])
+  }
+
+  const treatThumbnailBeforeSave = () => {
+    console.log("selected thumbnail:", selected);
+    // selected may be a string image file name or an object
+    // if the pack is new, or if the user changed the thumbnail
+
+    thumbName = (selected?.file?.name || selected?.source)
+
+    console.log("before thumbName:", thumbName);
+
+    if (thumbName) {
+      // May be a full url for a previously saved pack, or an
+      // originalFileName, with spaces and multiple dots. In
+      // either case, convert it to a url-friendly name.
+      thumbName = munge(thumbName.replace(URL_REGEX, ""))
+    } else {
+      thumbName = thumbnail
+    }
+
+    console.log("after thumbName:", thumbName);
+    setThumbnail(selected)
+  }
+
+
+  // Other items // Other items // Other items // Other //
   const app = "ischi"
   const packName = name.toLowerCase().replace(/\s/g, "_")
+
+
+
+  const cancel = () => {
+    setDialog()
+  }
+
+
+  const save = () => {
+    treatThumbnailBeforeSave()
+    saveToServer()
+    setDialog()
+  }
+
+
+  const createThumbnail = () => {
+    setThumbnail(selected)
+    setDialog()
+  }
+
+
+  const [ action, buttonName ] = user
+    ? [ save, t("new.save") ]
+    : [ createThumbnail, t("new.thumbnail") ]
+
 
   const saveToServer = () => {
     // Retain an ordered copy of just the new image files
@@ -65,9 +147,7 @@ export const Save = () => {
         // webkitRelativePath: ""
 
         const { name } = imageData.file
-        const source = name
-          .replace(/\s+/g, "_")
-          .replace(/\.+/g, ".")
+        const source = munge(name)
           // "Богданов-Бельский_Н.П._Портрет_Ф.А._Вельца.jpg"
         if (name !== source) {
           nameMap[name] = source
@@ -88,16 +168,6 @@ export const Save = () => {
     const packData = JSON.stringify(jsonData, null, ' ')
     nameMap = JSON.stringify(nameMap)
 
-    console.log("app:", app);
-    console.log("name:", name);
-    console.log("packName:", packName);
-    console.log("nameMap:", nameMap);
-    console.log("total", total);
-    console.log("packData", packData);
-    console.log("thumbnail", "thumbnail.jpg");
-    console.log("images:", images);
-
-
     const body = new FormData()
     body.append("app",      app)
     body.append("name",     name)
@@ -105,7 +175,7 @@ export const Save = () => {
     body.append("nameMap",  nameMap)
     body.append("total",    total)
     body.append("packData", packData)
-    body.append("thumbnail", "thumbnail.jpg")
+    body.append("thumbnail", thumbName)
     images.forEach( file => {
       body.append("images", file)
     })
@@ -131,17 +201,39 @@ export const Save = () => {
   }
 
 
-  // Prevent StrictMode from calling saveToServer twice
-  useEffect(() => {
-    timeOut = setTimeout(saveToServer, 0)
+  // // Prevent StrictMode from calling saveToServer twice
+  // useEffect(() => {
+  //   timeOut = setTimeout(saveToServer, 0)
 
-    return () => clearTimeout(timeOut)
-  }, [])
-
+  //   return () => clearTimeout(timeOut)
+  // }, [])
 
 
 
   return (
-    <h1>Save goes here</h1>
+    <>
+      <h2><Trans
+        i18nKey="new.save-pack"
+        values={{ name }}
+        defaults="Save {{name}}"
+      /></h2>
+      <Thumbnail
+        selected={selected}
+        selectThumbnail={selectThumbnail}
+      />
+      <div className="buttons">
+        <button
+          onClick={cancel}
+        >
+          {t("cancel")}
+        </button>
+        <button
+          className="primary"
+          onClick={action}
+        >
+          {buttonName}
+        </button>
+      </div>
+    </>
   )
 }
