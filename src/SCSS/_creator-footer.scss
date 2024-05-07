@@ -21,5 +21,9 @@
       position: absolute;
       right: var(--margin);
     }
+
+    @media (max-width: 750px) {
+      font-size: 2.4vw;
+    }
   }
 }

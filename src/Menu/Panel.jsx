@@ -104,12 +104,12 @@ export const Menu = () => {
 
       <div className="items">
         {/* More local actions will go here */}
-        { page === "/play" &&
+        {/* { page === "/play" &&
           <PlayActions
             open={sectionIsOpen.play}
             toggleOpen={toggleOpen}
           />
-        }
+        } */}
         <PageTracker
           open={sectionIsOpen.pages}
           toggleOpen={toggleOpen}

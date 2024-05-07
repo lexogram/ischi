@@ -22,12 +22,13 @@ export const PageTracker = (props) => {
     : { text: t("connect"),   type: "link",   to: "/connection"     }
 
   const items = [
-    { text: t("home"),      type: "link",     to: "/"          },
+    // { text: t("home"),      type: "link",     to: "/"          },
     { text: t("play"),      type: "link",     to: "/play"      },
     { text: t("create"),    type: "link",     to: "/create"    },
-    { text: t("community"), type: "divider"},
+    // { text: t("community"), type: "divider"},
+    { text: "————", type: "divider"},
     connection,
-    { text: t("account"),   type: "link",     to: "/o/account" },
+    // { text: t("account"),   type: "link",     to: "/o/account" },
     // { text: "information", type: "divider"},
     // { text: "About",       type: "link",     to: "/about"     },
     // { text: "Contact",     type: "link",     to: "/contact"   },

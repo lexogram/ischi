@@ -45,7 +45,8 @@ function App() {
           >
             {/* Paths wrapped by Frame go here */}
             {/* Paths that end with /* will ignore extra params */}
-            <Route index element={<Home />} />
+            {/* <Route index element={<Home />} /> */}
+            <Route index element={<Connection />} />
             <Route path="about" element={<About />} />
             <Route path="confirm/:token" element={<Confirm />} />
             <Route path="contact" element={<Contact />} />
