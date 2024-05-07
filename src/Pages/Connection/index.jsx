@@ -51,7 +51,7 @@ export const Connection = () => {
     username: "",
     organization: "",
     email: "",
-    password: "museum",
+    password: "",
     auto_login: storageData.auto_login
   })
 

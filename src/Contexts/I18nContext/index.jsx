@@ -37,7 +37,10 @@
 import { createContext, useState, useEffect } from 'react'
 import i18n from './I18n'
 
-const URL = `/ischi/locales/languages.json`
+const deployed = location.host === "lexogram.github.io"
+const URL = (deployed)
+  ? `/locales/languages.json`
+  : `/ischi/locales/languages.json`
 
 
 
