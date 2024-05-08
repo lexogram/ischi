@@ -5,6 +5,7 @@ import { Contact } from './Contact'
 import { Create } from './Create'
 import { Credits } from './Credits'
 import { Details } from './Details'
+import { Event } from './Event'
 import { Frame } from './Frame'
 import { Home } from './Home'
 import { Connection } from './Connection'
@@ -21,6 +22,7 @@ export {
   Create,
   Credits,
   Details,
+  Event,
   Frame,
   Home,
   Connection,

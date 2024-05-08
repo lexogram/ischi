@@ -92,7 +92,8 @@
   "pack": {
     "for": {
       "Organization": "PACKS CREATED FOR {{owner}}",
-      "User": "PACKS CREATED BY {{owner}}"
+      "User": "PACKS CREATED BY {{owner}}",
+      "none": "UNSAVED PACKS (SIGN IN TO SAVE THEM)"
     },
     "none": "YOU HAVEN'T SAVED ANY PACKS YET",
     "total": "({{total}} CARDS)",
@@ -116,6 +117,13 @@
     "save-pack": "SAVE PACK «{{name}}»",
     "thumbnail": "CHOOSE A THUMBNAIL IMAGE:",
     "save": "SAVE"
+  },
+  "event": {
+    "menu": "EVENTS",
+    "none": "NO EVENTS ARE CURRENTLY SCHEDULED.",
+    "welcome": "WELCOME TO THE {{event}} EVENT !",
+    "start-date": "THE EVENT WILL BEGIN ON 18 MAY",
+    "hello": "HELLO {{player}}! IT'S TOO EARLY TO REGISTER."
   },
   "xxx": "xxx"
 }

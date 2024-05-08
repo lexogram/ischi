@@ -13,6 +13,7 @@ import {
   Create,
   Credits,
   Details,
+  Event,
   Frame,
   Home,
   Connection,
@@ -68,6 +69,20 @@ function App() {
               <Route
                 path=""
                 element={<Play />}
+              />
+            </Route>
+            <Route path="event">
+              <Route
+                path=":host/:player/*"
+                element={<Event />}
+              />
+              <Route
+                path=":host/"
+                element={<Event />}
+              />
+              <Route
+                path=""
+                element={<Event />}
               />
             </Route>
 

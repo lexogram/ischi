@@ -93,47 +93,7 @@
 
   /* WAITING ROOM // WAITING ROOM // WAITING ROOM // WAITING ROOM */
 
-  #room-link {
-    --size: 2em;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
 
-  #room-link div {
-    position: relative;
-    display: flex;
-    align-items: center;
-    width: 100%;
-    margin-top: 1em;
-  }
-
-  #room-link a {
-    display: inline-block;
-    color: var(--light);
-    width: calc(100% - var(--size));
-    overflow: auto;
-  }
-
-  #room-link svg {
-    position: absolute;
-    right: 0;
-    width: var(--size);
-    height: var(--size);
-    padding: 0.333em;
-    box-sizing: border-box;
-    border: 1px outset var(--light);
-    border-radius: 0.25em;
-    color: var(--light);
-  }
-
-  #room-link svg:hover {
-    background-color: #000;
-  }
-
-  #room-link svg:active {
-    border-style: inset;
-  }
 
   ul.pack-list {
     list-style-type: none;
@@ -334,7 +294,7 @@
 
   .dimmed {
     /* For unselected cropped images, where a drop shadow will
-       be trimmed by the crop path. When such an image is 
+       be trimmed by the crop path. When such an image is
        selected, it will become crisper and brighter. This works
        both with flat colours and black and white images.
     */

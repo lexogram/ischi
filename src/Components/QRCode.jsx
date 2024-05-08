@@ -1,23 +1,18 @@
 /**
- * src/Components/RoomLink.jsx
+ * src/Components/QRCode.jsx
  */
 
 
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { toString } from 'qrcode' 
-import { WSContext } from '../../../Contexts'
-import { Copy } from '../../../Components/Copy'
-import { copyToClipboardAsync } from '../../../Utilities/helpers'
+import { Copy } from './Copy'
+import { copyToClipboardAsync } from '../Utilities/helpers'
 
 
 
-export const RoomLink = () => {
-  const { room } = useContext(WSContext)
+export const QRCode = ({ link }) => {
   const [ src, setSrc ] = useState()
   const [ collapsed, setCollapsed ] = useState(true)
-  
-  const href = location.href.replace(/(?<=play).*/, "")
-  const roomLink = `${href}/${encodeURI(room)}`
   
 
   const toggleCollapsed = () => {
@@ -26,7 +21,7 @@ export const RoomLink = () => {
 
 
   const copyToClipboard = () => {
-    copyToClipboardAsync(roomLink) // returns a promise
+    copyToClipboardAsync(link) // returns a promise
   }
 
 
@@ -44,7 +39,7 @@ export const RoomLink = () => {
       }
     }
 
-    toString(roomLink, { type: "svg" }, callback)
+    toString(link, { type: "svg" }, callback)
   }
 
   useEffect(createQRCode, [])
@@ -63,19 +58,19 @@ export const RoomLink = () => {
 
   return (
     <div
-      id="room-link"
+      className="qrcode"
       onClick={toggleCollapsed}
     >
       <img
         src={src}
-        alt={`qrcode for ${roomLink}`}
+        alt={`qrcode for ${link}`}
         style={imgStyle}
       />
 
       <div
         style={aStyle}
       >
-        <a href={roomLink}> {roomLink}</a>
+        <a href={link}> {link}</a>
         <Copy
           action={copyToClipboard}
         />

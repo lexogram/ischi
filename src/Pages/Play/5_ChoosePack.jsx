@@ -3,17 +3,28 @@
  */
 
 
-import React from 'react'
+import React, { useContext } from 'react'
+import { WSContext } from '../../Contexts'
+
+
 import { MemberList } from './Components/MemberList'
 import { PackList } from './Components/PackList'
-import { RoomLink } from './Components/RoomLink'
+import { QRCode } from '../../Components/QRCode'
+
 
 export const ChoosePack = () => {
+  const { room } = useContext(WSContext)  
+  const href = location.href.replace(/(?<=play).*/, "")
+  const link = `${href}/${encodeURI(room)}`
+
+  console.log("link:", link);
+  
+
   return (
     <>
       <h1>Members</h1>
       <MemberList />
-      <RoomLink />
+      <QRCode link={link}/>
       <PackList />
     </>
   )
