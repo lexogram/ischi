@@ -188,9 +188,13 @@ export const Save = () => {
     }
 
     fetch(SAVEPACK, options)
-    .then(response => response.json())
-    .then(json => callback(null, json))
-    .catch(callback)
+     .then(response => response.text())
+     .then(text => {
+        console.log("SAVEPACK response:", text);
+        return JSON.parse(text)
+      })
+     .then(json => callback(null, json))
+     .catch(callback)
 
     function callback(error, json) {
       console.log(

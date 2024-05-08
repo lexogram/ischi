@@ -7,6 +7,7 @@ import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { useTranslation, Trans } from 'react-i18next';
 import { CreatorContext } from '../../../../Contexts'
+import { UserContext } from '../../../../Contexts'
 import { OpenPack } from './OpenPack';
 
 
@@ -32,6 +33,13 @@ export const File = () => {
   //     }
   //   ]
   // }
+
+  const { user } = useContext(UserContext)
+  console.log("File Dialog — user:", user);
+  console.log("packs", JSON.stringify(packs, null, '  '));
+
+
+
 
   const ownedPacks = packs.name
     ? <OpenPack

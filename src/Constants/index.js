@@ -8,7 +8,7 @@ export const HOSTNAME = IS_DEPLOYED
 
 export const PORT = IS_DEPLOYED
   ? ""      // no colon
-  : ":9999" // includes colon
+  : ":8888" // includes colon
 
 export const PACK_SOURCE = "ischi/packs.json"
 
