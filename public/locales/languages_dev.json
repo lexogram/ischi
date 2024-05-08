@@ -1,0 +1,18 @@
+{
+  "kk": {
+    "name": "Қазақ",
+    "flag": "ischi/flags/kk.png"
+  },
+  "ru": {
+    "name": "Русский",
+    "flag": "ischi/flags/ru.png"
+  },
+  "en": {
+    "name": "English",
+    "flag": "ischi/flags/en-GB.png"
+  },
+  "fr": {
+    "name": "Français",
+    "flag": "ischi/flags/fr-FR.png"
+  }
+}
