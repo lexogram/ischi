@@ -94,9 +94,7 @@ export const DelaySlider = ({ delay, setDelay }) => {
 
 
   return (
-    <div
-      id="delay-slider"
-    >
+    <div className="slider">
       <div
         className="range"
         onMouseDown={startDrag}

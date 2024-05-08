@@ -36,6 +36,10 @@ export const PackList = () => {
   ))
 
   return (
-    <ul>{packList}</ul>
+    <ul
+      className="pack-list"
+    >
+      {packList}
+    </ul>
   )
 }

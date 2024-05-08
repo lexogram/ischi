@@ -51,7 +51,7 @@ export const RoomLink = () => {
 
 
   const imgStyle = {
-    width: collapsed ? "20%" : "100%",
+    width: collapsed ? "10vw" : "100%",
     cursor: "pointer"
   }
 

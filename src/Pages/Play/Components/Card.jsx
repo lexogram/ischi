@@ -15,6 +15,7 @@ export const Card = ({ index, top, d, x, y, match }) => {
     cardData,
     imageSources,
     layouts,
+    turnConstraint,
     useSunburst,
     cropByDefault,
     customLayout
@@ -45,8 +46,8 @@ export const Card = ({ index, top, d, x, y, match }) => {
     imageSources[imageData.imageIndex].source
   ))
   const layout = customLayout
-    ? layouts[Object.keys(layouts)[0]]
-    : layouts[layoutName]
+    ? layouts[layoutName]
+    : layouts[Object.keys(layouts)[0]]
 
 
   const pictures = imageURLs.map(( href, index ) => {
@@ -64,8 +65,12 @@ export const Card = ({ index, top, d, x, y, match }) => {
     if (crop === 0) {
       crop = cropByDefault
     }
-    if (useSunburst) {
-      rotation = getSunburstAngle(position, imageData)
+    if (turnConstraint) {
+      if (useSunburst) {
+        rotation = getSunburstAngle(position, imageData)
+      } else {
+        rotation = 0
+      }
     }
     const placement = {
       cx: cx + offsetX + 50,
