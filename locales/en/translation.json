@@ -92,7 +92,8 @@
   "pack": {
     "for": {
       "Organization": "Packs created for {{owner}}",
-      "User": "Packs created by {{owner}}"
+      "User": "Packs created by {{owner}}",
+      "none": "Unsaved packs (sign in to save them)"
     },
     "none": "You haven't saved any packs yet",
     "total": "({{total}} cards)",
@@ -116,6 +117,13 @@
     "save-pack": "Save Pack \"{{name}}\"",
     "thumbnail": "Choose a thumbnail image:",
     "save": "Save"
+  },
+  "event": {
+    "menu": "Events",
+    "none": "No events are currently scheduled.",
+    "welcome": "Welcome to the {{event}} event!",
+    "start-date": "The event will begin on 18 May",
+    "hello": "Hello {{player}}! It's too early to register."
   },
   "xxx": "xxx"
 }

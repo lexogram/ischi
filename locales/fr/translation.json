@@ -92,7 +92,8 @@
   "pack": {
     "for": {
       "Organization": "Jeux de cartes créer pour {{owner}}",
-      "User": "Jeux de cartes créer par {{owner}}"
+      "User": "Jeux de cartes créer par {{owner}}",
+      "none": "Jeux de cartes non-enregistrés"
     },
     "none": "Vous n'avez pas encore enregistrer un jeu de cartes",
     "total": "({{total}} cartes)",
@@ -116,6 +117,13 @@
     "save-pack": "Enregistrer \"{{name}}\"",
     "thumbnail": "Choisir une image comme onglet :",
     "save": "Enregistrer"
+  },
+  "event": {
+    "menu": "Évènement",
+    "none": "Aucun évènement n'est encore prevu.",
+    "welcome": "Bienvenus à l'évènement {{event}} !",
+    "start-date": "L'évènement commencera le 18 mai.",
+    "hello": "Bonjour! Il est trop tôt pour s'inscrire."
   },
   "xxx": "xxx"
 }
