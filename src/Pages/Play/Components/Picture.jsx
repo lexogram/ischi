@@ -42,14 +42,9 @@ export const Picture = ({
                   && ( lastClick.cardIndex === index
                     || found
                      )
-  const opacity = imageClicked ? "1" : "0.8"
-  const className = imageClicked
-    ? crop
-      ? ""
-      : "shadow"
-    : crop
-      ? "dimmed"
-      : ""
+  const className = imageClicked && !crop
+    ? "shadow"
+    : ""
   const style = found
     ? { pointerEvents: "none", cursor: "default" }
     : { cursor: "pointer" }
@@ -80,9 +75,14 @@ export const Picture = ({
         {...cropPath}
         transform={`rotate(${rotation})`}
         transform-origin={origin}
-        opacity={opacity}
         className={className}
       />
+      {crop && imageClicked && <circle
+        {...circle}
+        fill="#0000"
+        stroke={colour}
+        strokeWidth="1"
+      />}
       { showStamp && <g>
           <text
             x={cx}
