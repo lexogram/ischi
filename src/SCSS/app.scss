@@ -21,6 +21,7 @@
   --fixed-width: calc(100vw - var(--menu-width));
   --icon-ratio: 0.25;
   --icon-size: calc(var(--icon-ratio) * var(--menu-width));
+  --btn-border-radius: 0.25em;
 }
 
 body {
@@ -55,7 +56,7 @@ button,
   padding: 0.25em 0.5em;
 
   border: 1px outset #888;
-  border-radius: 0.25em;
+  border-radius: var(--btn-border-radius);
   background-color: inherit;
   color: var(--light);
   font-size: inherit;
