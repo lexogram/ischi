@@ -37,16 +37,18 @@ export const EventProvider = ({ children }) => {
   const [ disabled, setDisabled ] = useState(true)
   const [ message, setMessage ] = useState("")
   const [ avatar, setAvatar ] = useState("")
-  
-  
+
+
   const checkRef = useRef()
   const checkIfEmojiIsTaken = checkRef.current // starts undefined
 
 
 
   const getRandomEmojis = () => {
-    console.log("EventContext socketIsOpen:", socketIsOpen);
-    
+    if (!user_id) {
+      return
+    }
+
     sendMessage({
       recipient_id: "emojis",
       subject: "emojis"
@@ -100,8 +102,6 @@ export const EventProvider = ({ children }) => {
   }
 
   function checkSoon(content) {
-    console.log("checkSoon content:", content);
-    
     sendMessage({
       recipient_id: "emojis",
       subject: "check",
@@ -112,7 +112,6 @@ export const EventProvider = ({ children }) => {
   function treatIfEmojiIsTaken({ content }) {
     const { taken } = content
 
-    console.log("check taken:", taken);
     if (!taken || Array.isArray(taken)) {
       // No-one (with this `name`) has taken this emoji yet
       setDisabled(false)
