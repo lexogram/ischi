@@ -163,9 +163,9 @@ export const EventProvider = ({ children }) => {
     )
   }
 
-  function treatSwap( error, payload ) {
-    const {emoji: replaced, index, replacement} = payload
-    console.log("swap", JSON.stringify(payload, null, '  '));
+  function treatSwap({ content }) {
+    const {emoji: replaced, index, replacement} = content
+    console.log("swap", JSON.stringify(content, null, '  '));
 
     // replacement may be undefinned
 
