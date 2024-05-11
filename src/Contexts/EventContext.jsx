@@ -25,6 +25,7 @@ export const EventProvider = ({ children }) => {
   const {
     socketIsOpen,
     sendMessage,
+    user_id,
     addMessageListener,
     removeMessageListener,
     room,
@@ -213,7 +214,7 @@ export const EventProvider = ({ children }) => {
 
   // INITIALIZATION // INITIALIZATION // INITIALIZATION //
 
-  useEffect(getRandomEmojis, [socketIsOpen]) 
+  useEffect(getRandomEmojis, [user_id])
   useEffect(addMessageListeners) // called on every render
 
   return (
