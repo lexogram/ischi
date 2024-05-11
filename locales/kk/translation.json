@@ -121,9 +121,20 @@
   "event": {
     "menu": "EVENTS",
     "none": "NO EVENTS ARE CURRENTLY SCHEDULED.",
-    "welcome": "WELCOME TO THE {{event}} EVENT !",
+    "name": "«Музей түні»",
+    "welcome": "Музей түніне қош келдіңіз!",
     "start-date": "THE EVENT WILL BEGIN ON 18 MAY",
-    "hello": "HELLO {{player}}! IT'S TOO EARLY TO REGISTER."
+    "hello": "HELLO {{player}}! IT'S TOO EARLY TO REGISTER.",
+    "choose-language": "Тілді таңдаңыз:",
+    "instruction": "Атыңызды енгізіп, аватарды таңдаңыз:",
+    "loading": "Аватарды жүктеу...",
+    "checking": "Таңдалған аватардың қолданылуын тексеру...",
+    "taken": "Бұл аватар ({{emoji}}) қазірдің өзінде қолданыста.",
+    "same_name": "Бұл аватар ({{emoji}}) қазірдің өзінде қолданыста.",
+    "another": "Басқа аватарды таңдаңыз.",
+    "register": "Ойынды бастау!",
+    "score": "Нәтиже",
+    "time": "Уақыт"
   },
   "xxx": "xxx"
 }

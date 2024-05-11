@@ -121,9 +121,20 @@
   "event": {
     "menu": "Évènement",
     "none": "Aucun évènement n'est encore prevu.",
-    "welcome": "Bienvenus à l'évènement {{event}} !",
+    "name": "la \"Nuit au musée\"",
+    "welcome": "Bienvenus à {{event}} !",
     "start-date": "L'évènement commencera le 18 mai.",
-    "hello": "Bonjour! Il est trop tôt pour s'inscrire."
+    "hello": "Bonjour! Il est trop tôt pour s'inscrire.",
+    "choose-language": "Veuillez choisir votre langue :",
+    "instruction": "Veuillez saisir votre nom et choisir un avatar :",
+    "loading": "Chargement des avatars...",
+    "checking": "Verification de la disponibilité de cet avatar...",
+    "taken": "Quelqu'un d'autre vient de choisir {{emoji}}.",
+    "same_name": "Quelqu'un d'autre avec le nom \"{{name}}\" a déjà choisi {{emoji}}.",
+    "another": "Veuillez choisir un autre avatar.",
+    "register": "Allons-y !",
+    "score": "Score",
+    "time": "Temps"
   },
   "xxx": "xxx"
 }
