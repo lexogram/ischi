@@ -118,7 +118,7 @@ export const Menu = () => {
         <Languages />
       </div>
 
-      <label htmlFor="fix-menu">
+      <label className="fix-menu">
         <input
           type="checkbox"
           name="fix_menu"

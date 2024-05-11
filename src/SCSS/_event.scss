@@ -1,0 +1,135 @@
+#event {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+
+  .welcome {
+    --size: min(320px, calc(100vw - var(--scroll-size)));
+    --emoji-size: calc(0.2 * var(--size));
+    --emoji-font: calc( 0.75 * var(--emoji-size));
+    --font-size: min(4.75vw, 16px);
+    --pad-w: calc(0.125 * var(--font-size));
+    --pad-h: calc(0.0625 * var(--font-size));
+    --pad-x: calc(0.5 * var(--font-size));
+    width: var(--size);
+    font-size: var(--font-size);
+
+    .languages {
+      position: relative;
+      height: 5.5em;
+
+      img {
+        width: 3em;
+      }
+    }
+    
+    h1 {
+      text-align: center
+    }
+
+    div.register {
+      width: var(--size);
+      margin: 0 auto;
+    }
+    
+    .emojis {
+      position: relative;
+      width: var(--size);
+      height: var(--size);
+      margin: 0 auto;
+      text-align: center;
+    }
+    
+    label:disabled,
+    label[disabled] {
+      border: none;
+      background-color: transparent;
+      opacity: 0.25;
+      pointer-events: none;
+      cursor: default;
+    }
+    
+    input[type=text] {
+      display: inline-block;
+      width: calc(var(--size) - var(--pad-x));
+      font-size: inherit;
+      margin: 0 auto 0.5em;
+      text-align: left;
+      padding: var(--pad-h) var(--pad-w)
+    }
+    
+    input[type=radio] {
+      position: absolute;
+      width: 0;
+      opacity: 0;
+    }
+    
+    label:empty,
+    span {
+      display: inline-block;
+      width: var(--emoji-size);
+      height: var(--emoji-size);
+      font-size: var(--emoji-font);
+      box-sizing: border-box;
+      text-align: center;
+      opacity: 0.75;
+      vertical-align: top;
+    }
+    
+    span {
+      border: 1px outset #888;
+      border-radius: 0.25em;
+      cursor: pointer;
+    }
+    
+    .registered span {
+      margin-left: 0.25em;
+      width: auto; /* for long registered names */
+    }
+    
+    input[type=radio]:checked ~ span {
+      opacity: 1;
+      background-color: var(--light);
+      border-style: inset;
+    }
+    
+    .busy-button {
+      position: relative;
+      width: 100%;
+      height: 3em;
+      margin: 0.5em 0;
+    }
+    
+    .busy-button * {
+      width: 100%;
+      height: 100%;
+    }
+    
+    .busy-button p {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #300;
+      margin: 0;
+    }
+    
+    div.registered {
+      border-color: gold;
+      border-radius: 0.5em;
+      /* display: block; */
+    }
+    
+    div.registered span {
+      border: none
+    }
+    
+    div.registered span:last-child {
+      margin-left: 0.5em;
+      text-align: left;
+      color: gold;
+      background-color: transparent;
+      opacity: 1
+    }
+  }
+}

@@ -30,7 +30,7 @@ function App() {
   // Set --scroll-size custom CSS property in App.css to OS value
   const scrollSize = useScrollSize()
   document.documentElement.style.setProperty(
-    '--scroll-size', scrollSize + 1 + "px"
+    '--scroll-size', scrollSize + 3 + "px"
   );
 
   return (

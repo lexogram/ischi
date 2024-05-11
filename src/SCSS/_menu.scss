@@ -22,7 +22,7 @@
     transition: left .4s linear;
   }
 
-  label[for=fix-menu] {
+  label.fix-menu {
     position: absolute;
     top: 0;
     opacity: 0.25;
@@ -47,6 +47,10 @@
     margin-top: var(--icon-size);
     height: var(--items-height);
     overflow-x: auto;
+  }
+
+  .language-flags img {
+    width: min(7vw, 32px);
   }
 
   .menu-section {

@@ -1,6 +1,7 @@
 @use './variables.scss';
 @use 'menu.scss';
 @use 'creator.scss';
+@use 'event.scss';
 
 :root {
   --light: #ddd;
@@ -29,6 +30,11 @@ body {
   color: var(--light);
 
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#outlet {
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 

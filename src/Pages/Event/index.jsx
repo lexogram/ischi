@@ -3,10 +3,10 @@
  */
 
 
-import { Register } from "./Register";
+import { Welcome } from "./Welcome";
 import { Lobby } from "./Lobby";
 
 export {
-  Register,
+  Welcome,
   Lobby
 }

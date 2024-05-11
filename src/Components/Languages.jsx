@@ -57,7 +57,6 @@ export const Languages = (props) => {
     
 
     const imgStyle = {
-      width: "32px",
       border: `2px ${borderStyle} #ccc`,
       borderRadius: "100vmax",
       opacity
@@ -86,6 +85,7 @@ export const Languages = (props) => {
 
   return (
     <div
+      className="language-flags"
       onChange={chooseLanguage}
       style={divStyle}
     >

@@ -11,6 +11,7 @@ import { I18nProvider, I18nContext } from './I18nContext'
 import { UserProvider, UserContext } from './UserContext'
 import { CreatorProvider, CreatorContext } from './CreatorContext'
 import { GameProvider, GameContext } from './GameContext'
+import { EventProvider, EventContext } from './EventContext'
 
 
 
@@ -22,7 +23,9 @@ const Provider = ({ children }) => {
           <UserProvider>
             <CreatorProvider>
               <GameProvider>
-                {children}
+                <EventProvider>
+                  {children}
+                </EventProvider>
               </GameProvider>
             </CreatorProvider>
           </UserProvider>
@@ -40,5 +43,6 @@ export {
   I18nContext,
   UserContext,
   CreatorContext,
-  GameContext
+  GameContext,
+  EventContext
 }

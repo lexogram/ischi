@@ -2,8 +2,8 @@
  * src/Pages/Play/index.jsx
  */
 
-import { Connecting } from './1_Connecting'
-import { Disconnected } from './0_Disconnected'
+import { Connecting } from '../../Components/Connecting'
+import { Disconnected } from '../../Components/Disconnected'
 import { JoinRoom } from './2_JoinRoom'
 import { TeamManagement } from './3_TeamManagement'
 import { TeamMembers } from './4_TeamMembers'
