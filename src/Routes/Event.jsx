@@ -4,6 +4,8 @@
 
 
 import React, { useContext, useEffect } from 'react'
+import { useParams } from 'react-router-dom'
+
 import { WSContext } from '../Contexts'
 import { EventContext } from '../Contexts'
 import { Connecting } from '../Components/Connecting'
@@ -16,13 +18,16 @@ import {
 
 
 export const Event = () => {
+  const { host/* , player_id*/ } = useParams()
   const {
     requestSocketToOpen,
     socketIsOpen,
     socketError
   } = useContext(WSContext)
   const {
-    avatar
+    player,
+    setHost,
+    setPlayer
   } = useContext(EventContext)
 
 
@@ -33,12 +38,19 @@ export const Event = () => {
       } else {
         return <Disconnected error={socketError} />
       }
-    } else if (!avatar) {
-      return <Welcome />
+    } else if (!player) {
+
+      return <Welcome host={host}/>
     } else {
       return <Lobby />
     }
   })()
+
+
+  const setParams = () => {
+    setHost(host || "")
+    // setPlayer(player_id || "")
+  }
 
 
   const openSocketIfNeeded = () => {
@@ -49,6 +61,7 @@ export const Event = () => {
 
 
   useEffect(openSocketIfNeeded, [])
+  useEffect(setParams, [host /*, player_id */])
 
 
   return (

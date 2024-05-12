@@ -4,6 +4,9 @@
  */
 
 
+import storage from '../Utilities/storage'
+
+
 import React, {
   createContext,
   useState,
@@ -16,6 +19,9 @@ import {
   removeMessageListener,
   treatMessage
 } from '../Utilities/messages'
+
+let last_id = storage.getItem("last_id")
+
 
 // Determine the URL to use for WebSocket
 const SOCKET_URL = `wss://${HOSTNAME}${PORT}` // no trailing slash
@@ -32,6 +38,7 @@ export const WSProvider = ({ children }) => {
   const [ socketError, setSocketError ] = useState("")
   const [ user_id, setUserId ] = useState()
   const [ user_name, setUserName ] = useState()
+  const [ user_data, set_user_data ] = useState({})
   const [ room, setRoom ] = useState()
   const [ existing_room, setExistingRoom ] = useState(true)
   const [ errorStatus, setErrorStatus ] = useState(0)
@@ -89,10 +96,10 @@ export const WSProvider = ({ children }) => {
   }
 
 
-  const sendMessage = message => {
-    const sender_id = message.sender_id || user_id
+  const sendMessage = (message, temp_id) => {
+    const sender_id = message.sender_id || user_id || temp_id
 
-    if (!socketIsOpen || !sender_id) {
+    if (!temp_id && (!socketIsOpen || !sender_id)) {
       return messageNotSent(message)
     }
 
@@ -106,7 +113,10 @@ export const WSProvider = ({ children }) => {
 
     // console.log("message:", message);
 
-    socket.send(message)
+    // HACK to use socket immediately after it has been set,
+    // before the page has re-rendered and read socket from
+    // socketRef
+    ;(socket || socketRef.current).send(message)
   }
 
 
@@ -129,8 +139,21 @@ export const WSProvider = ({ children }) => {
         // }
         // This <uuid> should be used as the sender_id for all
         // future messages.
-        setUserId(recipient_id)
+        if (last_id) {
+          // This user logged in previously exchange the temporary
+          // recipient_id for the previous user_id
+          restoreUserId(last_id, recipient_id)
+        
+        } else {
+          setUserId(recipient_id)
+          storage.setItem("last_id", recipient_id)
+        }
         return true
+
+      case "user_id_restored": {
+        setUserId(recipient_id)
+        set_user_data(content)
+      }
 
       case "existing_room":
         return setExistingRoom(content) // string or undefined
@@ -139,9 +162,18 @@ export const WSProvider = ({ children }) => {
         return treatStatus(content)
 
       case "room_members":
-        // console.log("About to call setRoomMembers content:", content);
         return setRoomMembers(content)
     }
+  }
+
+
+  const restoreUserId = (last_id, temp_id) => {
+    sendMessage({
+      recipient_id: "system",
+      sender_id: temp_id,
+      subject: "restore_user_id",
+      content: last_id
+    }, temp_id)
   }
 
 
@@ -284,6 +316,7 @@ export const WSProvider = ({ children }) => {
 
         user_id,
         user_name,
+        user_data,
         room,
         existing_room,
         getExistingRoom,

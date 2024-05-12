@@ -23,25 +23,80 @@ export const EventContext = createContext()
 export const EventProvider = ({ children }) => {
   const { t } = useTranslation()
   const {
-    socketIsOpen,
     sendMessage,
     user_id,
+    user_data,
     addMessageListener,
     removeMessageListener,
     room,
     members
   } = useContext(WSContext)
-  const [ emojis, setEmojis ] = useState([])
-  const [ name, setName ] = useState("")
-  const [ emoji, setEmoji ] = useState("")
+
+  const [ emojis, setEmojis ]     = useState([])
+  const [ name, setName ]         = useState("")
+  const [ emoji, setEmoji ]       = useState("")
   const [ disabled, setDisabled ] = useState(true)
-  const [ message, setMessage ] = useState("")
-  const [ avatar, setAvatar ] = useState("")
+  const [ message, setMessage ]   = useState("")
+  const [ host, setHost ]         = useState("")
+  const [ player, setPlayer ]     = useState("")
+
+  // console.log("user_data:", user_data);
+  // {} OR 
+  // { choices: <array (empty if emoji is set)>
+  //   dataNotRestored: <boolean>
+  //   + (if a name and emoji were entered)
+  //   name: <string>
+  //   munged_name: <lowercase name>
+  //   selected: <emoji string if a choice was made>
+  //   + (if registered)
+  //   emoji: <same as selected>
+  // }
 
 
   const checkRef = useRef()
   const checkIfEmojiIsTaken = checkRef.current // starts undefined
 
+
+
+  const initialize = () => {
+    if (!user_id) {
+      return
+    }
+
+    // There may be data restored from a previous connection
+    const {
+      choices:
+      emojis,
+      name="",
+      selected="",
+      emoji=""
+    } = user_data
+
+    if (emojis) {
+      setName(name) // may be ""
+      // Restore from data preserved on the server
+      if (emojis.length) {
+        // Not yet registered. Set emojis. Trigger the debounce.
+        treatInitialEmojis({ content: { emojis }})
+        setEmoji(selected) // may be ""
+
+        if (name && selected) {
+          // Set the Register button to the correct enabled state
+          checkSoon({ name, emoji: selected })
+        }
+
+      } else {
+        setEmoji(emoji)
+
+        if (emoji && name) {
+          generatePlayerName(emoji, name)
+        }
+      }
+
+    } else {
+      getRandomEmojis()
+    }
+  }
 
 
   const getRandomEmojis = () => {
@@ -151,8 +206,13 @@ export const EventProvider = ({ children }) => {
   function treatConfirmation({ content }) {
     const { confirmed } = content
     if (confirmed) {
-      setAvatar(`${emoji} ${name}`)
+      generatePlayerName(emoji, name)
     }
+  }
+
+
+  const generatePlayerName = (emoji, name) => {
+    setPlayer(`${emoji}_${name}`)
   }
 
 
@@ -213,8 +273,9 @@ export const EventProvider = ({ children }) => {
 
   // INITIALIZATION // INITIALIZATION // INITIALIZATION //
 
-  useEffect(getRandomEmojis, [user_id])
+  useEffect(initialize, [user_id, user_data])
   useEffect(addMessageListeners) // called on every render
+
 
   return (
     <EventContext.Provider
@@ -226,7 +287,11 @@ export const EventProvider = ({ children }) => {
         disabled,
         message,
         register,
-        avatar
+
+        player,
+        setPlayer,
+        host,
+        setHost,
       }}
     >
       {children}

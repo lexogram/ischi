@@ -3,13 +3,17 @@
  */
 
 
-import React from 'react'
+import React, { useContext } from 'react'
+import { EventContext } from '../../../Contexts';
 import { Trans, useTranslation } from 'react-i18next';
 import { ChooseLanguage } from './ChooseLanguage'
 import { Register } from './Register';
 
 
-export const Welcome = (props) => {
+export const Welcome = () => {
+  const { host, name } = useContext(EventContext)
+  // TODO: use name instead of event in h1 element
+
   const { t } = useTranslation()
   const event = t("event.name")
 

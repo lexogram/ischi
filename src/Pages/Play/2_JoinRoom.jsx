@@ -221,12 +221,11 @@ export const JoinRoom = () => {
       </label>
 
       <p>{ errorStatus ? errorStatus : "" }</p>
-
+      {/* 
       { willCreate &&
-        <label htmlFor="create-teams">
+        <label>
           <input
             type="checkbox"
-            id="create-teams"
             name="create_teams"
             onChange={toggleCreateTeams}
             checked={create_teams}
@@ -235,6 +234,7 @@ export const JoinRoom = () => {
         </label>
       }
       { create_teams && <TeamPicker /> }
+      */}
 
       <button
         type="submit"

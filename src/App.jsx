@@ -73,7 +73,7 @@ function App() {
             </Route>
             <Route path="event">
               <Route
-                path=":host/:player/*"
+                path=":host/:player_id/*"
                 element={<Event />}
               />
               <Route
