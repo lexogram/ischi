@@ -68,15 +68,11 @@ export const CreatorProvider = ({ children }) => {
     layoutName,
     cardNumber,
 
-    // imageSet,
-    // imageSets,
-
     tweakIndices,
     activeImage,
 
     packs,
     importedFiles // array of new File objects that must be saved
-    // showSaveDialog
   } = state
 
   // <<< Required for switching packs
@@ -383,16 +379,6 @@ export const CreatorProvider = ({ children }) => {
         addImageFiles,
         setImageFiles,
         addImages,
-        // showSaveDialog,
-        // toggleSaveDialog,
-        // loadFrom,
-        // setImagesPerCard,
-
-        // imageSet,
-        // imageSets,
-        // setImageSet,
-
-        // getURL,
         getSunburstAngle,
 
         VIEW_WIDTH,
@@ -411,8 +397,6 @@ export const CreatorProvider = ({ children }) => {
         activeImage,
         setActiveImage,
 
-        // tweakForLocalHost,
-        // getHREF
         getImagesTotal,
         newPack,
 

@@ -488,7 +488,7 @@ const setActiveImage = (state, activeImage) => {
 
 function setRotation( state, { value, cardIndex, slotIndex }) {
   const cardData = state.cardData[cardIndex]
-  const imageData = cardData.imageSources
+  const imageData = cardData.images
   const specificData = imageData[slotIndex]
   specificData.rotation = value
 
@@ -498,7 +498,7 @@ function setRotation( state, { value, cardIndex, slotIndex }) {
 
 function setOffset( state, { value, cardIndex, slotIndex }) {
   const cardData = state.cardData[cardIndex]
-  const imageData = cardData.imageSources
+  const imageData = cardData.images
   const specificData = imageData[slotIndex]
   specificData.offsetX = value.offsetX
   specificData.offsetY = value.offsetY
@@ -509,7 +509,7 @@ function setOffset( state, { value, cardIndex, slotIndex }) {
 
 function setScale( state, { value, cardIndex, slotIndex }) {
   const cardData = state.cardData[cardIndex]
-  const imageData = cardData.imageSources
+  const imageData = cardData.images
   const specificData = imageData[slotIndex]
   specificData.specificScale = value
 
@@ -523,7 +523,7 @@ function setCrop (state, { cardIndex, slotIndex, index }) {
 
   if (index === undefined) {
     // The call came from the Tweaker
-    const imagesData = cardData[cardIndex].imageSources
+    const imagesData = cardData[cardIndex].images
     const { imageIndex } = imagesData[slotIndex]
     imageData = imageSources[imageIndex]
 
