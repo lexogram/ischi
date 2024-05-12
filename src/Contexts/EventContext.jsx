@@ -13,6 +13,7 @@ import { useTranslation, Trans } from 'react-i18next';
 import { WSContext } from './WSContext'
 import { GameContext } from './GameContext'
 import { debounce } from '../Utilities/debounce';
+import { GETEVENTPACKS, FETCH_OPTIONS } from '../Constants'
 
 
 
@@ -32,16 +33,20 @@ export const EventProvider = ({ children }) => {
     members
   } = useContext(WSContext)
 
-  const [ emojis, setEmojis ]     = useState([])
-  const [ name, setName ]         = useState("")
-  const [ emoji, setEmoji ]       = useState("")
-  const [ disabled, setDisabled ] = useState(true)
-  const [ message, setMessage ]   = useState("")
-  const [ host, setHost ]         = useState("")
-  const [ player, setPlayer ]     = useState("")
+  const [ emojis, setEmojis ]         = useState([])
+  const [ name, setName ]             = useState("")
+  const [ emoji, setEmoji ]           = useState("")
+  const [ disabled, setDisabled ]     = useState(true)
+  const [ message, setMessage ]       = useState("")
+  const [ host, setHost ]             = useState("")
+  const [ player, setPlayer ]         = useState("")
+  const [ packs, setPacks ]           = useState([])
+  const [ packFolder, setPackFolder ] = useState()
+
+
 
   // console.log("user_data:", user_data);
-  // {} OR 
+  // {} OR
   // { choices: <array (empty if emoji is set)>
   //   dataNotRestored: <boolean>
   //   + (if a name and emoji were entered)
@@ -99,6 +104,8 @@ export const EventProvider = ({ children }) => {
   }
 
 
+  // EMOJIS
+
   const getRandomEmojis = () => {
     if (!user_id) {
       return
@@ -120,6 +127,7 @@ export const EventProvider = ({ children }) => {
   }
 
 
+  // EMOJI+NAME AVAILABILITY
 
   const updateUserData = ({ target }) => {
     const { value, type } = target
@@ -156,7 +164,7 @@ export const EventProvider = ({ children }) => {
     checkIfEmojiIsTaken(options) // debounced
   }
 
-  function checkSoon(content) {
+  const checkSoon = (content) => {
     sendMessage({
       recipient_id: "emojis",
       subject: "check",
@@ -164,7 +172,7 @@ export const EventProvider = ({ children }) => {
     })
   }
 
-  function treatIfEmojiIsTaken({ content }) {
+  const treatIfEmojiIsTaken = ({ content }) => {
     const { taken } = content
 
     if (!taken || Array.isArray(taken)) {
@@ -188,6 +196,7 @@ export const EventProvider = ({ children }) => {
   }
 
 
+  // REGISTRATION
 
   const register = event => { // undefined if triggered by keyDown
     event && event.preventDefault()
@@ -203,29 +212,29 @@ export const EventProvider = ({ children }) => {
     })
   }
 
-  function treatConfirmation({ content }) {
+  const treatConfirmation = ({ content }) => {
     const { confirmed } = content
     if (confirmed) {
       generatePlayerName(emoji, name)
     }
   }
 
-
   const generatePlayerName = (emoji, name) => {
     setPlayer(`${emoji}_${name}`)
   }
 
 
+  // EMOJI ADJUSTMENTS
 
-  function getTakenMessage(emoji) {
+  const getTakenMessage = (emoji) => {
     return `${t("event.taken")} ${t("event.another")}`.replace(
       "{{emoji}}", emoji
     )
   }
 
-  function treatSwap({ content }) {
+  const treatSwap = ({ content }) => {
     const {emoji: replaced, index, replacement} = content
-    console.log("swap", JSON.stringify(content, null, '  '));
+    // console.log("swap", JSON.stringify(content, null, '  '));
 
     // replacement may be undefinned
 
@@ -245,6 +254,44 @@ export const EventProvider = ({ children }) => {
 
     emojis.splice(index, 1, replacement) // may be undefined
     setEmojis([ ...emojis ])
+  }
+
+
+  // PACKS
+
+  const getEventPacks = () => {
+    if (!host) {
+      return console.log("host required for getEventPacks()");
+    }
+
+    const callback = (error, packsData) => {
+      if (error) {
+        return console.log("getEventPacks error:", error);
+      }
+
+      setPacks(packsData)
+    }
+
+
+    const body = JSON.stringify({ query: { munged_name: host } })
+    console.log("getEventPacks body:", body);
+
+
+    const options = {
+      ...FETCH_OPTIONS,
+      body
+    }
+
+    fetch(GETEVENTPACKS, options)
+     .then(response => response.json())
+     .then(json => callback(null, json.packs))
+     .catch(callback)
+
+  }
+
+
+  const openPack = () => {
+
   }
 
 
@@ -275,6 +322,7 @@ export const EventProvider = ({ children }) => {
 
   useEffect(initialize, [user_id, user_data])
   useEffect(addMessageListeners) // called on every render
+  useEffect(getEventPacks, [host])
 
 
   return (
@@ -292,6 +340,10 @@ export const EventProvider = ({ children }) => {
         setPlayer,
         host,
         setHost,
+
+        packs,
+        openPack,
+        packFolder
       }}
     >
       {children}

@@ -21,13 +21,20 @@ export const DELAY_ARRAY = [
   ["click", "Click \"Next Card\" button to show it"]
 ]
 
-export const BACKEND  = `https://${HOSTNAME}${PORT}`
-export const SIGNUP   = `${BACKEND}/signup`
-export const SIGNIN   = `${BACKEND}/signin`
-export const SIGNOUT  = `${BACKEND}/signout`
-export const SIGNEDIN = `${BACKEND}/signedin`
-export const GETPACKS = `${BACKEND}/owned`
-export const ISCHI    = `${BACKEND}/ischi`
-export const SAVEPACK = `${BACKEND}/save`
+export const BACKEND       = `https://${HOSTNAME}${PORT}`
+export const SIGNUP        = `${BACKEND}/signup`
+export const SIGNIN        = `${BACKEND}/signin`
+export const SIGNOUT       = `${BACKEND}/signout`
+export const SIGNEDIN      = `${BACKEND}/signedin`
+export const GETPACKS      = `${BACKEND}/owned`
+export const GETEVENTPACKS = `${BACKEND}/event`
+export const ISCHI         = `${BACKEND}/ischi`
+export const SAVEPACK      = `${BACKEND}/save`
 
 export const CONNECTION_PATH = "/connection"
+
+export const FETCH_OPTIONS = {
+  headers: { "Content-Type": "application/json" },
+  method: "POST",
+  credentials: "include"
+}

@@ -15,13 +15,8 @@ import { UserContext } from '../UserContext'
 import { reducer, initialState } from './Reducer'
 import { useResize } from '../../Hooks/useResize'
 import { usePage } from '../../Hooks/usePage'
-import { GETPACKS, ISCHI } from '../../Constants'
+import { GETPACKS, ISCHI, FETCH_OPTIONS } from '../../Constants'
 
-const FETCH_OPTIONS = {
-  headers: { "Content-Type": "application/json" },
-  method: "POST",
-  credentials: "include"
-}
 
 const getImagesTotal = imagesPerCard => {
   return imagesPerCard * (imagesPerCard - 1) + 1
@@ -88,7 +83,6 @@ export const CreatorProvider = ({ children }) => {
   const addImageFiles = newImageFiles => {
     setImageFiles([ ...imageFiles, ...newImageFiles])
   }
-
 
   const setCustomLayout = value => {
     dispatch({
