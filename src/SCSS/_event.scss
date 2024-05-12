@@ -27,11 +27,6 @@
     h1 {
       text-align: center
     }
-
-    div.register {
-      width: var(--size);
-      margin: 0 auto;
-    }
     
     .emojis {
       position: relative;
@@ -83,11 +78,6 @@
       cursor: pointer;
     }
     
-    .registered span {
-      margin-left: 0.25em;
-      width: auto; /* for long registered names */
-    }
-    
     input[type=radio]:checked ~ span {
       opacity: 1;
       background-color: var(--light);
@@ -115,23 +105,28 @@
       border-radius: var(--btn-border-radius);
       margin: 0;
     }
-    
-    div.registered {
-      border-color: gold;
-      border-radius: 0.5em;
-      /* display: block; */
+  }
+
+  .lobby {
+    ul {
+      list-style-type: none;
+      padding: 0;
+
+      div {
+        flex: 1;
+        margin-left: 0.5em;
+        text-align: center;
+      }
     }
-    
-    div.registered span {
-      border: none
+    li {
+      display: flex;
     }
-    
-    div.registered span:last-child {
-      margin-left: 0.5em;
-      text-align: left;
-      color: gold;
-      background-color: transparent;
-      opacity: 1
+    h3 {
+      font-size: 2em;
+    }
+    img {
+      width: 20vmin;
+      height: 20vmin;
     }
   }
 }

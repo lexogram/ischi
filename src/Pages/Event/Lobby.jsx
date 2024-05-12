@@ -4,7 +4,7 @@
 
 
 
-import React, { useContext, useEffect } from 'react'
+import React, { useContext } from 'react'
 import { useTranslation, Trans } from 'react-i18next';
 import { EventContext } from '../../Contexts';
 import { ISCHI } from '../../Constants';
@@ -47,15 +47,6 @@ export const Lobby = () => {
       ? "button pressed"
       : "button"
 
-
-    // HACK to ensure currently selected button is visible
-    useEffect(() => {
-      const selected = document.querySelector( ".button.pressed")
-      if (selected) {
-        selected.scrollIntoView()
-      }
-    }, [])
-
     return (
       <li
         key={pack.name}
@@ -82,9 +73,9 @@ export const Lobby = () => {
   }
 
   return (
-    <>
+    <div className="lobby">
       {/* <h3>{title}</h3> */}
       <ul>{packList}</ul>
-    </>
+    </div>
   )
 }

@@ -274,9 +274,6 @@ export const EventProvider = ({ children }) => {
 
 
     const body = JSON.stringify({ query: { munged_name: host } })
-    console.log("getEventPacks body:", body);
-
-
     const options = {
       ...FETCH_OPTIONS,
       body
