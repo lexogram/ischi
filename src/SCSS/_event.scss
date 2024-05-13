@@ -246,4 +246,19 @@
     //   }
     // }
   }
+
+  .room {
+    .preview {
+      width: 100vw;
+      overflow: scroll;
+      ul {
+        list-style-type: none;
+        padding: 0;
+        display: flex;
+      }
+      img {
+        width: 25vmin;
+      }
+    }
+  }
 }

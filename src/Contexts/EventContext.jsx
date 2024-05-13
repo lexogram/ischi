@@ -44,9 +44,6 @@ export const EventProvider = ({ children }) => {
   const [ packs, setPacks ]               = useState([])
   const [ packFolder, setPackFolder ]     = useState()
 
-console.log("organization:", organization);
-
-
   // console.log("user_data:", user_data);
   // {} OR
   // { choices: <array (empty if emoji is set)>

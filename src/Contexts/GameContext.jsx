@@ -107,7 +107,7 @@ export const GameProvider = ({ children }) => {
 
 
   const loadGameData = ({ content }) => {
-    setGameData(content)
+    setGameData(content)    
     setLastClick(content.lastClick)
     setScore({})
     setFoundBy(content.foundBy)
