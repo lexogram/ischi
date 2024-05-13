@@ -1,17 +1,20 @@
 /**
- * src/Pages/Event/Lobby.jsx
+ * src/Pages/Event/index.jsx
  */
 
 
 
 import React, { useContext } from 'react'
 import { useTranslation, Trans } from 'react-i18next';
-import { EventContext } from '../../Contexts';
-import { ISCHI } from '../../Constants';
+import { EventContext } from '../../../Contexts';
+import { ISCHI } from '../../../Constants';
+import { LogOut } from './LogOut';
+import { Start } from './Start';
 
 
 export const Lobby = () => {
   const {
+    emoji,
     packs,     // [ {<as sampler>}, ... ], // may be empty
     openPack,  // <function>
     packFolder // <folder of current pack>
@@ -41,20 +44,13 @@ export const Lobby = () => {
       src = `${ISCHI}/${folder}/images/${thumbnail}`
     }
 
-    const selected = pack.folder === packFolder
-
-    const className = selected
-      ? "button pressed"
-      : "button"
-
     return (
       <li
         key={pack.name}
-        className={className}
         onClick={() => openPack(pack)}
       >
         <img src={src} alt={name} title={name} />
-        <div>
+        <div className="description">
           <h3>{name}</h3>
           <span>
             <Trans
@@ -64,6 +60,7 @@ export const Lobby = () => {
             />
           </span>
         </div>
+        <Start emoji={emoji}/>
       </li>
     )
   })
@@ -76,6 +73,7 @@ export const Lobby = () => {
     <div className="lobby">
       {/* <h3>{title}</h3> */}
       <ul>{packList}</ul>
+      <LogOut />
     </div>
   )
 }

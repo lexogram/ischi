@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  --padding: 0.5em;
 
 
   .welcome {
@@ -49,7 +50,7 @@
       display: inline-block;
       width: calc(var(--size) - var(--pad-x));
       font-size: inherit;
-      margin: 0 auto 0.5em;
+      margin: 0 auto var(--padding);
       text-align: left;
       padding: var(--pad-h) var(--pad-w)
     }
@@ -88,7 +89,7 @@
       position: relative;
       width: 100%;
       height: 3em;
-      margin: 0.5em 0;
+      margin: var(--padding) 0;
     }
     
     .busy-button * {
@@ -108,25 +109,145 @@
   }
 
   .lobby {
-    ul {
-      list-style-type: none;
+    font-size: min(3vmin, 30px);
+    --width: 100vmin;
+    --out-size: 2em;
+    --out-font: calc(var(--out-size) * 0.8);
+    --list-height: calc(100vh - var(--out-size));
+    --thumbnail-size: 30vmin;
+    --start-size: calc(var(--thumbnail-size) * 0.475);
+    --emoji-size: calc(var(--start-size) * 0.6667);
+    --item-height: calc(var(--thumbnail-size) + 1em);
+
+    .log-out {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: var(--out-size);
+      height: var(--out-size);
+      background-color: var(--dark);
       padding: 0;
 
-      div {
-        flex: 1;
-        margin-left: 0.5em;
-        text-align: center;
+      span {
+        font-size: var(--out-font);
       }
     }
-    li {
-      display: flex;
+
+    ul {
+      position: absolute;
+      top: var(--out-size);
+      left: calc((100vw - var(--width)) / 2);
+      width: var(--width);
+      height: var(--list-height);
+      overflow-y: auto;
+      overflow-x: hidden;
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
     }
+
+    li {
+      height: var(--item-height);
+      display: flex;
+      border-bottom: 1px solid var(--light);
+      box-sizing: border-box;
+      padding: var(--padding) 0;
+    }
+
+    li:nth-child(even) {
+      background-color: #333;
+    }
+
+    img {
+      width: var(--thumbnail-size);
+      height: var(--thumbnail-size);
+      margin-left: var(--padding);
+    }
+
+    div.description {
+      flex: 1;
+      margin: 0 var(--padding);
+      text-align: center;
+    }
+
     h3 {
       font-size: 2em;
+      // margin: 0.5em 0 0;
     }
-    img {
-      width: 20vmin;
-      height: 20vmin;
+
+    div.start {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      height: var(--thumbnail-size);
+      width: var(--start-size);
+      margin-right: var(--padding);
+      z-index: 1; /* to appear in front of li background */
+
+      button {
+        position: relative;
+        width: var(--start-size);
+        height: var(--start-size);
+        box-sizing: border-box;
+      }
+
+      button.live {
+        border-radius: var(--start-size);
+
+        div.timer {
+          position: absolute;
+          top: 0;
+          left: 0;
+          border: 0.25em solid #f006;
+          box-sizing: border-box;
+          width: 100%;
+          height: 100%;
+          border-radius: var(--start-size);
+        }
+
+        span.emoji {
+          background-color: transparent;
+        }
+
+        span.start {
+          display: inline-block;
+          top: 0;
+          line-height: var(--start-size);
+          background-color: transparent;
+          opacity: 0.75;
+          z-index: 1; /* to appear before timer */
+        }
+      }
+
+      span.emoji {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        font-size: var(--emoji-size);
+        line-height: var(--start-size);
+        background-color: #060;
+        z-index: -1;
+      }
+
+      span.start {
+        // background-color: #0006;
+        // color: var(--dark);
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: -1;
+        text-shadow: 0px 0px 5px #000, 0px 0px 5px #000;
+      }
     }
+
+    // @media (min-aspect-ratio: 117/100) {
+    //   ul {
+    //     top: 0;
+    //     height: 100vh;
+    //   }
+    // }
   }
 }

@@ -27,7 +27,7 @@ export const Event = () => {
   const {
     player,
     setHost,
-    setPlayer
+    // setPlayer
   } = useContext(EventContext)
 
 
