@@ -15,9 +15,7 @@ import { Start } from './Start';
 export const Lobby = () => {
   const {
     emoji,
-    packs,     // [ {<as sampler>}, ... ], // may be empty
-    openPack,  // <function>
-    packFolder // <folder of current pack>
+    packs,
   } = useContext(EventContext)
   
   const { t } = useTranslation()
@@ -47,7 +45,6 @@ export const Lobby = () => {
     return (
       <li
         key={pack.name}
-        onClick={() => openPack(pack)}
       >
         <img src={src} alt={name} title={name} />
         <div className="description">
@@ -60,7 +57,7 @@ export const Lobby = () => {
             />
           </span>
         </div>
-        <Start emoji={emoji}/>
+        <Start folder={pack.folder}/>
       </li>
     )
   })

@@ -33,16 +33,18 @@ export const EventProvider = ({ children }) => {
     members
   } = useContext(WSContext)
 
-  const [ emojis, setEmojis ]         = useState([])
-  const [ name, setName ]             = useState("")
-  const [ emoji, setEmoji ]           = useState("")
-  const [ disabled, setDisabled ]     = useState(true)
-  const [ message, setMessage ]       = useState("")
-  const [ host, setHost ]             = useState("")
-  const [ player, setPlayer ]         = useState("")
-  const [ packs, setPacks ]           = useState([])
-  const [ packFolder, setPackFolder ] = useState()
+  const [ emojis, setEmojis ]             = useState([])
+  const [ name, setName ]                 = useState("")
+  const [ emoji, setEmoji ]               = useState("")
+  const [ disabled, setDisabled ]         = useState(true)
+  const [ message, setMessage ]           = useState("")
+  const [ organization, setOrganization ] = useState("")
+  const [ player, setPlayer ]             = useState("")
+  const [ roomHost, setRoomHost ]         = useState("")
+  const [ packs, setPacks ]               = useState([])
+  const [ packFolder, setPackFolder ]     = useState()
 
+console.log("organization:", organization);
 
 
   // console.log("user_data:", user_data);
@@ -90,15 +92,18 @@ export const EventProvider = ({ children }) => {
           checkSoon({ name, emoji: selected })
         }
 
-      } else {
+      } else if (emoji && name) {
+        // emojis is empty because a player name has been registerd
         setEmoji(emoji)
 
-        if (emoji && name) {
-          generatePlayerName(emoji, name)
-        }
-      }
+        generatePlayerName(emoji, name)
 
+      } else {
+        // Empty array, no registration
+        getRandomEmojis()
+      }
     } else {
+      // No array at all
       getRandomEmojis()
     }
   }
@@ -260,8 +265,10 @@ export const EventProvider = ({ children }) => {
   // PACKS
 
   const getEventPacks = () => {
-    if (!host) {
-      return console.log("host required for getEventPacks()");
+    if (!organization) {
+      return //console.log(
+      //   "organization required for getEventPacks()"
+      // );
     }
 
     const callback = (error, packsData) => {
@@ -273,7 +280,9 @@ export const EventProvider = ({ children }) => {
     }
 
 
-    const body = JSON.stringify({ query: { munged_name: host } })
+    const body = JSON.stringify(
+      { query: { munged_name: organization } }
+    )
     const options = {
       ...FETCH_OPTIONS,
       body
@@ -287,7 +296,35 @@ export const EventProvider = ({ children }) => {
   }
 
 
-  const openPack = () => {
+  const createRoom = (folder) => {
+    // "folder": "663013af1db981a3f72b2e92/18-19_век"
+
+    const content = {
+      organization,
+      name,
+      emoji,
+      folder
+    }
+    sendMessage({
+      recipient_id: "game",
+      subject: "create_event_room",
+      content
+    })
+  }
+
+
+  const roomCreated = (message) => {
+    // console.log("roomCreated message:", JSON.stringify(message));
+    
+  }
+
+
+  // const roomJoined = (message) => {
+  //   console.log("roomJoined message:", message);
+  // }
+
+
+  const joinRoom = () => {
 
   }
 
@@ -307,7 +344,11 @@ export const EventProvider = ({ children }) => {
       { subject: "emojis", callback: treatInitialEmojis },
       { subject: "check", callback: treatIfEmojiIsTaken },
       { subject: "confirm", callback: treatConfirmation },
-      { subject: "swap", callback: treatSwap }
+      { subject: "swap", callback: treatSwap },
+      { subject: "event_room_created", callback: roomCreated },
+      // Treated by WSContext
+      // { subject: "room_joined", callback: roomJoined}
+
     ]
     addMessageListener(listeners)
 
@@ -319,7 +360,7 @@ export const EventProvider = ({ children }) => {
 
   useEffect(initialize, [user_id, user_data])
   useEffect(addMessageListeners) // called on every render
-  useEffect(getEventPacks, [host])
+  useEffect(getEventPacks, [organization])
 
 
   return (
@@ -335,12 +376,17 @@ export const EventProvider = ({ children }) => {
 
         player,
         setPlayer,
-        host,
-        setHost,
+        organization,
+        setOrganization,
 
         packs,
-        openPack,
-        packFolder
+        packFolder,
+
+        room,
+        roomHost,
+        setRoomHost,
+        joinRoom,
+        createRoom
       }}
     >
       {children}

@@ -13,12 +13,13 @@ import { Disconnected } from '../Components/Disconnected'
 
 import {
   Welcome,
-  Lobby
+  Lobby,
+  Room
 } from '../Pages/Event'
 
 
 export const Event = () => {
-  const { host/* , player_id*/ } = useParams()
+  const { organization, room_host } = useParams()
   const {
     requestSocketToOpen,
     socketIsOpen,
@@ -26,8 +27,10 @@ export const Event = () => {
   } = useContext(WSContext)
   const {
     player,
-    setHost,
-    // setPlayer
+    setOrganization,
+    room,     // forwarded from WSContext
+    roomHost, // read from params by a player who is not the host
+    setRoomHost
   } = useContext(EventContext)
 
 
@@ -38,9 +41,13 @@ export const Event = () => {
       } else {
         return <Disconnected error={socketError} />
       }
-    } else if (!player) {
 
-      return <Welcome host={host}/>
+    } else if (!player) {
+      return <Welcome organization={organization}/>
+
+    } else if (room || roomHost) {
+      return <Room />
+
     } else {
       return <Lobby />
     }
@@ -48,8 +55,8 @@ export const Event = () => {
 
 
   const setParams = () => {
-    setHost(host || "")
-    // setPlayer(player_id || "")
+    setOrganization(organization || "")
+    setRoomHost(room_host || "")
   }
 
 
@@ -61,7 +68,7 @@ export const Event = () => {
 
 
   useEffect(openSocketIfNeeded, [])
-  useEffect(setParams, [host /*, player_id */])
+  useEffect(setParams, [organization, room_host])
 
 
   return (

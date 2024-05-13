@@ -7,7 +7,7 @@ import React, { useContext } from 'react'
 import { WSContext } from '../../../Contexts'
 
 export const MemberList = () => {
-  const { members, user_id, host_id } = useContext(WSContext)
+  const { members, user_id, organization_id } = useContext(WSContext)
   // members = { <uuid>: <user_name>, ...}
 
 
@@ -27,7 +27,10 @@ export const MemberList = () => {
     .sort(alphabetically)
     .map(( entry ) => {
       const [ user_id, name ] = entry
-      const className = user_id === host_id ? "host" : ""
+      const className = user_id === organization_id
+        ? "organization"
+        : ""
+        
       return (
         <li
           key={user_id}

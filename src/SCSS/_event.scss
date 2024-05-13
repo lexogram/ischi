@@ -154,7 +154,7 @@
       padding: var(--padding) 0;
     }
 
-    li:nth-child(even) {
+    li:nth-child(odd) {
       background-color: #333;
     }
 
@@ -178,7 +178,7 @@
     div.start {
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      justify-content: center;
       align-items: center;
       height: var(--thumbnail-size);
       width: var(--start-size);
@@ -194,6 +194,7 @@
 
       button.live {
         border-radius: var(--start-size);
+        margin-bottom: var(--padding);
 
         div.timer {
           position: absolute;
@@ -227,18 +228,13 @@
         right: 0;
         font-size: var(--emoji-size);
         line-height: var(--start-size);
-        background-color: #060;
-        z-index: -1;
       }
 
       span.start {
-        // background-color: #0006;
-        // color: var(--dark);
         position: absolute;
         bottom: 0;
         left: 0;
         right: 0;
-        z-index: -1;
         text-shadow: 0px 0px 5px #000, 0px 0px 5px #000;
       }
     }

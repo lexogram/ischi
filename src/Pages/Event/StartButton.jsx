@@ -6,12 +6,19 @@
 import React from 'react'
 import { Timer } from './Timer'
 
-export const StartButton = ({ emoji, room, $live }) => {
+export const StartButton = ({
+  emoji,
+  $live,
+  action,
+  createdTime,
+  name,
+}) => {
 
 
   return (
     <button
-      className={$live ? "live" : ""}
+      className={$live ? "live" : "primary"}
+      onClick={action}
     >
 
       { $live && <Timer />}

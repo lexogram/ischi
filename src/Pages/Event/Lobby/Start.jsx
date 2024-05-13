@@ -3,21 +3,38 @@
  */
 
 
-import React from 'react'
+import React, { useContext } from 'react'
+import { EventContext } from '../../../Contexts'
 import { StartButton } from '../StartButton'
 
 
-export const Start = ({ emoji, room }) => {
+export const Start = ({ folder }) => {
+  const {
+    emoji,
+    room = { emoji: "🎁" },
+    joinRoom,
+    createRoom
+  } = useContext(EventContext)
+  const { name, /* emoji, */ createdTime } = room
+
+
+  const enterRoom = () => {
+    createRoom(folder)
+  }
 
 
   return (
     <div className="start">
-      <StartButton
+      { room.emoji && <StartButton
         $live={true}
-        emoji="🎁" // "🍃","🍄","🍅","🍆","🍇","🍈","🍉","🍊","🍋","🍌", "🍍","🍎","🍏","🍐","🍑","🍒","🍓","🍔","🍕","🍖","🍗","🍘","🍙","🍚","🍛","🍜","🍝","🍞","🍟","🍠" "🍡","🍢","🍣","🍤","🍥","🍦","🍧","🍨","🍩","🍪", "🍫","🍬","🍭","🍮","🍯","🍰","🍱","🍲","🍳","🍴","🍵","🍶","🍷","🍸","🍹","🍺","🍻","🍼","🍽️","🍾","🍿","🎀","🎁","🎂","🎃""🍵","🍶","🍷","🍸","🍹","🍺","🍻","🍼","🍽️","🍾", "🐼"
-      />
+        emoji={room.emoji}
+        action={joinRoom}
+        createdTime={createdTime}
+        name={name}
+      />}
       <StartButton
         emoji={emoji}
+        action={enterRoom}
       />
     </div>
   )

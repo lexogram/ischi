@@ -10,19 +10,30 @@
  */
 
 
-import React from 'react'
-import { Preview } from './Preview'
+import React, { useContext } from 'react'
+import { EventContext } from '../../../Contexts'
 import { QRCode } from '../../../Components/QRCode'
+import { Preview } from './Preview'
 import { Participants } from './Participants'
 import { StartButton } from '../StartButton'
 
 
-export const Room = (props) => {
+export const Room = () => {
+  const {
+    roomHost,
+    player
+  } = useContext(EventContext)
 
+  // Strip any existing emoji+name from the location.href...
+  const safe_host = encodeURI(roomHost || player) + "/"
+  const href = location.href.replace(safe_host, "")
+  // href = "http://domain:PORT/ischi#/event/nevzorovyh"
+  // ... and then add it (again)
+  const link = `${href}${safe_host}`
 
   return (
     <div className="room">
-      <QRCode />
+      <QRCode link={link}/>
       <Preview />
       <Participants />
       <StartButton />

@@ -11,7 +11,7 @@ import { Register } from './Register';
 
 
 export const Welcome = () => {
-  const { host, name } = useContext(EventContext)
+  const { organization, player } = useContext(EventContext)
   // TODO: use name instead of event in h1 element
 
   const { t } = useTranslation()
