@@ -26,7 +26,11 @@ export const Room = () => {
 
   // Strip any existing emoji+name from the location.href...
   const safe_host = encodeURI(roomHost || player) + "/"
-  const href = location.href.replace(safe_host, "")
+  let href = location.href.replace(safe_host, "")
+  // Ensure href ends in "/"
+  if (href.slice(-1) !== "/") {
+    href += "/"
+  }
   // href = "http://domain:PORT/ischi#/event/nevzorovyh"
   // ... and then add it (again)
   const link = `${href}${safe_host}`
