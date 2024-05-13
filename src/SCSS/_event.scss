@@ -248,6 +248,10 @@
   }
 
   .room {
+    position: absolute;
+    top: 0;
+    left: 0;
+
     .preview {
       width: 100vw;
       overflow: scroll;

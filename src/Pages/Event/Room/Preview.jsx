@@ -22,6 +22,11 @@ export const Preview = () => {
   const { joinRoom } = useContext(WSContext)
   const { gameData } = useContext(GameContext)
 
+  console.log("Preview",{ player, room, organization, roomHost });
+  console.log("typeof joinRoom:", typeof joinRoom);
+  console.log("gameData:", gameData);
+
+
   if (!room) {
     room = `${organization}/${roomHost}`
   }
@@ -42,15 +47,22 @@ export const Preview = () => {
     })
   }
 
-  const data = {
-    user_name: player,
-    room,
-    create_room: false
+
+
+  const getGameData = () => {
+    const data = {
+      user_name: player,
+      room,
+      create_room: false
+    }
+
+    console.log("getGameData", JSON.stringify(data, null, '  '));
+
+    joinRoom(data)
   }
 
   // Tell WSContext to send the message "send_user_to_room"
-  ;
-  useEffect(() => joinRoom(data), [])
+  useEffect(getGameData, [])
 
   return (
     // <h1>room: {room}, roomHost: {roomHost}</h1>
