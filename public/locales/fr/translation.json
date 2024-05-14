@@ -133,6 +133,10 @@
     "same_name": "Quelqu'un d'autre avec le nom \"{{name}}\" a déjà choisi {{emoji}}.",
     "another": "Veuillez choisir un autre avatar.",
     "register": "Allons-y !",
+    "join": "Participer",
+    "start": "Commencer",
+    "start-now": "Démarrer",
+    "no-player-yet": "En attente des joueurs...",
     "score": "Score",
     "time": "Temps"
   },

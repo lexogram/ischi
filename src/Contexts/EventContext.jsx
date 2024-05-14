@@ -44,6 +44,8 @@ export const EventProvider = ({ children }) => {
   const [ packs, setPacks ]               = useState([])
   const [ packFolder, setPackFolder ]     = useState()
   const [ noStrangers, setNoStrangers ]   = useState(true)
+  const [ startTime, setStartTime ]       = useState(0)
+  
   
 
   // console.log("user_data:", user_data);
@@ -313,7 +315,7 @@ export const EventProvider = ({ children }) => {
 
 
   const roomCreated = (message) => {
-    // console.log("roomCreated message:", JSON.stringify(message));
+    console.log("roomCreated message:", JSON.stringify(message));
     
   }
 
@@ -325,6 +327,25 @@ export const EventProvider = ({ children }) => {
 
   const joinRoom = () => {
 
+  }
+
+
+  const startGame = () => {
+    const content = { room }
+
+    sendMessage({
+      recipient_id: "game",
+      subject: "start_event_game",
+      content
+    })
+  }
+
+
+  const gameStarted = ({ content }) => {
+    if (content.room === room) {
+      // This is the game this player wants to play
+      setStartTime(content.startTime)
+    } 
   }
 
 
@@ -345,6 +366,7 @@ export const EventProvider = ({ children }) => {
       { subject: "confirm", callback: treatConfirmation },
       { subject: "swap", callback: treatSwap },
       { subject: "event_room_created", callback: roomCreated },
+      { subject: "event_game_started", callback: gameStarted}
       // Treated by WSContext
       // { subject: "room_joined", callback: roomJoined}
 
@@ -388,7 +410,9 @@ export const EventProvider = ({ children }) => {
         createRoom,
 
         noStrangers,
-        setNoStrangers
+        setNoStrangers,
+        startTime,
+        startGame
       }}
     >
       {children}

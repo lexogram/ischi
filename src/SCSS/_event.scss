@@ -7,6 +7,7 @@
   /* Welcome */
   --welcome-size: min(320px, calc(100vw - var(--scroll-size)));
   --welcome-emoji-size: calc(0.2 * var(--welcome-size));
+  /* WARNING: In narrow screens with Safari, 0.5 is needed */
   --welcome-emoji-font: calc( 0.75 * var(--welcome-emoji-size));
   --welcome-font-size: min(4.75vw, 16px);
 
@@ -208,7 +209,7 @@
   }
 
   .lobby {
-    font-size: min(3vmin, 30px);
+    font-size: min(2.5vmin, 25px);
 
     .log-out {
       position: absolute;
@@ -283,6 +284,7 @@
         width: var(--start-size);
         height: var(--start-size);
         box-sizing: border-box;
+        overflow: hidden;
       }
 
       /* Centre emojis in both buttons */

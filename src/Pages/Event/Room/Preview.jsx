@@ -23,8 +23,8 @@ export const Preview = () => {
   const { gameData } = useContext(GameContext)
 
   console.log("Preview",{ player, room, organization, roomHost });
-  console.log("typeof joinRoom:", typeof joinRoom);
-  console.log("gameData:", gameData);
+  // console.log("typeof joinRoom:", typeof joinRoom);
+  // console.log("gameData:", gameData);
 
 
   if (!room) {
@@ -46,7 +46,6 @@ export const Preview = () => {
       )
     })
   }
-
 
 
   const getGameData = () => {

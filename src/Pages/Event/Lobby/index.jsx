@@ -20,18 +20,6 @@ export const Lobby = () => {
   
   const { t } = useTranslation()
 
-  // let title
-  // if (source === "sampler") {
-  //   packs = samplers
-  //   title = t("pack.sampler")
-  // } else {
-  //   title = <Trans
-  //     i18nKey={`pack.for.${type}`}
-  //     values={{ owner }}
-  //     defaults="Packs created for {{owner}}"
-  //   />
-  // }
-
   const packList = packs.map( pack => {
     const { name, folder, thumbnail, total } = pack
 

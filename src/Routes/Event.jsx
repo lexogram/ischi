@@ -16,7 +16,7 @@ import {
   Lobby,
   Room
 } from '../Pages/Event'
-
+import { Game } from '../Pages/Play/6_Game'
 
 export const Event = () => {
   const { organization, room_host } = useParams()
@@ -30,7 +30,8 @@ export const Event = () => {
     setOrganization,
     room,     // forwarded from WSContext
     roomHost, // read from params by a player who is not the host
-    setRoomHost
+    setRoomHost,
+    startTime
   } = useContext(EventContext)
 
 
@@ -45,11 +46,14 @@ export const Event = () => {
     } else if (!player) {
       return <Welcome organization={organization}/>
 
-    } else if (room || roomHost) {
+    } else if (!room && !roomHost) {
+      return <Lobby />
+
+    } else if (!startTime) {
       return <Room />
 
     } else {
-      return <Lobby />
+      return <Game />
     }
   })()
 

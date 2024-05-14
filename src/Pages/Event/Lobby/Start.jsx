@@ -4,18 +4,24 @@
 
 
 import React, { useContext } from 'react'
+import { useTranslation } from 'react-i18next';
 import { EventContext } from '../../../Contexts'
 import { StartButton } from '../StartButton'
 
 
 export const Start = ({ folder }) => {
+  const { t } = useTranslation()
   const {
     emoji,
-    room = { emoji: "🎁" },
+    room,
     joinRoom,
     createRoom
   } = useContext(EventContext)
-  const { name, /* emoji, */ createdTime } = room
+
+  // In the future, room (or something similar) will contain
+  // data about the oldest publicly available game that has not
+  // started yet.
+  const { name, /* emoji, */ createdTime } = (room || {})
 
 
   const enterRoom = () => {
@@ -25,18 +31,18 @@ export const Start = ({ folder }) => {
 
   return (
     <div className="start">
-      { room.emoji && <StartButton
+      { room?.emoji && <StartButton
         $live={true}
         emoji={room.emoji}
         action={joinRoom}
         createdTime={createdTime}
         name={name}
-        text="Join"
+        text={t("event.join")}
       />}
       <StartButton
         emoji={emoji}
         action={enterRoom}
-        text="Start"
+        text={t("event.start")}
       />
     </div>
   )
