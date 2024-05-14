@@ -38,9 +38,53 @@
     (100vmin - 2 * var(--qr-collapsed-width)) / 2
   );
   --member-text-size: calc(var(--member-square-size) / 6);
+  /* Fit emojis to squares... even on Safari */
+  --member-emoji-size: calc(var(--member-square-size) * 0.6667);
+  --stranger-size: calc(var(--qr-collapsed-width) * 0.55);
+  --danger-size: calc(var(--qr-collapsed-width) * 0.6667);
 
 
-  /* Shared component: timer ring to fit in live start button */
+  /* Shared components */
+  .noStrangers {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: var(--qr-collapsed-width);
+    height: var(--qr-collapsed-width);
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+
+    input[type=checkbox] {
+      position: absolute;
+      left: -999vw;
+    }
+
+    span {
+      position: absolute;
+      top: -0.05em;
+      left: 0;
+      width: var(--qr-collapsed-width);
+      line-height: var(--qr-collapsed-width);
+      padding: 0;
+      margin: 0;
+    }
+
+    span.stranger {
+      font-size: var(--stranger-size);
+    }
+
+    span.hidden {
+      display: none;
+    }
+
+    span.danger {
+      font-size: var(--danger-size);
+      opacity: 0.75;
+    }
+  }
+  
+  /* timer ring to fit in live start button */
   div.timer {
     position: absolute;
     top: 0;
@@ -303,6 +347,7 @@
         font-size: var(--member-square-size);
         line-height: var(--member-square-size);
         overflow: hidden;
+        font-size: var(--member-emoji-size);
       }
 
       span.start {

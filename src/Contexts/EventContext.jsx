@@ -43,6 +43,8 @@ export const EventProvider = ({ children }) => {
   const [ roomHost, setRoomHost ]         = useState("")
   const [ packs, setPacks ]               = useState([])
   const [ packFolder, setPackFolder ]     = useState()
+  const [ noStrangers, setNoStrangers ]   = useState(true)
+  
 
   // console.log("user_data:", user_data);
   // {} OR
@@ -383,7 +385,10 @@ export const EventProvider = ({ children }) => {
         roomHost,
         setRoomHost,
         joinRoom,
-        createRoom
+        createRoom,
+
+        noStrangers,
+        setNoStrangers
       }}
     >
       {children}
