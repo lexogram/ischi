@@ -108,6 +108,13 @@ button:disabled,
   pointer-events: none;
 }
 
+.button.like {
+  border-style: solid!important;
+  // pointer-events: none;
+  cursor: default;
+  background-color: transparent!important;
+}
+
 .qrcode {
   --size: 2em;
   display: flex;

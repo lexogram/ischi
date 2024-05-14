@@ -41,7 +41,7 @@ const deployed = location.host === "lexogram.github.io"
 const URL = (deployed)
   ? `/ischi/locales/languages.json`
   : `/ischi/locales/languages_dev.json`
-
+// const URL = `/ischi/locales/languages.json`
 
 
 export const I18nContext = createContext({})

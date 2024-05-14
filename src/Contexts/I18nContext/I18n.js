@@ -11,6 +11,7 @@ const deployed = location.host === "lexogram.github.io"
 const loadPath = (deployed)
   ? `locales/{{lng}}/{{ns}}.json`
   : `ischi/locales/{{lng}}/{{ns}}.json`
+// const loadPath = `locales/{{lng}}/{{ns}}.json`
 
 const options = {
   debug: false,

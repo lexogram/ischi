@@ -4,7 +4,6 @@
   justify-content: space-between;
   --padding: 0.5em;
 
-
   .welcome {
     --size: min(320px, calc(100vw - var(--scroll-size)));
     --emoji-size: calc(0.2 * var(--size));
@@ -249,19 +248,57 @@
 
   .room {
     position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     top: 0;
     left: 0;
+    height: 100vh;
+    
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+    }
 
     .preview {
-      width: 100vw;
-      overflow: scroll;
+      --width: calc(100vw - var(--scroll-size));
+      --image-size: calc(var(--width) / 4);
+
+      margin-top: 1em;
+      flex: 1;
+      overflow-x: hidden;
+      overflow-y: auto;
+
       ul {
-        list-style-type: none;
-        padding: 0;
-        display: flex;
+        flex-wrap: wrap;
       }
+
       img {
-        width: 25vmin;
+        width: var(--image-size);
+        margin: 0;
+        vertical-align: top;
+      }
+    }
+
+    .members {
+      width: fit-content;
+      margin: 1em auto;
+      --size: 16vmin;
+
+      li {
+        margin: 0 1vmin;
+      }
+
+      span {
+        display: inline-block;
+        width: var(--size);
+        height: var(--size);
+        text-align: center;
+        font-size: var(--size);
+        line-height: var(--size);
       }
     }
   }
