@@ -46,14 +46,16 @@ export const QRCode = ({ link }) => {
 
 
   const imgStyle = {
-    width: collapsed ? "10vw" : "80vmin",
+    width: collapsed
+      ? "var(--qr-collapsed-width)"
+      : "var(--qr-expanded-width)",
     cursor: "pointer"
   }
 
 
   const aStyle = {
     display: collapsed ? "none" : "inherit",
-    width: "80vmin"
+    width: "var(--qr-expanded-width)"
   }
 
 

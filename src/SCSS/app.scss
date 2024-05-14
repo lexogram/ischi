@@ -22,6 +22,9 @@
   --icon-ratio: 0.25;
   --icon-size: calc(var(--icon-ratio) * var(--menu-width));
   --btn-border-radius: 0.25em;
+
+  --qr-collapsed-width: 10vmin;
+  --qr-expanded-width: 80vmin;
 }
 
 body {

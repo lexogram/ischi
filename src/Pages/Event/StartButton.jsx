@@ -12,6 +12,7 @@ export const StartButton = ({
   action,
   createdTime,
   name,
+  text
 }) => {
 
 
@@ -28,7 +29,7 @@ export const StartButton = ({
       <span 
         className="start"
       >
-        {$live ? "Join" : "Start"}
+        {text}
       </span>
     </button>
   )

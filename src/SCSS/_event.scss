@@ -4,16 +4,66 @@
   justify-content: space-between;
   --padding: 0.5em;
 
+  /* Welcome */
+  --welcome-size: min(320px, calc(100vw - var(--scroll-size)));
+  --welcome-emoji-size: calc(0.2 * var(--welcome-size));
+  --welcome-emoji-font: calc( 0.75 * var(--welcome-emoji-size));
+  --welcome-font-size: min(4.75vw, 16px);
+
+  /* Scale padding for name input:text with font-size*/
+  --pad-w: calc(0.125 * var(--welcome-font-size));
+  --pad-h: calc(0.0625 * var(--welcome-font-size));
+  --pad-x: calc(0.5 * var(--welcome-font-size));
+  --input-width: calc(var(--welcome-size) - var(--pad-x));
+
+  /* Lobby */
+  --thumbnail-size: 30vmin; /* for pack thumbnail */
+  --lobby-item-height: calc(var(--thumbnail-size) + 1em);
+  /* Square size of Start and Join buttons.
+   * Also line-height for emojis and Join text, to center them.
+   */
+  --start-size: calc(var(--thumbnail-size) * 0.475);
+  /* Size of emoji in Start and Join buttons */
+  --start-emoji-size: calc(var(--start-size) * 0.6667);
+  /* Centre lobby on a wide screen*/
+  --lobby-width: 100vmin;
+  --lobby-left: calc((100vw - var(--lobby-width)) / 2);
+  /* Log out button in space above lobby list*/
+  --out-size: 2em;
+  --out-font: calc(var(--out-size) * 0.8);
+  --lobby-list-height: calc(100vh - var(--out-size));
+
+  /* Room */
+  --member-square-size: calc(
+    (100vmin - 2 * var(--qr-collapsed-width)) / 2
+  );
+  --member-text-size: calc(var(--member-square-size) / 6);
+
+
+  /* Shared component: timer ring to fit in live start button */
+  div.timer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    border: 0.5vmin solid #f006;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    border-radius: 100vmax;
+  }
+
+  /* Centre text for Start buttons, make visible on background */
+  span.start {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-shadow: 0px 0px 5px #000, 0px 0px 5px #000;
+  }
+
   .welcome {
-    --size: min(320px, calc(100vw - var(--scroll-size)));
-    --emoji-size: calc(0.2 * var(--size));
-    --emoji-font: calc( 0.75 * var(--emoji-size));
-    --font-size: min(4.75vw, 16px);
-    --pad-w: calc(0.125 * var(--font-size));
-    --pad-h: calc(0.0625 * var(--font-size));
-    --pad-x: calc(0.5 * var(--font-size));
-    width: var(--size);
-    font-size: var(--font-size);
+    width: var(--welcome-size);
+    font-size: var(--welcome-font-size);
 
     .languages {
       position: relative;
@@ -30,8 +80,8 @@
     
     .emojis {
       position: relative;
-      width: var(--size);
-      height: var(--size);
+      width: var(--welcome-size);
+      height: var(--welcome-size);
       margin: 0 auto;
       text-align: center;
     }
@@ -46,12 +96,12 @@
     }
     
     input[type=text] {
+      /* Padding scales with font-size (not fixed pixels) */
       display: inline-block;
-      width: calc(var(--size) - var(--pad-x));
       font-size: inherit;
+      width: var(--input-width);
       margin: 0 auto var(--padding);
-      text-align: left;
-      padding: var(--pad-h) var(--pad-w)
+      padding: var(--pad-h) var(--pad-w);
     }
     
     input[type=radio] {
@@ -60,24 +110,27 @@
       opacity: 0;
     }
     
+    /* Dimensions of the space for each emoji (even when empty) */
     label:empty,
     span {
       display: inline-block;
-      width: var(--emoji-size);
-      height: var(--emoji-size);
-      font-size: var(--emoji-font);
+      width: var(--welcome-emoji-size);
+      height: var(--welcome-emoji-size);
+      font-size: var(--welcome-emoji-font);
       box-sizing: border-box;
-      text-align: center;
-      opacity: 0.75;
-      vertical-align: top;
     }
     
+    /* RadioButton-like status for unselected emojis */
     span {
       border: 1px outset #888;
       border-radius: 0.25em;
+      text-align: center;
+      opacity: 0.75;
+      vertical-align: top;
       cursor: pointer;
     }
     
+    /* Selected emoji */
     input[type=radio]:checked ~ span {
       opacity: 1;
       background-color: var(--light);
@@ -96,27 +149,22 @@
       height: 100%;
     }
     
+    /* Make the 'reason you can't press this button' p the same
+     * shape as the button
+     */
     .busy-button p {
       display: flex;
       justify-content: center;
       align-items: center;
       background-color: #533;
       text-align: center;
-      border-radius: var(--btn-border-radius);
+      border-radius: var(--btn-border-radius); /* in app.scss */
       margin: 0;
     }
   }
 
   .lobby {
     font-size: min(3vmin, 30px);
-    --width: 100vmin;
-    --out-size: 2em;
-    --out-font: calc(var(--out-size) * 0.8);
-    --list-height: calc(100vh - var(--out-size));
-    --thumbnail-size: 30vmin;
-    --start-size: calc(var(--thumbnail-size) * 0.475);
-    --emoji-size: calc(var(--start-size) * 0.6667);
-    --item-height: calc(var(--thumbnail-size) + 1em);
 
     .log-out {
       position: absolute;
@@ -135,9 +183,9 @@
     ul {
       position: absolute;
       top: var(--out-size);
-      left: calc((100vw - var(--width)) / 2);
-      width: var(--width);
-      height: var(--list-height);
+      left: var(--lobby-left);
+      width: var(--lobby-width);
+      height: var(--lobby-list-height);
       overflow-y: auto;
       overflow-x: hidden;
       list-style-type: none;
@@ -146,7 +194,7 @@
     }
 
     li {
-      height: var(--item-height);
+      height: var(--lobby-item-height);
       display: flex;
       border-bottom: 1px solid var(--light);
       box-sizing: border-box;
@@ -171,7 +219,6 @@
 
     h3 {
       font-size: 2em;
-      // margin: 0.5em 0 0;
     }
 
     div.start {
@@ -179,71 +226,44 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      /* Same height as pack thumbnail */
       height: var(--thumbnail-size);
+      /* Slightly less than half the height, to leave a gap */
       width: var(--start-size);
       margin-right: var(--padding);
       z-index: 1; /* to appear in front of li background */
 
       button {
+        /* Square that fits div.start width*/
         position: relative;
         width: var(--start-size);
         height: var(--start-size);
         box-sizing: border-box;
       }
 
-      button.live {
-        border-radius: var(--start-size);
-        margin-bottom: var(--padding);
-
-        div.timer {
-          position: absolute;
-          top: 0;
-          left: 0;
-          border: 0.25em solid #f006;
-          box-sizing: border-box;
-          width: 100%;
-          height: 100%;
-          border-radius: var(--start-size);
-        }
-
-        span.emoji {
-          background-color: transparent;
-        }
-
-        span.start {
-          display: inline-block;
-          top: 0;
-          line-height: var(--start-size);
-          background-color: transparent;
-          opacity: 0.75;
-          z-index: 1; /* to appear before timer */
-        }
-      }
-
+      /* Centre emojis in both buttons */
       span.emoji {
         position: absolute;
         top: 0;
         left: 0;
         right: 0;
-        font-size: var(--emoji-size);
+        font-size: var(--start-emoji-size);
         line-height: var(--start-size);
       }
 
-      span.start {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        text-shadow: 0px 0px 5px #000, 0px 0px 5px #000;
+      button.live {
+        border-radius: 100vmax;
+        margin-bottom: var(--padding);
+
+        /* Show Join text in the middle */
+        span.start {
+          top: 0;
+          line-height: var(--start-size);
+          opacity: 0.75;
+          z-index: 1; /* to appear before timer */
+        }
       }
     }
-
-    // @media (min-aspect-ratio: 117/100) {
-    //   ul {
-    //     top: 0;
-    //     height: 100vh;
-    //   }
-    // }
   }
 
   .room {
@@ -254,51 +274,66 @@
     top: 0;
     left: 0;
     height: 100vh;
-    
 
-    ul {
-      list-style-type: none;
-      padding: 0;
-      margin: 0;
+    .members {
       display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      width: 100%;
+
+      div:not(.timer),
+      button {
+        position: relative;
+        width: var(--member-square-size);
+        height: var(--member-square-size);
+        padding: 0;
+        border-radius: 2em;
+      }
+
+      button.live {
+        width:  var(--member-square-size);
+        border-radius: 100vmax;
+      }
+
+      span {
+        display: inline-block;
+        width: var(--member-square-size);
+        height: var(--member-square-size);
+        text-align: center;
+        font-size: var(--member-square-size);
+        line-height: var(--member-square-size);
+        overflow: hidden;
+      }
+
+      span.start {
+        font-size: var(--member-text-size);
+      }
     }
 
     .preview {
       --width: calc(100vw - var(--scroll-size));
       --image-size: calc(var(--width) / 4);
+      position: relative;
 
       margin-top: 1em;
-      flex: 1;
+      flex-shrink: 1;
       overflow-x: hidden;
       overflow-y: auto;
 
       ul {
+        display: flex;
         flex-wrap: wrap;
+        justify-content: center;
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        max-height: 24vh;
       }
 
       img {
-        width: var(--image-size);
+        height: min(8vh, 40vw);
         margin: 0;
         vertical-align: top;
-      }
-    }
-
-    .members {
-      width: fit-content;
-      margin: 1em auto;
-      --size: 16vmin;
-
-      li {
-        margin: 0 1vmin;
-      }
-
-      span {
-        display: inline-block;
-        width: var(--size);
-        height: var(--size);
-        text-align: center;
-        font-size: var(--size);
-        line-height: var(--size);
       }
     }
   }

@@ -15,7 +15,6 @@ import { EventContext } from '../../../Contexts'
 import { QRCode } from '../../../Components/QRCode'
 import { Preview } from './Preview'
 import { Participants } from './Participants'
-import { StartButton } from '../StartButton'
 
 
 export const Room = () => {
@@ -38,9 +37,8 @@ export const Room = () => {
   return (
     <div className="room">
       <QRCode link={link}/>
-      <Preview />
       <Participants />
-      <StartButton />
+      <Preview />
     </div>
   )
 }

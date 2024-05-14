@@ -31,10 +31,12 @@ export const Start = ({ folder }) => {
         action={joinRoom}
         createdTime={createdTime}
         name={name}
+        text="Join"
       />}
       <StartButton
         emoji={emoji}
         action={enterRoom}
+        text="Start"
       />
     </div>
   )
