@@ -9,12 +9,12 @@ import React, {
   useEffect,
   useRef
 } from 'react'
+import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { WSContext } from './WSContext'
 import { GameContext } from './GameContext'
 import { debounce } from '../Utilities/debounce';
 import { GETEVENTPACKS, FETCH_OPTIONS } from '../Constants'
-import { Game } from '../Pages/Play/6_Game';
 
 
 
@@ -23,6 +23,7 @@ export const EventContext = createContext()
 
 
 export const EventProvider = ({ children }) => {
+  const navigate = useNavigate()
   const { t } = useTranslation()
   const {
     sendMessage,
@@ -32,7 +33,11 @@ export const EventProvider = ({ children }) => {
     removeMessageListener,
     room
   } = useContext(WSContext)
-  const { gameData } = useContext(GameContext)
+  const {
+    leaveGame,
+    endGame,
+    gameEnded
+  } = useContext(GameContext)
 
   const [ emojis, setEmojis ]             = useState([])
   const [ name, setName ]                 = useState("")
@@ -45,6 +50,11 @@ export const EventProvider = ({ children }) => {
   const [ packs, setPacks ]               = useState([])
   const [ noStrangers, setNoStrangers ]   = useState(true)
   const [ startTime, setStartTime ]       = useState(0)
+
+
+  console.log(`EventContext room: ${room}, roomHost: ${roomHost},startTime: ${startTime}, gameEnded: ${gameEnded}`);
+  console.log("location:", location.href);
+
 
   // console.log("user_data:", user_data);
   // {} OR
@@ -61,7 +71,6 @@ export const EventProvider = ({ children }) => {
 
   const checkRef = useRef()
   const checkIfEmojiIsTaken = checkRef.current // starts undefined
-
 
 
   const initialize = () => {
@@ -321,11 +330,6 @@ export const EventProvider = ({ children }) => {
   }
 
 
-  // const roomJoined = ({ content }) => {
-  //   console.log("EventContext roomJoined message:", content);
-  // }
-
-
   const startGame = () => {
     const content = { room }
 
@@ -334,9 +338,19 @@ export const EventProvider = ({ children }) => {
       subject: "start_event_game",
       content
     })
+
+    // Reply to "event_game_started" => gameStarted, sent to all
+    // current members of the room. Any who join the game after
+    // it has started will be able to read startTime from the
+    // gameData
   }
 
 
+
+  /** gameStarted can be called
+   *
+   * @param {*} message
+   */
   const gameStarted = message => {
     let startTime
 
@@ -348,12 +362,58 @@ export const EventProvider = ({ children }) => {
       }
       ({ startTime } = content)
 
-    } else {
-      startTime = gameData?.startTime
+    // } else {
+    //   // This is for a player who joined the room after the
+    //   // game started... which is not currently planned
+    //   startTime = !gameOver && gameData?.startTime
     }
 
-    // This is the game this player wants to play
     setStartTime(startTime || 0)
+  }
+
+
+  const returnToLobby = () => {
+    // Force the room_host param to become empty, which will
+    // delete roomHost
+    let hash = location.hash
+      .replace(/#/, "")
+      .replace(roomHost+"/", "")
+      .replace(encodeURI(roomHost)+"/", "")
+    navigate(hash)
+  }
+
+
+  const leaveTheGame = () => {
+    console.log(`
+    ***** leaveGame for ${room} called ******`)
+
+    if (!roomHost) {
+      // This user _is_ the roomHost. Send a message to all
+      // players that this user is ending the game
+      endGame()
+
+    } else {
+      // This user joined a room hosted by roomHost
+      returnToLobby()
+
+      // Tell the server that this user is leaving the room
+      // ... but don't stop the game
+      leaveGame()
+    }
+
+    setStartTime(0)
+  }
+
+
+  const gameEndedByHost = () => {
+    console.log(`gameEndedByHost`)
+
+    if (startTime && gameEnded) {
+      setStartTime(0)
+    }
+    if (roomHost) {
+      returnToLobby()
+    }
   }
 
 
@@ -390,7 +450,7 @@ export const EventProvider = ({ children }) => {
   useEffect(initialize, [user_id, user_data])
   useEffect(addMessageListeners) // called on every render
   useEffect(getEventPacks, [organization])
-  useEffect(gameStarted, [gameData?.startTime])
+  useEffect(gameEndedByHost, [gameEnded])
 
 
   return (
@@ -421,7 +481,9 @@ export const EventProvider = ({ children }) => {
         setNoStrangers,
         startTime,
         setStartTime,
-        startGame
+        startGame,
+        leaveTheGame,
+        // gameEnded
       }}
     >
       {children}

@@ -13,7 +13,8 @@
 import React, { useContext } from 'react'
 import { EventContext } from '../../../Contexts'
 import { QRCode } from '../../../Components/QRCode'
-import { NoStrangers } from './NoStrangers'
+// import { NoStrangers } from './NoStrangers'
+import { LeaveGame } from '../../../Components/LeaveGame'
 import { Preview } from './Preview'
 import { Participants } from './Participants'
 
@@ -38,6 +39,7 @@ export const Room = () => {
   return (
     <div className="room">
       <QRCode link={link}/>
+      <LeaveGame $isPreview={true}/>
       {/* <NoStrangers /> */}
       <Participants />
       <Preview />

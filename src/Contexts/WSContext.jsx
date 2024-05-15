@@ -3,7 +3,6 @@
  */
 
 
-
 import storage from '../Utilities/storage'
 
 
@@ -30,29 +29,124 @@ const BASE_URL = `https://${HOSTNAME}${PORT}/`   // trailing slash
 
 export const WSContext = createContext()
 
-
+let render = 0
 
 export const WSProvider = ({ children }) => {
+  const renders = ++render
+
   const [ socketIsNeeded, setSocketIsNeeded ] = useState(false)
   const [ socketIsOpen, setSocketIsOpen ] = useState(false)
   const [ socketError, setSocketError ] = useState("")
   const [ user_id, setUserId ] = useState()
   const [ user_name, setUserName ] = useState()
   const [ user_data, set_user_data ] = useState({})
-  const [ room, setRoom ] = useState()
+  const [ room, setTheRoom ] = useState()
   const [ existing_room, setExistingRoom ] = useState(true)
   const [ errorStatus, setErrorStatus ] = useState(0)
   const [ members, setMembers ] = useState([])
   const [ host, setHost ] = useState()
   const [ host_id, setHostId ] = useState()
   const [ queuedMessages, setQueuedMessages ] = useState([])
-  
+
   const socketRef = useRef(null)
   const socket = socketRef.current
 
-  
-  console.log("queuedMessages:", queuedMessages);
-  console.log("socket:", socket);
+  // console.log(`${renders}. queuedMessages: ${JSON.stringify(queuedMessages, null, 2)}, socketIsOpen: ${socketIsOpen}`)
+
+  console.log(`${renders}. room: ${room}`)
+
+
+  const treatSystemMessage = (data) => {
+    const replacer = (key, value) => {
+      if (key === "choices" || key === "emojis") {
+        return `Array(${value.length})`
+      }
+      return value
+    }
+    console.log(`${renders}. Incoming system message: ${JSON.stringify(data, replacer, 2)}`)
+
+    const { subject, recipient_id, content } = data
+
+    switch (subject) {
+      case "connection":
+        return treatConnection(recipient_id)
+
+      case "user_id_restored":
+        return userIdRestored(recipient_id, content)
+
+      case "existing_room":
+        return setExistingRoom(content) // string or undefined
+
+      case "room_joined":
+        return treatStatus(content)
+
+      case "room_members":
+        return setRoomMembers(content)
+
+      case "left_room":
+        return exitRoom(content)
+
+      case "room_closing":
+        return roomClosing(content)
+    }
+  }
+
+
+  const treatConnection = (recipient_id) => {
+    // When it accepts a new connection request, WebSocket
+    // server should send a message with the format:
+    // { sender_id:    "system",
+    //   subject:      "connection",
+    //   recipient_id: <uuid>
+    // }
+    // This <uuid> should be used as the sender_id for all
+    // future messages.
+    if (last_id) {
+      // This user logged in previously exchange the temporary
+      // recipient_id for the previous user_id
+      console.log(`${renders}. last_id detected ${last_id}`);
+
+      restoreUserId(last_id, recipient_id)
+
+    } else {
+      setUserId(recipient_id)
+      storage.setItem("last_id", recipient_id)
+    }
+
+    return true
+  }
+
+
+  const restoreUserId = (last_id, temp_id) => {
+    console.log(`${renders}. About to restore ${last_id} (currently ${temp_id})`)
+
+    // The socket has only just been opened, and useState has
+    // not had time to set socket to a socket object
+    setQueuedMessages([{
+      recipient_id: "system",
+      sender_id: temp_id,
+      subject: "restore_user_id",
+      content: last_id
+    }])
+  }
+
+
+  const userIdRestored = (user_id, content) => {
+    setUserId(user_id)
+    set_user_data(content)
+
+    const { room, user_name } = content
+    if (room) {
+      joinRoom({ room, user_name }, user_id)
+    }
+  }
+
+
+  const setRoom = room => {
+    console.log(`${renders}. Setting the room to ${room}`)
+
+    setTheRoom(room)
+  }
 
 
   const treatStatus = ({ status, room, host }) => {
@@ -80,6 +174,7 @@ export const WSProvider = ({ children }) => {
     host,
     host_id
   }) => {
+    console.log(`${renders}. WS setRoomMembers ${room}` )
     setRoom(room)
     setMembers(members)
     setHost(host)
@@ -101,6 +196,8 @@ export const WSProvider = ({ children }) => {
 
 
   const sendMessage = (message) => {
+    console.log(`${renders}. About to sendMessage ${JSON.stringify(message, null, 2)}`)
+
     const sender_id = message.sender_id || user_id
 
     if (!socketIsOpen || !sender_id) {
@@ -127,71 +224,6 @@ export const WSProvider = ({ children }) => {
   }
 
 
-  const treatSystemMessage = data => {
-    const { subject, recipient_id, content } = data
-
-    switch (subject) {
-      case "connection":
-        // When it accepts a new connection request, WebSocket
-        // server should send a message with the format:
-        // { sender_id:    "system",
-        //   subject:      "connection",
-        //   recipient_id: <uuid>
-        // }
-        // This <uuid> should be used as the sender_id for all
-        // future messages.
-        if (last_id) {
-          // This user logged in previously exchange the temporary
-          // recipient_id for the previous user_id
-          console.log("About to restoreUserId. last_id", last_id);
-          
-          restoreUserId(last_id, recipient_id)
-        
-        } else {
-          setUserId(recipient_id)
-          storage.setItem("last_id", recipient_id)
-        }
-        return true
-
-      case "user_id_restored": 
-        return userIdRestored(recipient_id, content)
-
-      case "existing_room":
-        return setExistingRoom(content) // string or undefined
-
-      case "room_joined":
-        return treatStatus(content)
-
-      case "room_members":
-        return setRoomMembers(content)
-    }
-  }
-
-
-  const restoreUserId = (last_id, temp_id) => {
-    // The socket has only just been opened, and useState has
-    // not had time to set socket to a socket object
-    setQueuedMessages([{
-      recipient_id: "system",
-      sender_id: temp_id,
-      subject: "restore_user_id",
-      content: last_id
-    }])
-  }
-
-
-
-  const userIdRestored = (user_id, content) => {
-    setUserId(user_id)
-    set_user_data(content)
-
-    const { room, user_name } = content
-    if (room) {
-      joinRoom({ room, user_name }, user_id)
-    }
-  }
-
-
   const sendConnectionConfirmation = () => {
     if (user_id) {
       const timeNow = new Date().toTimeString().split(" ")[0]
@@ -215,9 +247,11 @@ export const WSProvider = ({ children }) => {
       return
     }
 
-    if (data.sender_id === "system") {
-      return treatSystemMessage(data)
-    }
+    // if (data.sender_id === "system") {
+    //   // This needs to call the function in the most recently
+    //   // rendered scope
+    //   return treatSystemMessage(data)
+    // }
 
     treatMessage(data)
   }
@@ -313,14 +347,34 @@ export const WSProvider = ({ children }) => {
   }
 
 
-  const leaveRoom = content => {
+  const leaveRoom = () => {
+    console.log(`${renders}. About to leaveRoom ${room}`)
+
     const message = {
       recipient_id: "system",
       subject: "leave_room",
-      content // { room }
+      content: { room }
     }
 
     sendMessage(message)
+  }
+
+
+  const exitRoom = content => {
+    console.log(`${renders}. Received exitRoom ${content.room} (${room})`)
+
+    if (room === content.room) {
+      setRoom()
+    }
+  }
+
+
+  const roomClosing = (content) => {
+    console.log(`${renders}. Received roomClosing ${content.room} (${room})`)
+
+    if (room === content.room) {
+      setRoom()
+    }
   }
 
 
@@ -345,9 +399,31 @@ export const WSProvider = ({ children }) => {
   }
 
 
+  // MESSAGES // MESSAGES // MESSAGES // MESSAGES // MESSAGES //
+
+
+  /**
+   * addMessageListeners() is called on every single render,
+   * because any incoming messages must have access to the scope
+   * of the current render.
+   * removeMessageListener() is therefore also called just before
+   * the next render, to clear out listener callbacks that are no
+   * longer valid.
+   */
+  const addMessageListeners = () => {
+    const listeners = [
+      { sender_id: "system", callback: treatSystemMessage }
+    ]
+    addMessageListener(listeners)
+
+    return () => removeMessageListener(listeners)
+  }
+
+
   useEffect(prepareToOpenSocket, [socketIsNeeded])
   useEffect(sendConnectionConfirmation, [user_id])
   useEffect(sendQueuedMessages, [socket, queuedMessages])
+  useEffect(addMessageListeners) // called on every render
 
 
   return (

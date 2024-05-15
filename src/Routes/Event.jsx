@@ -18,6 +18,7 @@ import {
 } from '../Pages/Event'
 import { Game } from '../Pages/Play/6_Game'
 
+
 export const Event = () => {
   const { organization, room_host } = useParams()
   const {
@@ -34,6 +35,15 @@ export const Event = () => {
     setRoomHost,
     startTime
   } = useContext(EventContext)
+
+  console.log(`EVENT ROUTE:
+  socketIsOpen: ${socketIsOpen}
+  socketError:  ${socketError}
+  player:       ${player}
+  room:         ${room}
+  roomHost:     ${roomHost}
+  startTime:    ${startTime}`)
+
 
 
   const page = (() => {
@@ -60,6 +70,8 @@ export const Event = () => {
 
 
   const setParams = () => {
+    console.log(`setParams organization: ${organization}, room_host: ${room_host}`)
+
     setOrganization(organization || "")
     setRoomHost(room_host || "")
   }

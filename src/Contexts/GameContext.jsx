@@ -37,9 +37,7 @@ export const GameProvider = ({ children }) => {
   const [ foundBy, setFoundBy ] = useState()
   const [ delay, setDelay ] = useState(DEFAULT_DELAY)
   const [ gameOver, setGameOver ] = useState(false)
-  
-
-
+  const [ gameEnded, setGameEnded ] = useState(false)
 
 
   // SELECTING A PACK // SELECTING A PACK // SELECTING A PACK //
@@ -108,7 +106,7 @@ export const GameProvider = ({ children }) => {
 
 
   const loadGameData = ({ content }) => {
-    setGameData(content)    
+    setGameData(content)
     setLastClick(content.lastClick)
     setScore({})
     setFoundBy(content.foundBy)
@@ -191,6 +189,64 @@ export const GameProvider = ({ children }) => {
   }
 
 
+  // LEAVING AND ENDING THE GAME // LEAVING AND ENDING THE GAME //
+
+
+  /** Sent by a player who is not the room_host. A message with
+   *  the subject "user_left_game" will be sent to all remaining
+   *  members in the room. A message "left_game" will be sent to
+   *  the player who is leaving.
+   */
+  const leaveGame = () => {
+    sendMessage({
+      recipient_id: "game",
+      subject: "leave_event_game",
+      content: { room }
+    })
+  }
+
+
+
+  /** Sent by the room_host when leaving a room. All players in
+   *  the room will receive a "game_ended_by_host" message,
+   *  treated by this script. The WSContext for each player will
+   *   receive a "room_closing" message.
+   */
+  const endGame = () => {
+    sendMessage({
+      recipient_id: "game",
+      subject: "end_event_game",
+      content: { room }
+    })
+  }
+
+
+  /** Personal confirmation that the server has treated the
+   *  "leave_event_game" message sent by leaveGame.
+   */
+  const leftGame = message => {
+    setGameEnded(true)
+  }
+
+
+  /** The server has treated the "leave_event_game" message sent
+   *  by another user (not the host).
+   */
+  const userLeftGame = ({ content }) => {
+    console.log(`The player ${content.user_name} has left the game.`)
+
+  }
+
+
+
+  /** The host (who may be this player) has left the room and
+   *  the room
+   */
+  const gameEndedByHost = (message) => {
+    setGameEnded(true)
+  }
+
+
   // MESSAGES // MESSAGES // MESSAGES // MESSAGES // MESSAGES //
 
 
@@ -207,7 +263,11 @@ export const GameProvider = ({ children }) => {
       { subject: "votes", callback: updateVotes },
       { subject: "gameData", callback: loadGameData },
       { subject: "match_found", callback: matchFound },
-      { subject: "show_next_card", callback: showNextCard }
+      { subject: "show_next_card", callback: showNextCard },
+
+      { subject: "left_game", callback: leftGame },
+      { subject: "user_left_game", callback: userLeftGame },
+      { subject: "game_ended_by_host", callback: gameEndedByHost }
     ]
     addMessageListener(listeners)
 
@@ -237,7 +297,10 @@ export const GameProvider = ({ children }) => {
         requestNextCard,
         score,
         gameOver,
-        setGameOver
+        setGameOver,
+        leaveGame,
+        endGame,
+        gameEnded
       }}
     >
       {children}

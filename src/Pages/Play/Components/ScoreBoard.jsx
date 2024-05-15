@@ -27,9 +27,6 @@ export const ScoreBoard = ({ gameOver }) => {
   // with an emoji which is (probably) unique
   const { setStartTime } = useContext(EventContext)
 
-  console.log("score:", score);
-  console.log("members:", members);
-
 
   const returnToLobby = () => {
     setStartTime(0)

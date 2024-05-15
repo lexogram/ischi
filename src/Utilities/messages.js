@@ -4,7 +4,8 @@
 
 
 const messageListeners = {
-  subject: {},
+  sender_id:    {},
+  subject:      {},
   recipient_id: {}
 } // { <topic>: { <subject>: [<function>, ...], ... }, ... }
 
@@ -47,19 +48,21 @@ const removeMessageListener = (listener) => {
 
 const treatMessageListener = (action, listener) => {
   if (typeof listener === "object") {
-    const {subject, recipient_id, callback} = listener
+    const {subject, sender_id, recipient_id, callback} = listener
 
     if (callback instanceof Function) {
-      const [ category, topic ] = subject
-        ? [ messageListeners.subject, subject ]
-        : recipient_id
-          ? [ messageListeners.recipient_id, recipient_id ]
-          : [] // neither subject nor recipient_id
+      const [ listenerMap, filter ] = sender_id
+        ? [ messageListeners.sender_id, sender_id ]
+        : subject
+          ? [ messageListeners.subject, subject ]
+          : recipient_id
+            ? [ messageListeners.recipient_id, recipient_id ]
+            : [] // neither subject nor recipient_id
 
-      if (category) {
-        const listeners = category[topic]
-                      || (category[topic] = new Set())
-        listeners[action](callback)
+      if (listenerMap) {
+        const listeners = listenerMap[filter]
+                       || (listenerMap[filter] = new Set())
+        listeners[action](callback) // add or delete
 
         // console.log(
         //   `MessageListener successfully ${action}ed\n`, listener
@@ -79,22 +82,28 @@ const treatMessageListener = (action, listener) => {
 const treatMessage = (data) => {
   const {
     subject,
-    // sender_id,
+    sender_id,
     recipient_id,
     // content
   } = data
   // console.log("New message:", data);
 
-  let listeners = messageListeners.subject[subject]
+  let listeners = messageListeners.sender_id[sender_id]
   if (listeners) {
     listeners.forEach( listener => listener( data ))
     return
-  } else {
-    listeners = messageListeners.recipient_id[recipient_id]
-    if (listeners) {
-      listeners.forEach( listener => listener( data ))
-      return
-    }
+  }
+
+  listeners = messageListeners.subject[subject]
+  if (listeners) {
+    listeners.forEach( listener => listener( data ))
+    return
+  }
+
+  listeners = messageListeners.subject[subject]
+  if (listeners) {
+    listeners.forEach( listener => listener( data ))
+    return
   }
 
   console.log("Unhandled message:", data);

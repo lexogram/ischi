@@ -11,6 +11,7 @@ import { NavContext } from '../../Contexts'
 import { Card } from './Components/Card'
 import { NextCard } from './Components/NextCard'
 import { ScoreBoard } from './Components/ScoreBoard'
+import { LeaveGame } from '../../Components/LeaveGame'
 
 
 
@@ -74,10 +75,9 @@ export const Game = () => {
         y={y}
         match={match}
       />
-      {/* { showScore ? <ScoreBoard /> : <NextCard r={r}/> } */}
-
-      
+      <NextCard r={r}/>
       <ScoreBoard gameOver={showScore}/>
+      <LeaveGame />
     </div>
   )
 }
