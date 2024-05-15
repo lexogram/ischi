@@ -9,6 +9,8 @@
   "sections": "Sections",
   "home": "Accueil",
   "play": "Jouer",
+  "play-again": "Rejouer",
+  "score": "Score",
   "create": "Créer",
   "community": "communauté",
   "connect": "Se connecter",
@@ -133,7 +135,10 @@
     "same_name": "Quelqu'un d'autre avec le nom \"{{name}}\" a déjà choisi {{emoji}}.",
     "another": "Veuillez choisir un autre avatar.",
     "register": "Allons-y !",
-    "score": "Score",
+    "join": "Participer",
+    "start": "Commencer",
+    "start-now": "Démarrer",
+    "no-player-yet": "En attente des joueurs...",
     "time": "Temps"
   },
   "xxx": "xxx"

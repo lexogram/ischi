@@ -9,6 +9,8 @@
   "sections": "Sections",
   "home": "Home",
   "play": "Play",
+  "play-again": "Play Again",
+  "score": "Score",
   "create": "Create",
   "community": "community",
   "connect": "Sign Up / Sign In",
@@ -133,7 +135,10 @@
     "same_name": "Someone else with the name \"{{name}}\" is already using {{emoji}}.",
     "another": "Please use a different avatar.",
     "register": "Let's Play!",
-    "score": "Score",
+    "join": "Join",
+    "start": "Start",
+    "start-now": "Start Now",
+    "no-player-yet": "Waiting for players...",
     "time": "Time"
   },
   "xxx": "xxx"
