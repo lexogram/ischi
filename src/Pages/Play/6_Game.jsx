@@ -74,7 +74,10 @@ export const Game = () => {
         y={y}
         match={match}
       />
-      { showScore ? <ScoreBoard /> : <NextCard r={r}/> }
+      {/* { showScore ? <ScoreBoard /> : <NextCard r={r}/> } */}
+
+      
+      <ScoreBoard gameOver={showScore}/>
     </div>
   )
 }

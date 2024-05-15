@@ -316,7 +316,7 @@ export const EventProvider = ({ children }) => {
 
   const roomCreated = (message) => {
     console.log("roomCreated message:", JSON.stringify(message));
-    
+    console.log("Message is received but roomCreated() does nothing with it")
   }
 
 
@@ -412,6 +412,7 @@ export const EventProvider = ({ children }) => {
         noStrangers,
         setNoStrangers,
         startTime,
+        setStartTime,
         startGame
       }}
     >

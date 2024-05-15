@@ -57,7 +57,8 @@ export const Participants = () => {
     // starts the game now
     if (memberDivs.length < 4) {
       memberDivs.push(
-        <StartButton 
+        <StartButton
+          key="start"
           emoji=""
           $live={true}
           action={startGame}

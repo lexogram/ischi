@@ -7,6 +7,7 @@ import React, { useContext, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { WSContext } from '../Contexts'
+import { GameContext } from '../Contexts'
 import { EventContext } from '../Contexts'
 import { Connecting } from '../Components/Connecting'
 import { Disconnected } from '../Components/Disconnected'
@@ -14,7 +15,8 @@ import { Disconnected } from '../Components/Disconnected'
 import {
   Welcome,
   Lobby,
-  Room
+  Room,
+  Score
 } from '../Pages/Event'
 import { Game } from '../Pages/Play/6_Game'
 
@@ -25,6 +27,7 @@ export const Event = () => {
     socketIsOpen,
     socketError
   } = useContext(WSContext)
+  // const { gameOver } = useContext(GameContext)
   const {
     player,
     setOrganization,
@@ -52,9 +55,11 @@ export const Event = () => {
     } else if (!startTime) {
       return <Room />
 
-    } else {
+    } else { // if (!gameOver) {
       return <Game />
-    }
+    } // else {
+    //   return <Score />
+    // }
   })()
 
 

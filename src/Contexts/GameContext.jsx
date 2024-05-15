@@ -37,6 +37,8 @@ export const GameProvider = ({ children }) => {
   const [ score, setScore ] = useState({})
   const [ foundBy, setFoundBy ] = useState()
   const [ delay, setDelay ] = useState(DEFAULT_DELAY)
+  const [ gameOver, setGameOver ] = useState(false)
+  
 
 
 
@@ -144,23 +146,25 @@ export const GameProvider = ({ children }) => {
     // Highlight the images found by someone, and block the mouse
     setLastClick({ cardIndex: -1, href })
 
-    // Ensure that every member has the correct score attached to
-    // their name even if their name is not unique
-    const names = Object.values(members)
-    const unique = names.filter(name => {
-      return (names.indexOf(name) === names.lastIndexOf(name))
-    })
+    // // Ensure that every member has the correct score attached to
+    // // their name even if their name is not unique
+    // const names = Object.values(members)
+    // const unique = names.filter(name => {
+    //   return (names.indexOf(name) === names.lastIndexOf(name))
+    // })
 
-    const entries = Object.entries(members)
+    // const entries = Object.entries(members)
 
-    let tally = entries.reduce((tally, [uuid, name]) => {
-      if (unique.indexOf(name) < 0) {
-        name = name + "-" + uuid.slice(0,3)
-      }
-      tally[name] = score[uuid] || 0
-      return tally
-    }, {})
-    setScore(tally)
+    // let tally = entries.reduce((tally, [uuid, name]) => {
+    //   if (unique.indexOf(name) < 0) {
+    //     name = name + "-" + uuid.slice(0,3)
+    //   }
+    //   tally[name] = score[uuid] || 0
+    //   return tally
+    // }, {})
+    // setScore(tally)
+
+    setScore(score)
   }
 
 
@@ -179,7 +183,10 @@ export const GameProvider = ({ children }) => {
     // Forget any clicks applied to the previous cards
     setLastClick({})
 
-    if (content !== "game_over") {
+    if (content === "game_over") {
+      setGameOver(true)
+
+    } else {
       setFoundBy()
     }
   }
@@ -230,7 +237,9 @@ export const GameProvider = ({ children }) => {
         foundBy,
         requestNextCard,
         score,
-        setGameData
+        setGameData,
+        gameOver,
+        setGameOver
       }}
     >
       {children}

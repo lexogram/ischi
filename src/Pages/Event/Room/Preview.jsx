@@ -22,7 +22,7 @@ export const Preview = () => {
   const { joinRoom } = useContext(WSContext)
   const { gameData } = useContext(GameContext)
 
-  console.log("Preview",{ player, room, organization, roomHost });
+  // console.log("Preview",{ player, room, organization, roomHost });
   // console.log("typeof joinRoom:", typeof joinRoom);
   // console.log("gameData:", gameData);
 

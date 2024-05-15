@@ -44,6 +44,8 @@
   --stranger-size: calc(var(--qr-collapsed-width) * 0.55);
   --danger-size: calc(var(--qr-collapsed-width) * 0.6667);
 
+  --text-shadow: 0px 0px 5px #000, 0px 0px 5px #000;
+
 
   /* Shared components */
   .noStrangers {
@@ -103,7 +105,7 @@
     bottom: 0;
     left: 0;
     right: 0;
-    text-shadow: 0px 0px 5px #000, 0px 0px 5px #000;
+    text-shadow: var(--text-shadow);
   }
 
   .welcome {
@@ -382,6 +384,29 @@
         margin: 0;
         vertical-align: top;
       }
+    }
+  }
+
+  #board {
+    ul {
+      list-style-type: none;
+      padding: 0;
+      font-size: 5vmin;
+      margin: 0;
+    }
+
+    div.score,
+    div.final-score {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+    }
+
+
+
+    span {
+      margin-left: 0.25em;
+      text-shadow: var(--text-shadow);
     }
   }
 }

@@ -38,7 +38,7 @@ export const Room = () => {
   return (
     <div className="room">
       <QRCode link={link}/>
-      <NoStrangers />
+      {/* <NoStrangers /> */}
       <Participants />
       <Preview />
     </div>
