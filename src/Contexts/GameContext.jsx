@@ -26,8 +26,7 @@ export const GameProvider = ({ children }) => {
     sendMessage,
     addMessageListener,
     removeMessageListener,
-    room,
-    members
+    room
   } = useContext(WSContext)
   const [ packData, setPackData ] = useState([])
   const [ votes, setVotes ] = useState({})
@@ -162,7 +161,7 @@ export const GameProvider = ({ children }) => {
     //   tally[name] = score[uuid] || 0
     //   return tally
     // }, {})
-    // setScore(tally)
+    // Score(tally)
 
     setScore(score)
   }
@@ -237,7 +236,6 @@ export const GameProvider = ({ children }) => {
         foundBy,
         requestNextCard,
         score,
-        setGameData,
         gameOver,
         setGameOver
       }}

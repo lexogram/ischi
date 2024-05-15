@@ -9,6 +9,8 @@
   "sections": "Sections",
   "home": "Accueil",
   "play": "Jouer",
+  "play-again": "Rejouer",
+  "score": "Score",
   "create": "Créer",
   "community": "communauté",
   "connect": "Se connecter",
@@ -137,7 +139,6 @@
     "start": "Commencer",
     "start-now": "Démarrer",
     "no-player-yet": "En attente des joueurs...",
-    "score": "Score",
     "time": "Temps"
   },
   "xxx": "xxx"

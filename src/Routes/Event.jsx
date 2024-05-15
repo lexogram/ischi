@@ -7,7 +7,6 @@ import React, { useContext, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { WSContext } from '../Contexts'
-import { GameContext } from '../Contexts'
 import { EventContext } from '../Contexts'
 import { Connecting } from '../Components/Connecting'
 import { Disconnected } from '../Components/Disconnected'
@@ -16,7 +15,6 @@ import {
   Welcome,
   Lobby,
   Room,
-  Score
 } from '../Pages/Event'
 import { Game } from '../Pages/Play/6_Game'
 
@@ -55,11 +53,9 @@ export const Event = () => {
     } else if (!startTime) {
       return <Room />
 
-    } else { // if (!gameOver) {
+    } else {
       return <Game />
-    } // else {
-    //   return <Score />
-    // }
+    }
   })()
 
 

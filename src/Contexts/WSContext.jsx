@@ -1,7 +1,7 @@
 /**
- * Context.jsx
- * description
+ * src/Contexts/WSContext.jsx
  */
+
 
 
 import storage from '../Utilities/storage'
@@ -42,13 +42,17 @@ export const WSProvider = ({ children }) => {
   const [ room, setRoom ] = useState()
   const [ existing_room, setExistingRoom ] = useState(true)
   const [ errorStatus, setErrorStatus ] = useState(0)
-  const [ teams, setTeams ] = useState([])
   const [ members, setMembers ] = useState([])
   const [ host, setHost ] = useState()
   const [ host_id, setHostId ] = useState()
-
+  const [ queuedMessages, setQueuedMessages ] = useState([])
+  
   const socketRef = useRef(null)
   const socket = socketRef.current
+
+  
+  console.log("queuedMessages:", queuedMessages);
+  console.log("socket:", socket);
 
 
   const treatStatus = ({ status, room, host }) => {
@@ -83,24 +87,24 @@ export const WSProvider = ({ children }) => {
   }
 
 
-  const messageNotSent = (message) => {
+  const messageNotSent = (message, sender_id) => {
     // Fail quietly?
 
     const reason = !socketIsOpen
-      ? `WebSocket is closed${
-          !user_id ? "; no user_id" : ""
+      ? `WebSocket is closed ${typeof socket}${
+          !sender_id ? "; no sender_id" : ""
         }`
-      : "No user_id"
+      : `No sender__id ${sender_id}`
 
     console.log("Message could not be sent:", message, reason)
   }
 
 
-  const sendMessage = (message, temp_id) => {
-    const sender_id = message.sender_id || user_id || temp_id
+  const sendMessage = (message) => {
+    const sender_id = message.sender_id || user_id
 
-    if (!temp_id && (!socketIsOpen || !sender_id)) {
-      return messageNotSent(message)
+    if (!socketIsOpen || !sender_id) {
+      return messageNotSent(message, sender_id)
     }
 
     if (typeof message !== "object") {
@@ -113,10 +117,7 @@ export const WSProvider = ({ children }) => {
 
     // console.log("message:", message);
 
-    // HACK to use socket immediately after it has been set,
-    // before the page has re-rendered and read socket from
-    // socketRef
-    ;(socket || socketRef.current).send(message)
+    socket.send(message)
   }
 
 
@@ -142,6 +143,8 @@ export const WSProvider = ({ children }) => {
         if (last_id) {
           // This user logged in previously exchange the temporary
           // recipient_id for the previous user_id
+          console.log("About to restoreUserId. last_id", last_id);
+          
           restoreUserId(last_id, recipient_id)
         
         } else {
@@ -150,10 +153,8 @@ export const WSProvider = ({ children }) => {
         }
         return true
 
-      case "user_id_restored": {
-        setUserId(recipient_id)
-        set_user_data(content)
-      }
+      case "user_id_restored": 
+        return userIdRestored(recipient_id, content)
 
       case "existing_room":
         return setExistingRoom(content) // string or undefined
@@ -168,12 +169,26 @@ export const WSProvider = ({ children }) => {
 
 
   const restoreUserId = (last_id, temp_id) => {
-    sendMessage({
+    // The socket has only just been opened, and useState has
+    // not had time to set socket to a socket object
+    setQueuedMessages([{
       recipient_id: "system",
       sender_id: temp_id,
       subject: "restore_user_id",
       content: last_id
-    }, temp_id)
+    }])
+  }
+
+
+
+  const userIdRestored = (user_id, content) => {
+    setUserId(user_id)
+    set_user_data(content)
+
+    const { room, user_name } = content
+    if (room) {
+      joinRoom({ room, user_name }, user_id)
+    }
   }
 
 
@@ -283,8 +298,9 @@ export const WSProvider = ({ children }) => {
   }
 
 
-  const joinRoom = content => {
+  const joinRoom = ( content, sender_id ) => {
     const message = {
+      sender_id: sender_id || user_id,
       recipient_id: "system",
       subject: "send_user_to_room",
       content // { user_name, room, create_room, ... }
@@ -293,12 +309,45 @@ export const WSProvider = ({ children }) => {
     const { user_name } = content
     setUserName(user_name)
 
+    setQueuedMessages([message])
+  }
+
+
+  const leaveRoom = content => {
+    const message = {
+      recipient_id: "system",
+      subject: "leave_room",
+      content // { room }
+    }
+
     sendMessage(message)
+  }
+
+
+  const sendQueuedMessages = () => {
+    if (queuedMessages.length) {
+
+      if (socketIsOpen) {
+        queuedMessages.forEach(sendMessage)
+
+        // Don't setQueuedMessages, so the queuedMessages remains
+        // at the same address, and the useEffect won't be
+        // triggered again until setQueuedMessages is called again
+        queuedMessages.length = 0
+
+      } else {
+        console.log(
+          "Queued messages can't be sent (no socket)\n",
+          JSON.stringify(queuedMessages, null, '  ')
+        )
+      }
+    }
   }
 
 
   useEffect(prepareToOpenSocket, [socketIsNeeded])
   useEffect(sendConnectionConfirmation, [user_id])
+  useEffect(sendQueuedMessages, [socket, queuedMessages])
 
 
   return (
@@ -321,7 +370,7 @@ export const WSProvider = ({ children }) => {
         existing_room,
         getExistingRoom,
         joinRoom,
-        teams,
+        leaveRoom,
         members,
         host,
         host_id,

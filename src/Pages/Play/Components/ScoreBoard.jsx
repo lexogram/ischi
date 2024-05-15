@@ -19,24 +19,24 @@ export const ScoreBoard = ({ gameOver }) => {
 
   const { t } = useTranslation()
 
-  const { members } = useContext(WSContext)
-  const { score, setGameData } = useContext(GameContext)
+  const { members, leaveRoom } = useContext(WSContext)
+  const { score } = useContext(GameContext)
   // score { <user_id>: <integer> }
   // members { <user_id>: <string name> }
   // names may not be unique but user_ids will be. names may start
   // with an emoji which is (probably) unique
-  const { setStartTime, setRoom } = useContext(EventContext)
+  const { setStartTime } = useContext(EventContext)
 
   console.log("score:", score);
   console.log("members:", members);
 
 
   const returnToLobby = () => {
-    // setGameData()
     setStartTime(0)
-    setRoom()
+    leaveRoom({ room })
 
     if (room_host) {
+      // Unset room_host param by changing the URL
       let eventURL = location.hash.replace(room_host, "")
       eventURL = eventURL.replace(/^#/, "")
       navigate(eventURL)
@@ -111,7 +111,7 @@ export const ScoreBoard = ({ gameOver }) => {
 
   return (
     <div className={gameOver && "final-score" || "score"}>
-      {gameOver && <h1>Score</h1>}
+      {gameOver && <h1>{t("score")}</h1>}
       <ul>
         {scoreboard}
       </ul>
@@ -119,7 +119,7 @@ export const ScoreBoard = ({ gameOver }) => {
       {gameOver && <button
         onClick={returnToLobby}
       >
-        {t("event.play-again")}
+        {t("play-again")}
       </button>}
     </div>
   )

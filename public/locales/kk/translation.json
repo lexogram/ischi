@@ -9,6 +9,8 @@
   "sections": "SECTIONS",
   "home": "HOME",
   "play": "PLAY",
+  "play-again": "PLAY AGAIN",
+  "score": "Нәтиже",
   "create": "CREATE",
   "community": "COMMUNITY",
   "connect": "SIGN UP / SIGN IN",
@@ -137,7 +139,6 @@
     "start": "Ойынды бастау!",
     "start-now": "Ойынды бастау!",
     "no-player-yet": "Ойынды бастау!",
-    "score": "Нәтиже",
     "time": "Уақыт"
   },
   "xxx": "xxx"

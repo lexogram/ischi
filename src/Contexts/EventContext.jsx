@@ -9,11 +9,12 @@ import React, {
   useEffect,
   useRef
 } from 'react'
-import { useTranslation, Trans } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { WSContext } from './WSContext'
 import { GameContext } from './GameContext'
 import { debounce } from '../Utilities/debounce';
 import { GETEVENTPACKS, FETCH_OPTIONS } from '../Constants'
+import { Game } from '../Pages/Play/6_Game';
 
 
 
@@ -29,9 +30,9 @@ export const EventProvider = ({ children }) => {
     user_data,
     addMessageListener,
     removeMessageListener,
-    room,
-    members
+    room
   } = useContext(WSContext)
+  const { gameData } = useContext(GameContext)
 
   const [ emojis, setEmojis ]             = useState([])
   const [ name, setName ]                 = useState("")
@@ -42,11 +43,8 @@ export const EventProvider = ({ children }) => {
   const [ player, setPlayer ]             = useState("")
   const [ roomHost, setRoomHost ]         = useState("")
   const [ packs, setPacks ]               = useState([])
-  const [ packFolder, setPackFolder ]     = useState()
   const [ noStrangers, setNoStrangers ]   = useState(true)
   const [ startTime, setStartTime ]       = useState(0)
-  
-  
 
   // console.log("user_data:", user_data);
   // {} OR
@@ -73,36 +71,34 @@ export const EventProvider = ({ children }) => {
 
     // There may be data restored from a previous connection
     const {
-      choices:
-      emojis,
+      user_name, //
+      choices: emojis,
       name="",
       selected="",
-      emoji=""
+      emoji="",
+      // room // will have been treated in WSContext
     } = user_data
 
-    if (emojis) {
-      setName(name) // may be ""
-      // Restore from data preserved on the server
-      if (emojis.length) {
-        // Not yet registered. Set emojis. Trigger the debounce.
-        treatInitialEmojis({ content: { emojis }})
-        setEmoji(selected) // may be ""
+    if (user_name) {
+      // Registered user is reconnecting
+      setPlayer(user_name)
+      setName(name)
+      setEmoji(emoji)
 
-        if (name && selected) {
-          // Set the Register button to the correct enabled state
-          checkSoon({ name, emoji: selected })
-        }
 
-      } else if (emoji && name) {
-        // emojis is empty because a player name has been registerd
-        setEmoji(emoji)
+    } else if (emojis) {
+      // User is reconnecting before registration was complete
+      setName(name)      // may be ""
+      setEmoji(selected) // may be ""
 
-        generatePlayerName(emoji, name)
+      // Set emojis. Trigger the debounce.
+      treatInitialEmojis({ content: { emojis }})
 
-      } else {
-        // Empty array, no registration
-        getRandomEmojis()
+      if (name && selected) {
+        // Set the Register button to the correct enabled state
+        checkSoon({ name, emoji: selected })
       }
+
     } else {
       // No array at all
       getRandomEmojis()
@@ -320,14 +316,14 @@ export const EventProvider = ({ children }) => {
   }
 
 
-  // const roomJoined = (message) => {
-  //   console.log("roomJoined message:", message);
-  // }
-
-
   const joinRoom = () => {
-
+    console.log("EventContext joinRoom() called")
   }
+
+
+  // const roomJoined = ({ content }) => {
+  //   console.log("EventContext roomJoined message:", content);
+  // }
 
 
   const startGame = () => {
@@ -341,11 +337,23 @@ export const EventProvider = ({ children }) => {
   }
 
 
-  const gameStarted = ({ content }) => {
-    if (content.room === room) {
-      // This is the game this player wants to play
-      setStartTime(content.startTime)
-    } 
+  const gameStarted = message => {
+    let startTime
+
+    const { content } = (message || {})
+    if (content) {
+      if (content.room !== room) {
+        // This is not the room that you are looking for
+        return
+      }
+      ({ startTime } = content)
+
+    } else {
+      startTime = gameData?.startTime
+    }
+
+    // This is the game this player wants to play
+    setStartTime(startTime || 0)
   }
 
 
@@ -366,7 +374,7 @@ export const EventProvider = ({ children }) => {
       { subject: "confirm", callback: treatConfirmation },
       { subject: "swap", callback: treatSwap },
       { subject: "event_room_created", callback: roomCreated },
-      { subject: "event_game_started", callback: gameStarted}
+      { subject: "event_game_started", callback: gameStarted},
       // Treated by WSContext
       // { subject: "room_joined", callback: roomJoined}
 
@@ -382,6 +390,7 @@ export const EventProvider = ({ children }) => {
   useEffect(initialize, [user_id, user_data])
   useEffect(addMessageListeners) // called on every render
   useEffect(getEventPacks, [organization])
+  useEffect(gameStarted, [gameData?.startTime])
 
 
   return (
@@ -401,7 +410,6 @@ export const EventProvider = ({ children }) => {
         setOrganization,
 
         packs,
-        packFolder,
 
         room,
         roomHost,

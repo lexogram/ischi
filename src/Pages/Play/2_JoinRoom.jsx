@@ -33,9 +33,8 @@ export const JoinRoom = () => {
   const [ user_name, setUserName ] = useState(user || "")
   const [ room, setRoom ] = useState(linkRoom || "")
 
-  // Don't ask to create a room or teams unless the user says so
+  // Don't ask to create a room unless the user says so
   const [ create_room, setCreateRoom ] = useState(false)
-  const [ create_teams, setCreateTeams ] = useState(false)
 
   // Lock the room name and show a lock icon if room in params
   const [ locked, setLocked ] = useState(!!room)
@@ -69,7 +68,6 @@ export const JoinRoom = () => {
   //     errorStatus,
   //     user_name,
   //     create_room,
-  //     create_teams,
   //     locked,
   //     disabled,
   //     cantCreate,
@@ -134,11 +132,6 @@ export const JoinRoom = () => {
   const toggleCreateRoom = () => {
     setCreateRoom(!create_room)
     setDisabled(true) // so we check for name clash ???
-  }
-
-
-  const toggleCreateTeams = () => {
-    setCreateTeams(!create_teams)
   }
 
 
@@ -221,20 +214,6 @@ export const JoinRoom = () => {
       </label>
 
       <p>{ errorStatus ? errorStatus : "" }</p>
-      {/* 
-      { willCreate &&
-        <label>
-          <input
-            type="checkbox"
-            name="create_teams"
-            onChange={toggleCreateTeams}
-            checked={create_teams}
-          />
-          <span>Create teams?</span>
-        </label>
-      }
-      { create_teams && <TeamPicker /> }
-      */}
 
       <button
         type="submit"
