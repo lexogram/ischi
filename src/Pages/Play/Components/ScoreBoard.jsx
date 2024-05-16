@@ -13,7 +13,7 @@ import { EventContext } from '../../../Contexts'
 
 const EMOJI_REGEX = /(.*)_(.*)/
 
-export const ScoreBoard = ({ gameOver }) => {
+export const ScoreBoard = ({ gameOver, action }) => {
   const navigate = useNavigate()
   const { room_host } = useParams()
 
@@ -114,7 +114,7 @@ export const ScoreBoard = ({ gameOver }) => {
       </ul>
       
       {gameOver && <button
-        onClick={returnToLobby}
+        onClick={action}
         className="primary"
       >
         {t("play-again")}

@@ -11,8 +11,8 @@ import React, {
 } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { WSContext } from './WSContext'
-import { GameContext } from './GameContext'
+import { WSContext } from './2_WSContext'
+import { GameContext } from './6_GameContext'
 import { debounce } from '../Utilities/debounce';
 import { GETEVENTPACKS, FETCH_OPTIONS } from '../Constants'
 

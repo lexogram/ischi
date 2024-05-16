@@ -31,9 +31,10 @@ export const Event = () => {
     player,
     setOrganization,
     room,     // forwarded from WSContext
-    roomHost, // read from params by a player who is not the host
+    roomHost, // read from params by players who are not host
     setRoomHost,
-    startTime
+    startTime,
+    leaveTheGame
   } = useContext(EventContext)
 
   console.log(`EVENT ROUTE:
@@ -64,7 +65,7 @@ export const Event = () => {
       return <Room />
 
     } else {
-      return <Game />
+      return <Game action={leaveTheGame}/>
     }
   })()
 

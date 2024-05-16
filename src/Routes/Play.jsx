@@ -12,8 +12,8 @@ const {
   Connecting,
   Disconnected,
   JoinRoom,
-  TeamManagement,
-  TeamMembers,
+  // TeamManagement,
+  // TeamMembers,
   ChoosePack,
   Game
 } = Screens
@@ -26,20 +26,21 @@ export const Play = () => {
     requestSocketToOpen,
     socketIsOpen,
     socketError,
-    user_id,
+    // user_id,
     user_name,
     room,
-    host_id,
-    teams,
+    // host_id,
+    // teams,
 
-    // Currently unused 
-    reconnectionFailed,
-    create_room,
-    host_name
+    // // Currently unused 
+    // reconnectionFailed,
+    // create_room,
+    // host_name
   } = useContext(WSContext)
   
   const {
-    gameData
+    gameData,
+    setGameData
   } = useContext(GameContext)
 
 
@@ -55,18 +56,18 @@ export const Play = () => {
       return <JoinRoom />
 
     } else if (!gameData) {
-      if (teams.length > 1) {
-        if (host_id === user_id) {
-          return <TeamManagement />
-        } else {
-          return <TeamMembers />
-        }
-      } else {
+      // if (teams.length > 1) {
+      //   if (host_id === user_id) {
+      //     return <TeamManagement />
+      //   } else {
+      //     return <TeamMembers />
+      //   }
+      // } else {
         return <ChoosePack />
-      }
+      // }
 
     } else {
-      return <Game />
+      return <Game action={() => setGameData()}/>
     }
   })()
 

@@ -5,13 +5,13 @@
 
 import React from 'react'
 
-import { NavProvider, NavContext } from './NavContext'
-import { WSProvider, WSContext } from './WSContext'
-import { I18nProvider, I18nContext } from './I18nContext'
-import { UserProvider, UserContext } from './UserContext'
-import { CreatorProvider, CreatorContext } from './CreatorContext'
-import { GameProvider, GameContext } from './GameContext'
-import { EventProvider, EventContext } from './EventContext'
+import { NavProvider, NavContext } from './1_NavContext'
+import { WSProvider, WSContext } from './2_WSContext'
+import { I18nProvider, I18nContext } from './3_I18nContext'
+import { UserProvider, UserContext } from './4_UserContext'
+import { CreatorProvider, CreatorContext } from './5_CreatorContext'
+import { GameProvider, GameContext } from './6_GameContext'
+import { EventProvider, EventContext } from './7_EventContext'
 
 
 

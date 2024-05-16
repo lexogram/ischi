@@ -6,7 +6,7 @@
 
 import React, { useState, useContext } from 'react'
 import { Trans, useTranslation } from 'react-i18next';
-import { UserContext } from '../../Contexts/UserContext'
+import { UserContext } from '../../Contexts'
 import { SIGNIN, SIGNUP } from '../../Constants'
 
 import storage from '../../Utilities/storage'

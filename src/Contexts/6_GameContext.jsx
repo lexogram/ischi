@@ -10,7 +10,7 @@ import React, {
   useEffect
 } from 'react'
 
-import { WSContext } from './WSContext'
+import { WSContext } from './2_WSContext'
 import { GETPACKS, DELAY_ARRAY } from '../Constants'
 const DEFAULT_DELAY = DELAY_ARRAY[2][0]
 
@@ -282,7 +282,8 @@ export const GameProvider = ({ children }) => {
         setGameOver,
         leaveGame,
         endGame,
-        gameEnded
+        gameEnded,
+        setGameData
       }}
     >
       {children}
