@@ -8,14 +8,20 @@ import React, { useContext } from 'react'
 import { useTranslation, Trans } from 'react-i18next';
 import { EventContext } from '../../../Contexts';
 import { ISCHI } from '../../../Constants';
-import { LogOut } from './LogOut';
+import { GoBack } from '../../../Components/GoBack';
 import { Start } from './Start';
+
+import leave from '../../../Assets/leave.png'
+
+
+const TITLE = "ищи"
 
 
 export const Lobby = () => {
   const {
     emoji,
     packs,
+    logOut
   } = useContext(EventContext)
   
   const { t } = useTranslation()
@@ -54,11 +60,16 @@ export const Lobby = () => {
     packList.push(<li key="none">{t("pack.none")}</li>)
   }
 
+
   return (
     <div className="lobby">
-      {/* <h3>{title}</h3> */}
+      <h1 className='title'>{TITLE}</h1>
       <ul>{packList}</ul>
-      <LogOut />
+      <GoBack
+        image={leave}
+        action={logOut}
+        alt="re-enter"
+      />
     </div>
   )
 }

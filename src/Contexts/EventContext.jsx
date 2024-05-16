@@ -93,7 +93,8 @@ export const EventProvider = ({ children }) => {
       setPlayer(user_name)
       setName(name)
       setEmoji(emoji)
-
+      // Remember the emoji choices, in case the user logs out
+      setEmojis(emojis)
 
     } else if (emojis) {
       // User is reconnecting before registration was complete
@@ -417,6 +418,13 @@ export const EventProvider = ({ children }) => {
   }
 
 
+  const logOut = () => {
+    checkRef.current = debounce(checkSoon, 500)
+    setDisabled(false)
+    setPlayer()
+  }
+
+
   // MESSAGES // MESSAGES // MESSAGES // MESSAGES // MESSAGES //
 
   /**
@@ -484,6 +492,7 @@ export const EventProvider = ({ children }) => {
         startGame,
         leaveTheGame,
         // gameEnded
+        logOut
       }}
     >
       {children}

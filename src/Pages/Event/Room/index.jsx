@@ -14,7 +14,7 @@ import React, { useContext } from 'react'
 import { EventContext } from '../../../Contexts'
 import { QRCode } from '../../../Components/QRCode'
 // import { NoStrangers } from './NoStrangers'
-import { LeaveGame } from '../../../Components/LeaveGame'
+import { GoBack } from '../../../Components/GoBack'
 import { Preview } from './Preview'
 import { Participants } from './Participants'
 
@@ -22,7 +22,8 @@ import { Participants } from './Participants'
 export const Room = () => {
   const {
     roomHost,
-    player
+    player,
+    leaveTheGame
   } = useContext(EventContext)
 
   // Strip any existing emoji+name from the location.href...
@@ -39,7 +40,7 @@ export const Room = () => {
   return (
     <div className="room">
       <QRCode link={link}/>
-      <LeaveGame $isPreview={true}/>
+      <GoBack action={leaveTheGame}/>
       {/* <NoStrangers /> */}
       <Participants />
       <Preview />

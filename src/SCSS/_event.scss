@@ -30,9 +30,7 @@
   --lobby-width: 100vmin;
   --lobby-left: calc((100vw - var(--lobby-width)) / 2);
   /* Log out button in space above lobby list*/
-  --out-size: 2em;
-  --out-font: calc(var(--out-size) * 0.8);
-  --lobby-list-height: calc(100vh - var(--out-size));
+  --lobby-list-height: calc(100vh - var(--qr-collapsed-width));
 
   /* Room */
   --member-square-size: calc(
@@ -44,6 +42,9 @@
   --stranger-size: calc(var(--qr-collapsed-width) * 0.55);
   --danger-size: calc(var(--qr-collapsed-width) * 0.6667);
 
+  --go-back-size: calc(var(--qr-collapsed-width) * 0.6667);
+
+  /* Make white text readable on a white background*/
   --text-shadow: 0px 0px 5px #000, 0px 0px 5px #000;
 
 
@@ -87,7 +88,7 @@
     }
   }
 
-  .leave-room {
+  .go-back {
     position: absolute;
     top: 0;
     right: 0;
@@ -98,7 +99,9 @@
     overflow: hidden;
     
     img {
-      width: calc(var(--qr-collapsed-width) * 0.6667); 
+      width: var(--go-back-size); 
+      height: var(--go-back-size);
+      margin: 0; 
     }
   }
   
@@ -121,6 +124,12 @@
     left: 0;
     right: 0;
     text-shadow: var(--text-shadow);
+  }
+
+  .title {
+    position: absolute;
+    top: 0;
+    margin: 0.25em 0;
   }
 
   .welcome {
@@ -228,23 +237,9 @@
   .lobby {
     font-size: min(2.5vmin, 25px);
 
-    .log-out {
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: var(--out-size);
-      height: var(--out-size);
-      background-color: var(--dark);
-      padding: 0;
-
-      span {
-        font-size: var(--out-font);
-      }
-    }
-
     ul {
       position: absolute;
-      top: var(--out-size);
+      top: var(--qr-collapsed-width);
       left: var(--lobby-left);
       width: var(--lobby-width);
       height: var(--lobby-list-height);
@@ -267,7 +262,7 @@
       background-color: #333;
     }
 
-    img {
+    :not(button) img {
       width: var(--thumbnail-size);
       height: var(--thumbnail-size);
       margin-left: var(--padding);

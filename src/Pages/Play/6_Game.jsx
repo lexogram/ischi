@@ -7,17 +7,19 @@ import React, { useContext } from 'react'
 import { useCircles } from '../../Hooks/useCircles'
 import { GameContext } from '../../Contexts'
 import { NavContext } from '../../Contexts'
+import { EventContext } from '../../Contexts'
 
 import { Card } from './Components/Card'
 import { NextCard } from './Components/NextCard'
 import { ScoreBoard } from './Components/ScoreBoard'
-import { LeaveGame } from '../../Components/LeaveGame'
+import { GoBack } from '../../Components/GoBack'
 
 
 
 export const Game = () => {
   const { gameData } = useContext(GameContext)
   const { outletLeft } = useContext(NavContext)
+  const { leaveTheGame } = useContext(EventContext)
   const { d, r, x, y } = useCircles(outletLeft)
   let {
     index,
@@ -77,7 +79,7 @@ export const Game = () => {
       />
       <NextCard r={r}/>
       <ScoreBoard gameOver={showScore}/>
-      <LeaveGame />
+      <GoBack action={leaveTheGame}/>
     </div>
   )
 }
