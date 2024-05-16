@@ -99,7 +99,7 @@ export const ScoreBoard = ({ gameOver }) => {
       <li
         key={user_id}
       >
-        <span className="name">{name}</span>
+        <span className="name">{name}:</span>
         <span className="score">{score}</span>
       </li>
     )
@@ -115,6 +115,7 @@ export const ScoreBoard = ({ gameOver }) => {
       
       {gameOver && <button
         onClick={returnToLobby}
+        className="primary"
       >
         {t("play-again")}
       </button>}

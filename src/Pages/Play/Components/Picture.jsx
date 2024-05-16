@@ -6,6 +6,9 @@
 import React, { useContext } from 'react'
 import { GameContext } from '../../../Contexts'
 
+const EMOJI_REGEX = /(.{1,2}_)(.*)/ // some emojis are double-byte
+
+
 export const Picture = ({
   index,
   path,
@@ -55,6 +58,15 @@ export const Picture = ({
   }
 
 
+  const emojiFreeFoundBy = (() => {
+    const match = EMOJI_REGEX.exec(foundBy)
+    if (match) {
+      return match[2]
+    }
+    return foundBy
+  })()
+
+
   return (
     <g
       style={style}
@@ -97,7 +109,7 @@ export const Picture = ({
             transform={`rotate(${rotation})`}
             transform-origin={origin}
           >
-            {foundBy}
+            {emojiFreeFoundBy}
           </text>
           <circle
             {...circle}

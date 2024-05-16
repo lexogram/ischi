@@ -143,24 +143,6 @@ export const GameProvider = ({ children }) => {
     // Highlight the images found by someone, and block the mouse
     setLastClick({ cardIndex: -1, href })
 
-    // // Ensure that every member has the correct score attached to
-    // // their name even if their name is not unique
-    // const names = Object.values(members)
-    // const unique = names.filter(name => {
-    //   return (names.indexOf(name) === names.lastIndexOf(name))
-    // })
-
-    // const entries = Object.entries(members)
-
-    // let tally = entries.reduce((tally, [uuid, name]) => {
-    //   if (unique.indexOf(name) < 0) {
-    //     name = name + "-" + uuid.slice(0,3)
-    //   }
-    //   tally[name] = score[uuid] || 0
-    //   return tally
-    // }, {})
-    // Score(tally)
-
     setScore(score)
   }
 
