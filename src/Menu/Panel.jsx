@@ -30,6 +30,9 @@ export const Menu = () => {
   // Will be compared in <Section /> to the `to` link in the items
   // defined by PageTracker, in order to highligh the current page
 
+  // Hide the menu for events
+  const [ hidden, setHidden ] = useState(false)
+  
   // Make menu slide away (unfixed) by default
   const [ fixMenu, setFixMenu ] = useState(false)
   // Initially show menu open
@@ -70,7 +73,14 @@ export const Menu = () => {
 
   const style = {
     // Move Menu left if it's neither open nor fixed
-    left: (open || fixMenu ? 0 : "calc(-1 * var(--menu-width))")
+    left: (open || fixMenu ? 0 : "calc(-1 * var(--menu-width))"),
+    display: (hidden ? "none" : "block" )
+  }
+
+
+  const toggleMenuForEvents = () => {
+    const hide = (/\/event/.test(location.hash))
+    setHidden(hide)
   }
 
 
@@ -82,6 +92,7 @@ export const Menu = () => {
   }, [])
 
   useEffect(updateOutletWidth, [fixMenu])
+  useEffect(toggleMenuForEvents, [location.hash])
 
 
   /** Called by a click on a section disclosure triangle */
