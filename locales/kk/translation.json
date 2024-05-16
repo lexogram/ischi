@@ -9,7 +9,7 @@
   "sections": "SECTIONS",
   "home": "HOME",
   "play": "PLAY",
-  "play-again": "PLAY AGAIN",
+  "play-again": "Қайта ойнаймыз",
   "score": "Нәтиже",
   "create": "CREATE",
   "community": "COMMUNITY",
@@ -135,10 +135,10 @@
     "same_name": "Бұл аватар ({{emoji}}) қазірдің өзінде қолданыста.",
     "another": "Басқа аватарды таңдаңыз.",
     "register": "Ойынды бастау!",
-    "join": "Ойынды бастау!",
-    "start": "Ойынды бастау!",
-    "start-now": "Ойынды бастау!",
-    "no-player-yet": "Ойынды бастау!",
+    "join": "Бірге ойнаймыз",
+    "start": "Ойынның басы",
+    "start-now": "Дәл қазір бастау",
+    "no-player-yet": "Ойыншыларды күтеміз...",
     "time": "Уақыт"
   },
   "xxx": "xxx"
