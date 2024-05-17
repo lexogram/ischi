@@ -1,6 +1,8 @@
 /**
- * src/Pages/Play/Game.jsx
+ * src/Pages/Play/6_Game.jsx
  */
+
+
 
 
 import React, { useContext } from 'react'
@@ -45,17 +47,51 @@ export const Game = ({action}) => {
     indices = randomIndices.slice(index, index + 2)
 
 
-    // Find the file name of the images that match
+    // Find the file name of the images that match. First get at
+    // array of indices of where to find the pictures for each
+    // card in imageSources.
     const images1 = cardData[indices[0]]
                     .images
                     .map( image => image.imageIndex)
+    // E.g.: [ 42, 54, 48, 29, 7, 23, 17, 11 ]
     const images2 = cardData[indices[1]]
                     .images
                     .map( image => image.imageIndex)
+    // E.g.: [ 18, 10, 34, 2, 26, 42, 51, 43 ]
+    // (imageIndex in the operation below will be set to 42)
     const imageIndex = images1.find(
+      // For each value (index of an image in imageSources),
+      // in images1, check if the same value can be found in
+      // images2. If not, indexOf() returns -1; with +1, this
+      // becomes 0, or falsy. If the same value _is_ found, it
+      // will be at least 0. With +1 it will be truthy.
       index => images2.indexOf(index) + 1
     )
-    match = imageSources[imageIndex].source
+
+    if (!isNaN(imageIndex)) {
+      try {
+        match = imageSources[imageIndex].source
+
+      } catch (error) {
+        console.log("\n**********************");
+        console.log("error:", error);
+        console.log(
+          "imageSources:", JSON.stringify(imageSources, null, 2)
+        );
+        console.log("imageIndex:", imageIndex);
+        console.log("imageSources[imageIndex]:", imageSources[imageIndex]);
+        console.log("images1:", images1);
+        console.log("images2:", images2);
+        console.log("**********************\n")
+      }
+
+    } else {
+      console.log("\n**********************");
+      console.log("** NO MATCH WAS FOUND **")
+      console.log("images1:", images1);
+      console.log("images2:", images2);
+      console.log("\n**********************");
+    }
   }
 
   return (
