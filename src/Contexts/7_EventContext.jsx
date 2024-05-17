@@ -37,6 +37,7 @@ export const EventProvider = ({ children }) => {
     room
   } = useContext(WSContext)
   const {
+    createdTime,
     startTime,
     setStartTime,
     leaveGame,
@@ -352,6 +353,10 @@ export const EventProvider = ({ children }) => {
   }
 
 
+  
+  /** Called by a click on the Start Now button or by a useEffect
+   *  when a fourth player arrives.
+   */
   const startGame = () => {
     const content = { room }
 
@@ -536,6 +541,7 @@ export const EventProvider = ({ children }) => {
 
         noStrangers,
         setNoStrangers,
+        createdTime,
         startTime,
         setStartTime,
         startGame,

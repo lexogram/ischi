@@ -16,7 +16,7 @@ const messageListeners = {
  * messages.
  * Messages with a recipient_id of "system" will be treated
  * separately, regardless of their subject
- * 
+ *
  * Listeners can subscribe to either...
  * - All messages with a given subject (e.g. "make_move")
  * or:
@@ -41,7 +41,7 @@ const removeMessageListener = (listener) => {
       removeMessageListener(listener)
     })
   }
-  
+
   treatMessageListener("delete", listener)
 }
 
@@ -86,7 +86,7 @@ const treatMessage = (message) => {
     recipient_id,
     // content
   } = message
-  
+
   const replacer = (key, value) => {
     if (Array.isArray(value)) {
       return `Array(${value.length})`
@@ -96,7 +96,7 @@ const treatMessage = (message) => {
   console.log(`treatMesssage:
   ${JSON.stringify(message, replacer, 2)}
   `)
-  
+
 
   let listeners = messageListeners.sender_id[sender_id]
   if (listeners) {

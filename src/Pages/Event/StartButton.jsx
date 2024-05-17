@@ -8,11 +8,11 @@ import { Timer } from './Timer'
 
 export const StartButton = ({
   emoji,
-  $live,
   action,
-  createdTime,
-  name,
-  text
+  text,
+  // For future use with a minute timer. $live may be redundant
+  $live,
+  createdTime
 }) => {
 
 
@@ -22,7 +22,7 @@ export const StartButton = ({
       onClick={action}
     >
 
-      { $live && <Timer />}
+      { $live && <Timer createdTime={createdTime} />}
       <span className="emoji">
         {emoji}
       </span>

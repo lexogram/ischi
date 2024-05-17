@@ -39,6 +39,8 @@ export const GameProvider = ({ children }) => {
   const [ gameOver, setGameOver ] = useState(false)
   const [ gameEnded, setGameEnded ] = useState(false)
   const [ startTime, setStartTime ] = useState(0)
+  const [ createdTime, setCreatedTime ] = useState(0)
+  
   
 
 
@@ -114,11 +116,12 @@ export const GameProvider = ({ children }) => {
 
 
   const loadGameData = ({ content }) => {
-    const { lastClick, foundBy, startTime } = content
+    const { lastClick, foundBy, createdTime, startTime } = content
     setGameData(content)
     setLastClick(lastClick)
     setFoundBy(foundBy)
-    setStartTime(startTime)
+    setCreatedTime(createdTime) // should be a big number
+    setStartTime(startTime || 0)
     setScore({})
   }
 
@@ -289,6 +292,7 @@ export const GameProvider = ({ children }) => {
         foundBy,
         startTime,
         setStartTime,
+        createdTime,
         requestNextCard,
         score,
         gameOver,

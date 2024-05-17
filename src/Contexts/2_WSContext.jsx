@@ -49,9 +49,9 @@ export const WSProvider = ({ children }) => {
   const [ host_id, setHostId ] = useState()
   const [ queuedOutgoing, setQueuedOutgoing ] = useState([])
   const [ messagesToTreat, setMessagesToTreat ] = useState(0)
-  
-  
-  
+
+
+
 
   const socketRef = useRef(null)
   const socket = socketRef.current
@@ -59,8 +59,8 @@ export const WSProvider = ({ children }) => {
   console.log(`WS (render ${renders}
   incomingRef.current.length: ${incomingRef.current.length}
   messagesToTreat: ${messagesToTreat}`)
-  
-  
+
+
 
   // console.log(`${renders}. queuedOutgoing: ${JSON.stringify(queuedOutgoing, null, 2)}, socketIsOpen: ${socketIsOpen}`)
 
@@ -90,7 +90,7 @@ export const WSProvider = ({ children }) => {
     incomingRef.current.length = 0
     setMessagesToTreat(0)
   }
-    
+
 
   const treatIncoming = (message) => {
     const { subject, recipient_id, content } = message
@@ -393,7 +393,7 @@ export const WSProvider = ({ children }) => {
 
     // user_name is required by Routes/Play.js to decide to stop
     // showing the JoinRoom dialog and move to the ShowPack page.
-    const { user_name } = content 
+    const { user_name } = content
     setUserName(user_name)
 
     setQueuedOutgoing([ ...queuedOutgoing, message])

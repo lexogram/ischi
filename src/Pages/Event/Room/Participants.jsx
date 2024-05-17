@@ -1,5 +1,12 @@
 /**
  * src/Pages/Event/Room/Participants.jsx
+ * 
+ * Shows a block of four cells containing:
+ * 1.   The host's emoji
+ * 2-3. Empty square or a player's emoji
+ * 4.   EITHER: Start Now button (on host's screen)
+ *      OR:     Empty square (on player's screens)
+ *      OR:     (Momentarily) a fourth player's emoji    
  */
 
 
@@ -15,7 +22,11 @@ const SPLIT_NAME_REGEX = /(.*)_(.*)/
 export const Participants = () => {
   const { t } = useTranslation()
   const { members } = useContext(WSContext)
-  const { roomHost, startGame } = useContext(EventContext)
+  const {
+    roomHost,
+    createdTime,
+    startGame
+  } = useContext(EventContext)
   const memberEntries = Object.values(members || {})
 
 
@@ -28,6 +39,8 @@ export const Participants = () => {
   }
 
 
+  // Create a block of 4 divs, containing emojis, nothing or
+  // a Start Now button 
   const memberDivs = memberEntries.map(( memberName, index ) => {
     const match = SPLIT_NAME_REGEX.exec(memberName)
 
@@ -60,10 +73,9 @@ export const Participants = () => {
         <StartButton
           key="start"
           emoji=""
-          $live={true}
+          createdTime={createdTime} //\\ intended for showing
+          $live={true}                // a minute timer
           action={startGame}
-          createdTime={+new Date()}
-          name
           text={t("event.start-now")}
         />
       )
@@ -74,7 +86,7 @@ export const Participants = () => {
   const startIfHostPlusThreeOtherPlayers = () => {
     if (showStartNow && memberEntries.length === 4) {
       startGame()
-      // The fourth member will have been shown only for a momen.
+      // The fourth member will have been shown only for a moment.
       // The game will start just as soon as a message can be sent
       // to the server and back.
     }

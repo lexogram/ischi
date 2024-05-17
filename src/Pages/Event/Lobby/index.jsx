@@ -19,7 +19,6 @@ const TITLE = "ищи"
 
 export const Lobby = () => {
   const {
-    emoji,
     packs,
     logOut
   } = useContext(EventContext)

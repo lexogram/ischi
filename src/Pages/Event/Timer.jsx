@@ -6,7 +6,7 @@
 import React from 'react'
 
 
-export const Timer = (props) => {
+export const Timer = ({ createdTime }) => {
 
 
   return (

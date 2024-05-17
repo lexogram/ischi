@@ -48,14 +48,14 @@ export const Preview = () => {
   }
 
 
-  
+
   /** Two cases: room host and player joining the room
-   *  
+   *
    *  1. The room host will have sent a "create_event_room"
-   *     message to the server and will have received a 
+   *     message to the server and will have received a
    *     "room_created" message in reply, with a content like
    *     { ..., gameData, ... }. So gameData will already be set.
-   * 
+   *
    *     If the host reconnects, WSContext will attempt to
    *     restoreUserId(), and the userIdRestored() function will
    *     call joinRoom(), so again `gameData` will be set.
@@ -68,10 +68,10 @@ export const Preview = () => {
    *     the server, which sends a "gameData" message which
    *     triggers loadGameData() in GameContext, and then we'll
    *     re-render Preview with gameData all set.
-   * 
+   *
    *     getGameData() is only triggered by useEffect the first
    *     time this Preview component is rendered.
-   * 
+   *
    *     If a player disconnects and then reconnects, the same
    *     sequence will occur.
    */
