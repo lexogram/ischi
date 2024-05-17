@@ -77,7 +77,7 @@ export const Game = ({action}) => {
       />
       <NextCard r={r}/>
       <ScoreBoard gameOver={showScore} action={action}/>
-      <GoBack/>
+      <GoBack action={action}/>
     </div>
   )
 }

@@ -1,5 +1,5 @@
 /**
- * src/Pages/Event/index.jsx
+ * src/Pages/Event/Lobby/index.jsx
  */
 
 

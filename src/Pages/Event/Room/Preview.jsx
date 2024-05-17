@@ -28,7 +28,7 @@ export const Preview = () => {
 
 
   if (!room) { // for player
-    room = `${organization}/${roomHost}`
+    room = roomHost
   }
 
   let preview = []

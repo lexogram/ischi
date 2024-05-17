@@ -183,7 +183,7 @@ export const WSProvider = ({ children }) => {
 
 
   const setRoom = room => {
-  // console.log(`${renders}. Setting the room to ${room}`)
+    console.log(`${renders}. Setting the room to ${room}`)
 
     setTheRoom(room)
   }

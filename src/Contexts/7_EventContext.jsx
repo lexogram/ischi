@@ -40,6 +40,8 @@ export const EventProvider = ({ children }) => {
     createdTime,
     startTime,
     setStartTime,
+    endTime, // 0: game in progress, -1: game left, >0: game over
+    setEndTime,
     leaveGame,
     endGame,
     gameEnded
@@ -52,17 +54,16 @@ export const EventProvider = ({ children }) => {
   const [ message, setMessage ]           = useState("")
   const [ organization, setOrganization ] = useState("")
   const [ player, setPlayer ]             = useState("")
-  const [ roomHost, setRoomHost ]         = useState("")
+  const [ roomHost, setTheRoomHost ]      = useState("")
   const [ packs, setPacks ]               = useState([])
   const [ noStrangers, setNoStrangers ]   = useState(true)
-  const [ leaving, setLeaving ]           = useState(false)
-  
+  const [ link, setLink ]                 = useState("")
 
 
-// console.log(`EventContext room: ${room}, roomHost: ${roomHost},startTime: ${startTime}, gameEnded: ${gameEnded}`);
-// console.log("location:", location.href);
-
-
+  const setRoomHost = roomHost => {
+    setTheRoomHost(roomHost)
+    createLink(roomHost)
+  }
   // console.log("user_data:", user_data);
   // {} OR
   // { choices: <array (empty if emoji is set)>
@@ -92,7 +93,7 @@ export const EventProvider = ({ children }) => {
     user_data: ${JSON.stringify(user_data, replacer, 2)}
 
     `)
-    
+
     if (!user_id) {
       return
     }
@@ -245,7 +246,7 @@ export const EventProvider = ({ children }) => {
 
   const treatConfirmation = ({ content }) => {
     console.log(`EventC (render ${renders} treatConfirmation: ${JSON.stringify(content)}`)
-    
+
     const { confirmed } = content
     if (confirmed) {
       generatePlayerName(emoji, name)
@@ -341,19 +342,29 @@ export const EventProvider = ({ children }) => {
   }
 
 
-  // // MOVED TO GameContext // MOVED TO GameContext //
-  // const roomCreated = (message) => {
-  //   console.log(`EventC (render ${renders})
-  //   roomCreated() received ${message} but did nothing with it.`)
-  // }
+  const roomCreated = (message) => {
+    console.log(`EventC (render ${renders})
+    roomCreated() received ${message}`)
 
+    const { content } = message
+    const { room } = content
 
-  const joinRoom = () => {
-  // console.log("EventContext joinRoom() called (from Join button, which hasn't been implemented")
+    createLink(room)
   }
 
 
-  
+  const createLink = roomHost => {
+    // Strip any existing emoji+name from the location.href...
+    const safe_host = encodeURI(roomHost)
+    const { origin, pathname } = location
+    const link = `${origin}${pathname}#/event${safe_host}`
+
+    setLink(link)
+  }
+
+
+
+
   /** Called by a click on the Start Now button or by a useEffect
    *  when a fourth player arrives.
    */
@@ -370,7 +381,7 @@ export const EventProvider = ({ children }) => {
     // rejoining the game. For players for whom loadGameData in
     // GameContext has already been called, the gameStarted()
     // callback will be triggered, and startTime will be set
-    // locally. 
+    // locally.
 
     // Reply to "event_game_started" => gameStarted, sent to all
     // current members of the room. Any who join the game after
@@ -397,58 +408,47 @@ export const EventProvider = ({ children }) => {
     }
 
     setStartTime(startTime || 0)
+    // setEndTime(0)
   }
 
 
   const returnToLobby = () => {
     // Force the room_host param to become empty, which will
     // delete roomHost
-    let hash = location.hash
+    const hash = location.hash
       .replace(/#/, "")
-      .replace(roomHost+"/", "")
-      .replace(encodeURI(roomHost)+"/", "")
+      .replace(roomHost, "")
+      .replace(encodeURI(roomHost), "")
+      + `/${organization}`
+    console.log("returnToLobby at:", hash);
+
     navigate(hash)
   }
 
 
   const leaveTheGame = () => {
-  // console.log(`
-    // ***** leaveGame for ${room} called ******`)
-    setLeaving(true)
-
-    if (!roomHost) {
-      // This user _is_ the roomHost. Send a message to all
-      // players that this user is ending the game
-      endGame()
-
-    } else {
-      // Tell Game to tell the server that this user is leaving
-      // the room ... but don't stop the game
-      leaveGame()
-      // This will call finishEndingTheGame after the Game
-      // context receives the "left_game" message, which will
-      // setStartTime(0) and call returnToLobby() (to delete
-      // room_host param)
+    if (!endTime) {  // the game was not complete...
+      setEndTime(-1) // ... but it's over
     }
-
-    setStartTime(0)
+    
+    leaveGame()
   }
 
 
-  
+
   /** Called by useEffect: on first render + with gameEnded change
-   * 
+   *
    *  `gameEnded` is read from GameContext and starts false.
    *  This means that the next call will be after a message is
    *  received from the server: "left_game" (when this user
    *  chooses to leave the game) or "game_ended_by_host" (when
    *  the room host leaves the game.)
-   * 
+   *
    *  The first time, roomHost will not yet have been set, even if
    *  the link contains a room_host. The Event Route _will_ have
    *  called `setParams()` which will have called `setRoomHost()` *  in this instance, but the page will not have been rendered
    *  yet, so the new value will not be available yet.
-   * 
+   *
    *  The first time, all that will happen is `leaving` will be
    *  reset to false.
    */
@@ -456,19 +456,17 @@ export const EventProvider = ({ children }) => {
     console.log(`finishEndingTheGame:
     startTime: ${startTime}
     gameEnded: ${gameEnded}
-    roomHost: ${roomHost}
-    leaving: ${leaving} (will be set to false)
+    roomHost:  ${roomHost}
+    endTime:   ${endTime}
     `)
-    
 
-    if (startTime && gameEnded) {
-      setStartTime(0)
-    }
     if (roomHost) {
       returnToLobby()
+    } else {
+      setStartTime(0)
+      setEndTime(0)
+      // setGameEnded(false)
     }
-
-    setLeaving(false)
   }
 
 
@@ -495,7 +493,7 @@ export const EventProvider = ({ children }) => {
       { subject: "check", callback: treatIfEmojiIsTaken },
       { subject: "confirm", callback: treatConfirmation },
       { subject: "swap", callback: treatSwap },
-      // { subject: "event_room_created", callback: roomCreated },
+      { subject: "event_room_created", callback: roomCreated },
       { subject: "event_game_started", callback: gameStarted},
       // Treated by WSContext
       // { subject: "room_joined", callback: roomJoined}
@@ -534,9 +532,9 @@ export const EventProvider = ({ children }) => {
         packs,
 
         room,
+        link,
         roomHost,
         setRoomHost,
-        joinRoom,
         createRoom,
 
         noStrangers,
@@ -544,9 +542,9 @@ export const EventProvider = ({ children }) => {
         createdTime,
         startTime,
         setStartTime,
+        endTime,
         startGame,
         leaveTheGame,
-        leaving,
         // gameEnded
         logOut
       }}

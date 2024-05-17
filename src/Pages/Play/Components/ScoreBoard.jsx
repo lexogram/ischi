@@ -14,31 +14,14 @@ import { EventContext } from '../../../Contexts'
 const EMOJI_REGEX = /(.*)_(.*)/
 
 export const ScoreBoard = ({ gameOver, action }) => {
-  const navigate = useNavigate()
-  const { room_host } = useParams()
-
   const { t } = useTranslation()
 
-  const { members, leaveRoom } = useContext(WSContext)
+  const { members } = useContext(WSContext)
   const { score } = useContext(GameContext)
   // score { <user_id>: <integer> }
   // members { <user_id>: <string name> }
   // names may not be unique but user_ids will be. names may start
   // with an emoji which is (probably) unique
-  const { setStartTime } = useContext(EventContext)
-
-
-  const returnToLobby = () => {
-    setStartTime(0)
-    leaveRoom({ room })
-
-    if (room_host) {
-      // Unset room_host param by changing the URL
-      let eventURL = location.hash.replace(room_host, "")
-      eventURL = eventURL.replace(/^#/, "")
-      navigate(eventURL)
-    }
-  }
 
 
   const memberMap = (() => {

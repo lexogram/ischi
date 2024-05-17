@@ -38,10 +38,11 @@ export const GameProvider = ({ children }) => {
   const [ delay, setDelay ] = useState(DEFAULT_DELAY)
   const [ gameOver, setGameOver ] = useState(false)
   const [ gameEnded, setGameEnded ] = useState(false)
-  const [ startTime, setStartTime ] = useState(0)
   const [ createdTime, setCreatedTime ] = useState(0)
-  
-  
+  const [ startTime, setStartTime ] = useState(0)
+  const [ endTime, setEndTime ] = useState(0)
+
+
 
 
   // SELECTING A PACK // SELECTING A PACK // SELECTING A PACK //
@@ -116,12 +117,19 @@ export const GameProvider = ({ children }) => {
 
 
   const loadGameData = ({ content }) => {
-    const { lastClick, foundBy, createdTime, startTime } = content
+    const {
+      lastClick,
+      foundBy,
+      createdTime,
+      startTime,
+      endTime
+    } = content
     setGameData(content)
     setLastClick(lastClick)
     setFoundBy(foundBy)
     setCreatedTime(createdTime) // should be a big number
     setStartTime(startTime || 0)
+    setEndTime(endTime || 0)
     setScore({})
   }
 
@@ -170,13 +178,16 @@ export const GameProvider = ({ children }) => {
 
 
   const showNextCard = ({ content }) => {
-    setGameData({ ...gameData, index: content })
+    // { index: <integer | "game_over" [, endTime: <integer> ]}
+
+    setGameData({ ...gameData, ...content })
 
     // Forget any clicks applied to the previous cards
     setLastClick({})
 
-    if (content === "game_over") {
+    if (content.index  === "game_over") {
       setGameOver(true)
+      setEndTime(content.endTime) // provided to children
 
     } else {
       setFoundBy()
@@ -281,6 +292,13 @@ export const GameProvider = ({ children }) => {
       value ={{
         BASE_URL,
         packData,
+
+        createdTime,
+        startTime,
+        setStartTime,
+        endTime,
+        setEndTime,
+
         usersVote,
         votes,
         vote,
@@ -290,9 +308,7 @@ export const GameProvider = ({ children }) => {
         clickImage,
         lastClick,
         foundBy,
-        startTime,
-        setStartTime,
-        createdTime,
+
         requestNextCard,
         score,
         gameOver,

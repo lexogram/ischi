@@ -11,7 +11,7 @@ import exit from '../Assets/exit.png'
 export const GoBack = ({ action, image, alt, className }) => {
   const { t } = useTranslation()
 
-  className = `go-back ${className}`
+  className = `go-back ${className || ""}`
   alt = t(alt || "exit")
 
   return (

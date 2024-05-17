@@ -29,7 +29,6 @@ export const Event = () => {
     socketIsOpen,
     socketError
   } = useContext(WSContext)
-  // const { gameOver } = useContext(GameContext)
   const {
     player,
     setOrganization,
@@ -37,8 +36,8 @@ export const Event = () => {
     roomHost, // read from params by players who are not host
     setRoomHost,
     startTime,
+    endTime,
     leaveTheGame,
-    leaving
   } = useContext(EventContext)
 
 console.log(`EVENT ROUTE (render: ${renders}):
@@ -62,7 +61,7 @@ console.log(`EVENT ROUTE (render: ${renders}):
     } else if (!player) {
       return <Welcome organization={organization}/>
 
-    } else if (!room && !roomHost || leaving) {
+    } else if (!room && !roomHost || endTime) {
       return <Lobby />
 
     } else if (!startTime) {
@@ -78,7 +77,16 @@ console.log(`EVENT ROUTE (render: ${renders}):
   // console.log(`setParams organization: ${organization}, room_host: ${room_host}`)
 
     setOrganization(organization || "")
-    setRoomHost(room_host || "")
+
+    if (room_host) {
+      // Calque on expression in creatEventRoom in ischi.js on the
+      // server:
+      //  const room = `/${organization}/${roomHost}`
+      setRoomHost(`/${organization}/${room_host}`)
+
+    } else {
+      setRoomHost("")
+    }
   }
 
 

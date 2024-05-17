@@ -21,21 +21,9 @@ import { Participants } from './Participants'
 
 export const Room = () => {
   const {
-    roomHost,
-    player,
-    leaveTheGame
+    leaveTheGame,
+    link
   } = useContext(EventContext)
-
-  // Strip any existing emoji+name from the location.href...
-  const safe_host = encodeURI(roomHost || player) + "/"
-  let href = location.href.replace(safe_host, "")
-  // Ensure href ends in "/"
-  if (href.slice(-1) !== "/") {
-    href += "/"
-  }
-  // href = "http://domain:PORT/ischi#/event/nevzorovyh"
-  // ... and then add it (again)
-  const link = `${href}${safe_host}`
 
   return (
     <div className="room">
