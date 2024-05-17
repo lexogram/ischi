@@ -29,7 +29,8 @@ const BASE_URL = `https://${HOSTNAME}${PORT}/`   // trailing slash
 
 export const WSContext = createContext()
 
-let render = 0
+let render = 0 // for debugging
+
 
 export const WSProvider = ({ children }) => {
   const renders = ++render
@@ -46,26 +47,53 @@ export const WSProvider = ({ children }) => {
   const [ members, setMembers ] = useState([])
   const [ host, setHost ] = useState()
   const [ host_id, setHostId ] = useState()
-  const [ queuedMessages, setQueuedMessages ] = useState([])
+  const [ queuedOutgoing, setQueuedOutgoing ] = useState([])
+  const [ messagesToTreat, setMessagesToTreat ] = useState(0)
+  
+  
+  
 
   const socketRef = useRef(null)
   const socket = socketRef.current
+  const incomingRef = useRef([])
+  console.log(`WS (render ${renders}
+  incomingRef.current.length: ${incomingRef.current.length}
+  messagesToTreat: ${messagesToTreat}`)
+  
+  
 
-  // console.log(`${renders}. queuedMessages: ${JSON.stringify(queuedMessages, null, 2)}, socketIsOpen: ${socketIsOpen}`)
+  // console.log(`${renders}. queuedOutgoing: ${JSON.stringify(queuedOutgoing, null, 2)}, socketIsOpen: ${socketIsOpen}`)
 
-  console.log(`${renders}. room: ${room}`)
+  // console.log(`${renders}. room: ${room}`)
 
 
-  const treatSystemMessage = (data) => {
+  const treatSystemMessage = (message) => {
     const replacer = (key, value) => {
       if (key === "choices" || key === "emojis") {
         return `Array(${value.length})`
       }
       return value
     }
-    console.log(`${renders}. Incoming system message: ${JSON.stringify(data, replacer, 2)}`)
 
-    const { subject, recipient_id, content } = data
+    incomingRef.current = [ ...incomingRef.current, message ]
+
+    setMessagesToTreat(messagesToTreat + 1)
+
+    console.log(`WS (render ${renders})
+    Incoming:  ${JSON.stringify(message, replacer, 2)}
+    messagesToTreat: ${messagesToTreat}`)
+  }
+
+
+  const treatQueuedIncoming = () => {
+    incomingRef.current.forEach( treatIncoming )
+    incomingRef.current.length = 0
+    setMessagesToTreat(0)
+  }
+    
+
+  const treatIncoming = (message) => {
+    const { subject, recipient_id, content } = message
 
     switch (subject) {
       case "connection":
@@ -104,7 +132,7 @@ export const WSProvider = ({ children }) => {
     if (last_id) {
       // This user logged in previously exchange the temporary
       // recipient_id for the previous user_id
-      console.log(`${renders}. last_id detected ${last_id}`);
+      // console.log(`${renders}. last_id detected ${last_id}`);
 
       restoreUserId(last_id, recipient_id)
 
@@ -118,17 +146,21 @@ export const WSProvider = ({ children }) => {
 
 
   const restoreUserId = (last_id, temp_id) => {
-    console.log(`${renders}. About to restore ${last_id} (currently ${temp_id})`)
+    // console.log(`${renders}. About to restore ${last_id} (currently ${temp_id})`)
 
     // The socket has only just been opened, and useState has
     // not had time to set socket to a socket object
-    setQueuedMessages([{
-      recipient_id: "system",
-      sender_id: temp_id,
-      subject: "restore_user_id",
-      content: last_id
-    }])
+    setQueuedOutgoing([
+      ...queuedOutgoing,
+      {
+        recipient_id: "system",
+        sender_id: temp_id,
+        subject: "restore_user_id",
+        content: last_id
+      }
+    ])
   }
+
 
 
   const userIdRestored = (user_id, content) => {
@@ -137,13 +169,21 @@ export const WSProvider = ({ children }) => {
 
     const { room, user_name } = content
     if (room) {
+      // joinRoom will trigger two methods on the server:
+      // sendUserToRoom() in users.js, and setUserNameAndRoom()
+      // in ischi.js.
+      // sendUserToRoom() will reply with "room_joined" and then
+      // "room_members".
+      // setUserNameAndRoom() will reply with "votes" (if there
+      // are any) and "gameData" (if there is a game in progress)
+      // "gameData" will trigger loadGameData() in GameContext.
       joinRoom({ room, user_name }, user_id)
     }
   }
 
 
   const setRoom = room => {
-    console.log(`${renders}. Setting the room to ${room}`)
+  // console.log(`${renders}. Setting the room to ${room}`)
 
     setTheRoom(room)
   }
@@ -174,7 +214,7 @@ export const WSProvider = ({ children }) => {
     host,
     host_id
   }) => {
-    console.log(`${renders}. WS setRoomMembers ${room}` )
+  // console.log(`${renders}. WS setRoomMembers ${room}` )
     setRoom(room)
     setMembers(members)
     setHost(host)
@@ -191,12 +231,13 @@ export const WSProvider = ({ children }) => {
         }`
       : `No sender__id ${sender_id}`
 
-    console.log("Message could not be sent:", message, reason)
+  // console.log("Message could not be sent:", message, reason)
   }
 
 
   const sendMessage = (message) => {
-    console.log(`${renders}. About to sendMessage ${JSON.stringify(message, null, 2)}`)
+  console.log(`WS (render ${renders})
+  About to sendMessage ${JSON.stringify(message, null, 2)}`)
 
     const sender_id = message.sender_id || user_id
 
@@ -264,7 +305,7 @@ export const WSProvider = ({ children }) => {
     socketRef.current = null
 
     const timeNow = new Date().toTimeString().split(" ")[0]
-    console.log(`Connection closed at ${timeNow} ${error}`)
+  // console.log(`Connection closed at ${timeNow} ${error}`)
   }
 
 
@@ -332,6 +373,16 @@ export const WSProvider = ({ children }) => {
   }
 
 
+
+  /** joinRoom will trigger two methods on the server:
+   *  sendUserToRoom() in users.js, and setUserNameAndRoom()
+   *  in ischi.js.
+   *  sendUserToRoom() will reply with "room_joined" and then
+   *  "room_members".
+   *  setUserNameAndRoom() will reply with "votes" (if there
+   *  are any) and "gameData" (if there is a game in progress)
+   *  "gameData" will trigger loadGameData() in GameContext.
+  */
   const joinRoom = ( content, sender_id ) => {
     const message = {
       sender_id: sender_id || user_id,
@@ -340,15 +391,17 @@ export const WSProvider = ({ children }) => {
       content // { user_name, room, create_room, ... }
     }
 
-    const { user_name } = content
+    // user_name is required by Routes/Play.js to decide to stop
+    // showing the JoinRoom dialog and move to the ShowPack page.
+    const { user_name } = content 
     setUserName(user_name)
 
-    setQueuedMessages([message])
+    setQueuedOutgoing([ ...queuedOutgoing, message])
   }
 
 
   const leaveRoom = () => {
-    console.log(`${renders}. About to leaveRoom ${room}`)
+  // console.log(`${renders}. About to leaveRoom ${room}`)
 
     const message = {
       recipient_id: "system",
@@ -361,7 +414,7 @@ export const WSProvider = ({ children }) => {
 
 
   const exitRoom = content => {
-    console.log(`${renders}. Received exitRoom ${content.room} (${room})`)
+  // console.log(`${renders}. Received exitRoom ${content.room} (${room})`)
 
     if (room === content.room) {
       setRoom()
@@ -370,7 +423,7 @@ export const WSProvider = ({ children }) => {
 
 
   const roomClosing = (content) => {
-    console.log(`${renders}. Received roomClosing ${content.room} (${room})`)
+  // console.log(`${renders}. Received roomClosing ${content.room} (${room})`)
 
     if (room === content.room) {
       setRoom()
@@ -378,21 +431,21 @@ export const WSProvider = ({ children }) => {
   }
 
 
-  const sendQueuedMessages = () => {
-    if (queuedMessages.length) {
+  const sendQueuedOutgoing = () => {
+    if (queuedOutgoing.length) {
 
       if (socketIsOpen) {
-        queuedMessages.forEach(sendMessage)
+        queuedOutgoing.forEach(sendMessage)
 
-        // Don't setQueuedMessages, so the queuedMessages remains
+        // Don't setQueuedOutgoing, so the queuedOutgoing remains
         // at the same address, and the useEffect won't be
-        // triggered again until setQueuedMessages is called again
-        queuedMessages.length = 0
+        // triggered again until setQueuedOutgoing is called again
+        queuedOutgoing.length = 0
 
       } else {
         console.log(
           "Queued messages can't be sent (no socket)\n",
-          JSON.stringify(queuedMessages, null, '  ')
+          JSON.stringify(queuedOutgoing, null, '  ')
         )
       }
     }
@@ -422,7 +475,8 @@ export const WSProvider = ({ children }) => {
 
   useEffect(prepareToOpenSocket, [socketIsNeeded])
   useEffect(sendConnectionConfirmation, [user_id])
-  useEffect(sendQueuedMessages, [socket, queuedMessages])
+  useEffect(sendQueuedOutgoing, [socket, queuedOutgoing])
+  useEffect(treatQueuedIncoming, [messagesToTreat])
   useEffect(addMessageListeners) // called on every render
 
 

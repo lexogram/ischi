@@ -70,13 +70,13 @@ export const Save = () => {
   }
 
   const treatThumbnailBeforeSave = () => {
-    console.log("selected thumbnail:", selected);
+  // console.log("selected thumbnail:", selected);
     // selected may be a string image file name or an object
     // if the pack is new, or if the user changed the thumbnail
 
     thumbName = (selected?.file?.name || selected?.source)
 
-    console.log("before thumbName:", thumbName);
+  // console.log("before thumbName:", thumbName);
 
     if (thumbName) {
       // May be a full url for a previously saved pack, or an
@@ -87,7 +87,7 @@ export const Save = () => {
       thumbName = thumbnail
     }
 
-    console.log("after thumbName:", thumbName);
+  // console.log("after thumbName:", thumbName);
     setThumbnail(selected)
   }
 
@@ -190,17 +190,17 @@ export const Save = () => {
     fetch(SAVEPACK, options)
      .then(response => response.text())
      .then(text => {
-        console.log("SAVEPACK response:", text);
+      // console.log("SAVEPACK response:", text);
         return JSON.parse(text)
       })
      .then(json => callback(null, json))
      .catch(callback)
 
     function callback(error, json) {
-      console.log(
-        "UPLOAD\n error:", error,
-        "\n json:", JSON.stringify(json, null, 2)
-      );
+    // console.log(
+      //   "UPLOAD\n error:", error,
+      //   "\n json:", JSON.stringify(json, null, 2)
+      // );
     }
   }
 

@@ -29,7 +29,7 @@ const debounce = (debouncedFunction, immediate, delay = 300) => {
 
 // // USAGE //
 // function postBounce(a,b,c){
-//   console.log('Done', a, b, c);
+// // console.log('Done', a, b, c);
 // }
 // const processChange = debounce(postBounce);
 // for ( let ii = 0; ii < 1000; ii += 1 ) {

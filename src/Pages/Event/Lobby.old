@@ -9,8 +9,8 @@ import { EventContext } from '../../Contexts';
 export const Lobby = (props) => {
   const { organization, player } = useContext(EventContext)
 
-  console.log("organization:", organization);
-  console.log("player:", player);
+// console.log("organization:", organization);
+// console.log("player:", player);
   
 
   return (

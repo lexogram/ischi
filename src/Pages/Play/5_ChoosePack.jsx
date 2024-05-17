@@ -17,7 +17,7 @@ export const ChoosePack = () => {
   const href = location.href.replace(/(?<=play).*/, "")
   const link = `${href}/${encodeURI(room)}`
 
-  console.log("link:", link);
+// console.log("link:", link);
   
 
   return (

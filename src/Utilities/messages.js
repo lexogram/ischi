@@ -79,34 +79,44 @@ const treatMessageListener = (action, listener) => {
 }
 
 
-const treatMessage = (data) => {
+const treatMessage = (message) => {
   const {
     subject,
     sender_id,
     recipient_id,
     // content
-  } = data
-  // console.log("New message:", data);
+  } = message
+  
+  const replacer = (key, value) => {
+    if (Array.isArray(value)) {
+      return `Array(${value.length})`
+    }
+    return value
+  }
+  console.log(`treatMesssage:
+  ${JSON.stringify(message, replacer, 2)}
+  `)
+  
 
   let listeners = messageListeners.sender_id[sender_id]
   if (listeners) {
-    listeners.forEach( listener => listener( data ))
+    listeners.forEach( listener => listener( message ))
     return
   }
 
   listeners = messageListeners.subject[subject]
   if (listeners) {
-    listeners.forEach( listener => listener( data ))
+    listeners.forEach( listener => listener( message ))
     return
   }
 
-  listeners = messageListeners.subject[subject]
+  listeners = messageListeners.recipient_id[recipient_id]
   if (listeners) {
-    listeners.forEach( listener => listener( data ))
+    listeners.forEach( listener => listener( message ))
     return
   }
 
-  console.log("Unhandled message:", data);
+  console.log("Unhandled message:", message);
 }
 
 

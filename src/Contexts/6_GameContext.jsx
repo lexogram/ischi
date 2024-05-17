@@ -38,6 +38,8 @@ export const GameProvider = ({ children }) => {
   const [ delay, setDelay ] = useState(DEFAULT_DELAY)
   const [ gameOver, setGameOver ] = useState(false)
   const [ gameEnded, setGameEnded ] = useState(false)
+  const [ startTime, setStartTime ] = useState(0)
+  
 
 
   // SELECTING A PACK // SELECTING A PACK // SELECTING A PACK //
@@ -105,11 +107,19 @@ export const GameProvider = ({ children }) => {
   }
 
 
+  const roomCreated = ({ content }) => {
+    const { gameData } = content // also folder, room, createdTime
+    loadGameData({ content: gameData })
+  }
+
+
   const loadGameData = ({ content }) => {
+    const { lastClick, foundBy, startTime } = content
     setGameData(content)
-    setLastClick(content.lastClick)
+    setLastClick(lastClick)
+    setFoundBy(foundBy)
+    setStartTime(startTime)
     setScore({})
-    setFoundBy(content.foundBy)
   }
 
 
@@ -247,6 +257,7 @@ export const GameProvider = ({ children }) => {
       { subject: "match_found", callback: matchFound },
       { subject: "show_next_card", callback: showNextCard },
 
+      { subject: "event_room_created", callback: roomCreated },
       { subject: "left_game", callback: leftGame },
       { subject: "user_left_game", callback: userLeftGame },
       { subject: "game_ended_by_host", callback: gameEndedByHost }
@@ -276,6 +287,8 @@ export const GameProvider = ({ children }) => {
         clickImage,
         lastClick,
         foundBy,
+        startTime,
+        setStartTime,
         requestNextCard,
         score,
         gameOver,

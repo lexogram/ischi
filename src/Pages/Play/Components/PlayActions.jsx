@@ -20,39 +20,39 @@ const ADMIN = 3
 export const PlayActions = (props) => {
 
   const showLink = (event) => {
-    console.log("showLink called:", event);
+  // console.log("showLink called:", event);
   }
 
   const showScore = (event) => {
-    console.log("showScore called:", event);
+  // console.log("showScore called:", event);
   }
 
   const resetScore = (event) => {
-    console.log("resetScore called:", event);
+  // console.log("resetScore called:", event);
   }
 
   const leaveRoom = (event) => {
-    console.log("leaveRoom called:", event);
+  // console.log("leaveRoom called:", event);
   }
 
   const setHost = (event) => {
-    console.log("setHost called:", event);
+  // console.log("setHost called:", event);
   }
 
   const createTeams = (event) => {
-    console.log("createTeams called:", event);
+  // console.log("createTeams called:", event);
   }
 
   const setTeamColours = (event) => {
-    console.log("setTeamColours called:", event);
+  // console.log("setTeamColours called:", event);
   }
 
   const setTeamSound = (event) => {
-    console.log("setTeamSound called:", event);
+  // console.log("setTeamSound called:", event);
   }
 
   const setUpVoting = (event) => {
-    console.log("setUpVoting called:", event);
+  // console.log("setUpVoting called:", event);
   }
 
   const level = ADMIN

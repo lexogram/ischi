@@ -19,7 +19,10 @@ import {
 import { Game } from '../Pages/Play/6_Game'
 
 
+let render = 0
+
 export const Event = () => {
+  const renders = ++render
   const { organization, room_host } = useParams()
   const {
     requestSocketToOpen,
@@ -34,10 +37,11 @@ export const Event = () => {
     roomHost, // read from params by players who are not host
     setRoomHost,
     startTime,
-    leaveTheGame
+    leaveTheGame,
+    leaving
   } = useContext(EventContext)
 
-  console.log(`EVENT ROUTE:
+console.log(`EVENT ROUTE (render: ${renders}):
   socketIsOpen: ${socketIsOpen}
   socketError:  ${socketError}
   player:       ${player}
@@ -58,7 +62,7 @@ export const Event = () => {
     } else if (!player) {
       return <Welcome organization={organization}/>
 
-    } else if (!room && !roomHost) {
+    } else if (!room && !roomHost || leaving) {
       return <Lobby />
 
     } else if (!startTime) {
@@ -71,7 +75,7 @@ export const Event = () => {
 
 
   const setParams = () => {
-    console.log(`setParams organization: ${organization}, room_host: ${room_host}`)
+  // console.log(`setParams organization: ${organization}, room_host: ${room_host}`)
 
     setOrganization(organization || "")
     setRoomHost(room_host || "")

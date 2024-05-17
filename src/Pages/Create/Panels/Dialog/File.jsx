@@ -35,8 +35,8 @@ export const File = () => {
   // }
 
   const { user } = useContext(UserContext)
-  console.log("File Dialog — user:", user);
-  console.log("packs", JSON.stringify(packs, null, '  '));
+// console.log("File Dialog — user:", user);
+// console.log("packs", JSON.stringify(packs, null, '  '));
 
 
 
