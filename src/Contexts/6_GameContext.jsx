@@ -239,7 +239,7 @@ export const GameProvider = ({ children }) => {
    *  by another user (not the host).
    */
   const userLeftGame = ({ content }) => {
-    console.log(`The player ${content.user_name} has left the game.`)
+    // console.log(`The player ${content.user_name} has left the game.`)
 
   }
 

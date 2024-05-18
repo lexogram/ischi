@@ -88,11 +88,10 @@ export const EventProvider = ({ children }) => {
       }
       return value
     }
-    console.log(`EVENTC (render ${renders})
-    user_id: ${user_id}
-    user_data: ${JSON.stringify(user_data, replacer, 2)}
-
-    `)
+    // console.log(`EVENTC (render ${renders})
+    // user_id: ${user_id}
+    // user_data: ${JSON.stringify(user_data, replacer, 2)}
+    // `)
 
     if (!user_id) {
       return
@@ -245,7 +244,7 @@ export const EventProvider = ({ children }) => {
   }
 
   const treatConfirmation = ({ content }) => {
-    console.log(`EventC (render ${renders} treatConfirmation: ${JSON.stringify(content)}`)
+    // console.log(`EventC (render ${renders} treatConfirmation: ${JSON.stringify(content)}`)
 
     const { confirmed } = content
     if (confirmed) {
@@ -343,8 +342,8 @@ export const EventProvider = ({ children }) => {
 
 
   const roomCreated = (message) => {
-    console.log(`EventC (render ${renders})
-    roomCreated() received ${message}`)
+    // console.log(`EventC (render ${renders})
+    // roomCreated() received ${message}`)
 
     const { content } = message
     const { room } = content
@@ -420,7 +419,7 @@ export const EventProvider = ({ children }) => {
       .replace(roomHost, "")
       .replace(encodeURI(roomHost), "")
       + `/${organization}`
-    console.log("returnToLobby at:", hash);
+    // console.log("returnToLobby at:", hash);
 
     navigate(hash)
   }
@@ -453,12 +452,12 @@ export const EventProvider = ({ children }) => {
    *  reset to false.
    */
   const finishEndingTheGame = () => {
-    console.log(`finishEndingTheGame:
-    startTime: ${startTime}
-    gameEnded: ${gameEnded}
-    roomHost:  ${roomHost}
-    endTime:   ${endTime}
-    `)
+    // console.log(`finishEndingTheGame:
+    // startTime: ${startTime}
+    // gameEnded: ${gameEnded}
+    // roomHost:  ${roomHost}
+    // endTime:   ${endTime}
+    // `)
 
     if (roomHost) {
       returnToLobby()

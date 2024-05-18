@@ -40,13 +40,13 @@ export const Event = () => {
     leaveTheGame,
   } = useContext(EventContext)
 
-console.log(`EVENT ROUTE (render: ${renders}):
-  socketIsOpen: ${socketIsOpen}
-  socketError:  ${socketError}
-  player:       ${player}
-  room:         ${room}
-  roomHost:     ${roomHost}
-  startTime:    ${startTime}`)
+// console.log(`EVENT ROUTE (render: ${renders}):
+//   socketIsOpen: ${socketIsOpen}
+//   socketError:  ${socketError}
+//   player:       ${player}
+//   room:         ${room}
+//   roomHost:     ${roomHost}
+//   startTime:    ${startTime}`)
 
 
 

@@ -93,9 +93,9 @@ const treatMessage = (message) => {
     }
     return value
   }
-  console.log(`treatMesssage:
-  ${JSON.stringify(message, replacer, 2)}
-  `)
+  // console.log(`treatMesssage:
+  // ${JSON.stringify(message, replacer, 2)}
+  // `)
 
 
   let listeners = messageListeners.sender_id[sender_id]

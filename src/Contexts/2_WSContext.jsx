@@ -56,11 +56,9 @@ export const WSProvider = ({ children }) => {
   const socketRef = useRef(null)
   const socket = socketRef.current
   const incomingRef = useRef([])
-  console.log(`WS (render ${renders}
-  incomingRef.current.length: ${incomingRef.current.length}
-  messagesToTreat: ${messagesToTreat}`)
-
-
+  // console.log(`WS (render ${renders}
+  // incomingRef.current.length: ${incomingRef.current.length}
+  // messagesToTreat: ${messagesToTreat}`)
 
   // console.log(`${renders}. queuedOutgoing: ${JSON.stringify(queuedOutgoing, null, 2)}, socketIsOpen: ${socketIsOpen}`)
 
@@ -79,9 +77,9 @@ export const WSProvider = ({ children }) => {
 
     setMessagesToTreat(messagesToTreat + 1)
 
-    console.log(`WS (render ${renders})
-    Incoming:  ${JSON.stringify(message, replacer, 2)}
-    messagesToTreat: ${messagesToTreat}`)
+    // console.log(`WS (render ${renders})
+    // Incoming:  ${JSON.stringify(message, replacer, 2)}
+    // messagesToTreat: ${messagesToTreat}`)
   }
 
 
@@ -183,7 +181,7 @@ export const WSProvider = ({ children }) => {
 
 
   const setRoom = room => {
-    console.log(`${renders}. Setting the room to ${room}`)
+    // console.log(`${renders}. Setting the room to ${room}`)
 
     setTheRoom(room)
   }
@@ -236,8 +234,8 @@ export const WSProvider = ({ children }) => {
 
 
   const sendMessage = (message) => {
-  console.log(`WS (render ${renders})
-  About to sendMessage ${JSON.stringify(message, null, 2)}`)
+  // console.log(`WS (render ${renders})
+  // About to sendMessage ${JSON.stringify(message, null, 2)}`)
 
     const sender_id = message.sender_id || user_id
 

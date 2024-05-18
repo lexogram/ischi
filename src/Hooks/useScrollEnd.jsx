@@ -43,7 +43,7 @@ export const useScrollEnd = (callback, timeout=200) => {
 
   React.useEffect(() => {
     if (!containerRef.current) {
-      console.log("No ref to element")
+      // console.log("No ref to element")
       return
     }
 

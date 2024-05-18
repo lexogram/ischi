@@ -52,13 +52,15 @@ export const Game = ({action}) => {
     // card in imageSources.
     const images1 = cardData[indices[0]]
                     .images
-                    .map( image => image.imageIndex)
+                    .map( image => parseInt(image.imageIndex))
     // E.g.: [ 42, 54, 48, 29, 7, 23, 17, 11 ]
     const images2 = cardData[indices[1]]
                     .images
-                    .map( image => image.imageIndex)
+                    .map( image => parseInt(image.imageIndex))
     // E.g.: [ 18, 10, 34, 2, 26, 42, 51, 43 ]
     // (imageIndex in the operation below will be set to 42)
+    
+
     const imageIndex = images1.find(
       // For each value (index of an image in imageSources),
       // in images1, check if the same value can be found in
@@ -83,6 +85,8 @@ export const Game = ({action}) => {
         console.log("images1:", images1);
         console.log("images2:", images2);
         console.log("**********************\n")
+
+        localStorage.removeItem("ischi")
       }
 
     } else {
@@ -91,6 +95,8 @@ export const Game = ({action}) => {
       console.log("images1:", images1);
       console.log("images2:", images2);
       console.log("\n**********************");
+
+      localStorage.removeItem("ischi")
     }
   }
 
