@@ -13,6 +13,7 @@ import { NotFound } from './NotFound'
 import { Play } from './Play'
 import { Print } from './Print'
 import { RequireLogin } from './RequireLogin'
+import { Reset } from './Reset'
 
 export {
   About,
@@ -29,5 +30,6 @@ export {
   NotFound,
   Play,
   Print,
-  RequireLogin
+  RequireLogin,
+  Reset
 }

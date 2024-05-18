@@ -20,7 +20,8 @@ import {
   NotFound,
   Play,
   Print,
-  RequireLogin
+  RequireLogin,
+  Reset
 } from "./Routes/"
 import "./SCSS/app.scss"
 import { useScrollSize } from './Hooks/useScrollSize'
@@ -56,6 +57,7 @@ function App() {
             <Route path="details" element={<Details />} />
             <Route path="connection" element={<Connection />} />
             <Route path="print" element={<Print />} />
+            <Route path="reset" element={<Reset />} />
             {/* Allow /play route to specify room and user */}
             <Route path="play">
               <Route

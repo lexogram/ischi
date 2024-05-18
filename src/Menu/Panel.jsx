@@ -79,7 +79,7 @@ export const Menu = () => {
 
 
   const toggleMenuForEvents = () => {
-    const hide = (/\/event/.test(location.hash))
+    const hide = (/\/event/.test(location.hash) || /\/reset/.test(location.hash))
     setHidden(hide)
   }
 
