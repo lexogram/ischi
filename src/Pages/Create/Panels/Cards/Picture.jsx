@@ -5,6 +5,9 @@
 import React, { useContext } from "react";
 import { CreatorContext } from "../../../../Contexts";
 import { Tweaker } from "./Tools/Tweaker";
+import { getBestFit } from "./getFit.js"
+
+
 
 
 
@@ -66,15 +69,7 @@ export const Picture = ({
   const className = `picture card-${cardIndex} slot-${slotIndex}`
 
   const content = (useFileName)
-    ? 
-        <text
-          {...square}
-          fill="#000"
-          transform={`rotate(${rotation})`}
-          transform-origin={origin}
-        >
-          {name}
-        </text>
+    ? getTextElement()
     : <image
         href={href}
         {...square}
@@ -82,6 +77,23 @@ export const Picture = ({
         transform={`rotate(${rotation})`}
         transform-origin={origin}
       />
+
+  function getTextElement() {
+    const { x, y, size } = getBestFit(name, width)
+
+    return (
+        <text
+          x={square.x + x}
+          y={square.y + y}
+          fontSize={size}
+          fill="#000"
+          transform={`rotate(${rotation})`}
+          transform-origin={origin}
+        >
+          {name}
+        </text>
+    )
+  }
 
   return (
     <g
