@@ -66,12 +66,12 @@ export const WSProvider = ({ children }) => {
 
 
   const treatSystemMessage = (message) => {
-    const replacer = (key, value) => {
-      if (key === "choices" || key === "emojis") {
-        return `Array(${value.length})`
-      }
-      return value
-    }
+    // const replacer = (key, value) => {
+    //   if (key === "choices" || key === "emojis") {
+    //     return `Array(${value.length})`
+    //   }
+    //   return value
+    // }
 
     incomingRef.current = [ ...incomingRef.current, message ]
 

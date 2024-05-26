@@ -16,7 +16,6 @@ export const Preview = () => {
   let {
     player,
     room,    // will be set to `nevzorovyh/<emoji>_name` for host
-    organization,
     roomHost // will be set to `<emoji>_name` for visitor
   } = useContext(EventContext)
   const { joinRoom } = useContext(WSContext)

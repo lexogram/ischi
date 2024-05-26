@@ -57,12 +57,16 @@ export const Card = ({ card, cardIndex, dimensions, isPreview }) => {
       // }
 
 
-      const {
+      let {
         name,
         source,
         selfScale,
         crop: imageCrop
       } = display
+
+      if (!name) {
+        name = source.replace(/.*\//, "").replace(/\.\w+$/, "")
+      }
 
       const href = source // getURL(source)
       // console.log("href:", href);
