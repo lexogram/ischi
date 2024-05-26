@@ -1,10 +1,10 @@
 /**
  * src/Contexts/CreatorContext/data/cardUtilities.js
- * 
+ *
  * Exports:
  *   allLayouts()
  *     Returns a map of layouts, indexed by the number of images
- *     per card. 
+ *     per card.
  *     {
  *       <integer images-per-card> : {
  *         "<LayoutName>": {
@@ -20,7 +20,7 @@
  *     be used with the given number of images.
  *     Chooses the array of sets of image indices associated with
  *     that number of images per card.
- *     Returns adjusted imageCount as total to reflect 
+ *     Returns adjusted imageCount as total to reflect
  *     {
  *       sets: [[<integer card index, ... ], ...],
  *       total: imageCount
@@ -30,7 +30,7 @@
  *     Accepts a source object (created by an input:file element)
  *     and wraps it in an object with the format
  *        { source,  crop: 0, selfScale: 1}
- * 
+ *
  *   createCards()
  *     Chooses a predictably-random layout for each card, then
  *     places the set images for that card at a predictably-random
@@ -126,8 +126,8 @@ const sets = Object.values(allSets)
 
 const setLengths = sets.map( set => set.length )
 setLengths.push(9999)
-// setLengths =    [ 7, 13, 21, 31, 57. 73, 91, 9999 ]
-// images per card =  3, 4,  5,  6,  8.  9, 10 ]
+// setLengths =    [ 7, 13, 21, 31, 57, 73, 91, 9999 ]
+const imageCount = [ 3,  4,  5,  6,  8,  9, 10 ]
 
 
 export const getSets = totalImages => {
@@ -137,10 +137,12 @@ export const getSets = totalImages => {
 
   const set = sets[setIndex]
   const total = setLengths[setIndex]
+  const imagesPerCard = imageCount[setIndex]
 
   return {
     sets: set,
-    total
+    total,
+    imagesPerCard
   }
 }
 
@@ -155,6 +157,8 @@ export const createDisplay = (source) => {
 
   if (source instanceof File) {
     display.file = source
+    // Delete the extension from the file name
+    display.name = source.name.replace(/\.\w+$/, "")
     source = URL.createObjectURL(source)
   }
 
@@ -179,7 +183,7 @@ const getRandomItem = (array, random) => {
 }
 
 
-const fillCard = (imageIndices, layoutName, random) => {
+const fillCard = (imageIndices, layoutName, random, useName) => {
   const images = imageIndices.map( imageIndex => ({
     imageIndex,
     specificScale: 1,
@@ -187,7 +191,8 @@ const fillCard = (imageIndices, layoutName, random) => {
     offsetX: 0,
     offsetY: 0,
     zIndex: 0,
-    crop: 0
+    crop: 0,
+    useFileName: useName.pop() // false or true
   }))
 
   return {
@@ -201,14 +206,30 @@ const fillCard = (imageIndices, layoutName, random) => {
 export const createCards = (
   total,
   layoutNames,
-  random
+  random,
+  useFileNames,
+  alwaysUseFileNames
 ) => {
-  const { sets } = getSets(total)
+  const { sets, imagesPerCard } = getSets(total)
+  const totalImageCount = total * imagesPerCard
+
+
+  let filler = () => 0 // use images only, by default
+  if (useFileNames) {
+    if (alwaysUseFileNames) {
+      filler = () => 1
+
+    } else {
+      filler = (_, index) => index % 2
+    }
+  }
+
+  const useName = Array.from({ length: totalImageCount }, filler)
 
   const cards = sets.map( imageIndices => {
     const layoutName = getRandomItem(layoutNames, random)
-    return fillCard(imageIndices, layoutName, random)
+    return fillCard(imageIndices, layoutName, random, useName)
   })
-  
+
   return cards
 }

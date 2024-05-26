@@ -13,7 +13,6 @@ export const Card = ({ card, cardIndex, dimensions, isPreview }) => {
     total, // required for crop-circle-XXX defId
     imageSources, // [ ..., { source, selfScale }, ...]
     layouts, // { <layoutName>: [ {...card position...}, ...]}
-    getURL,
     customLayout,
     cropByDefault,
     turnConstraint,
@@ -36,17 +35,35 @@ export const Card = ({ card, cardIndex, dimensions, isPreview }) => {
 
     if (display) {
       // { source: <string | File object>, selfcale: <number> }
-      const { source, selfScale, crop: imageCrop } = display
-
-      // console.log("source:", source)
-      // <string url>
-      // OR
-      // { name: "cobra.png",
-      //   lastModified: 1702048092580,
-      //   webkitRelativePath: "images/reptile/cobra.png",
-      //   size: 33562,
-      //   type: "image/png"
+      // console.log("display:", display);
+      // { crop: 0,
+      //   file: File {
+      //     name: "01.png",
+      //     lastModified: 1716526798179,
+      //     size: 18843,
+      //     type: "image/png",
+      //     webkitRelativePath: ""
+      //   },
+      //   name: <string filename without extension>
+      //   selfScale: 1,
+      //   source: "blob:http://localhost:5173/<rAnd0m$tuff>""
       // }
+      // OR
+      // { crop: 0,
+      //   selfScale: 1,
+      //  [name: <image>,]
+      //   source: "http://localhost:5173/isch/<owner>/<pack>/
+      //            images/<image>.<ext>"
+      // }
+
+
+      const {
+        name,
+        source,
+        selfScale,
+        crop: imageCrop
+      } = display
+
       const href = source // getURL(source)
       // console.log("href:", href);
       // blob:http://domain:port/r4nd0m-ha5h
@@ -92,9 +109,10 @@ export const Card = ({ card, cardIndex, dimensions, isPreview }) => {
       }
 
       const pictureData = {
-        ...imageData, // offsetX, offsetY, zIndex
+        ...imageData, // offsetX, offsetY, zIndex, useFileName
         indices,
         href,
+        name,
         cx,
         cy,
         r,

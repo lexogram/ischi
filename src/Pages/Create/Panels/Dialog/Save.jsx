@@ -12,7 +12,6 @@ import { Thumbnail } from './Thumbnail'
 
 const URL_REGEX = /^http.*\//
 
-let timeOut
 
 export const Save = () => {
   const { t } = useTranslation()
@@ -203,14 +202,6 @@ export const Save = () => {
       // );
     }
   }
-
-
-  // // Prevent StrictMode from calling saveToServer twice
-  // useEffect(() => {
-  //   timeOut = setTimeout(saveToServer, 0)
-
-  //   return () => clearTimeout(timeOut)
-  // }, [])
 
 
 

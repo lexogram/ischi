@@ -13,7 +13,9 @@ export const Picture = ({
   cy,
   r,
   defId,
+  useFileName,
   href,
+  name,
   tweaks,
   rotation,
   fill,
@@ -42,7 +44,7 @@ export const Picture = ({
   const square = { x, y, width, height: width }
 
   // Tweaker
-  const toggleTweaker = ({ type, target }) => {
+  const toggleTweaker = ({ type }) => {
     const tweakIndices = (type === "mouseenter")
      ? indices
      : 0
@@ -63,6 +65,24 @@ export const Picture = ({
   const { cardIndex, slotIndex} = indices
   const className = `picture card-${cardIndex} slot-${slotIndex}`
 
+  const content = (useFileName)
+    ? 
+        <text
+          {...square}
+          fill="#000"
+          transform={`rotate(${rotation})`}
+          transform-origin={origin}
+        >
+          {name}
+        </text>
+    : <image
+        href={href}
+        {...square}
+        {...cropPath}
+        transform={`rotate(${rotation})`}
+        transform-origin={origin}
+      />
+
   return (
     <g
       className={className}
@@ -76,13 +96,7 @@ export const Picture = ({
           />
         </clipPath>
       </defs>
-      <image
-        href={href}
-        {...square}
-        {...cropPath}
-        transform={`rotate(${rotation})`}
-        transform-origin={origin}
-      />
+      {content}
       { !isPreview &&
       <circle
         className="crop-circle"

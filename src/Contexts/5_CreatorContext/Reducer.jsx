@@ -234,7 +234,7 @@ function loadFromJSON(state, payload) {
 
 
 function newPack( state, payload ) {
-  const { packs } = state
+  const { packs, useFileNames, alwaysUseFileNames } = state
 
   const { name, imagesPerCard, total, imageFiles } = payload
 
@@ -253,7 +253,9 @@ function newPack( state, payload ) {
   const cardData = createCards(
     total,
     layoutNames,
-    lcg()
+    lcg(),
+    useFileNames,
+    alwaysUseFileNames
   )
   if (!duplicate) {
     packs.packs.push({
@@ -314,12 +316,12 @@ function addImages( state, imageFiles ) {
     .from(imageFiles)
     // Check if an image with the same name and statistics has
     // already been added. There is a small chance of a false
-    // match, if two different imageSources with the same name happen
-    // to have exactly the same size and modification time.
+    // match, if two different imageSources with the same name 
+    // happen to have exactly the same size and modification time.
     //
     // This only applies to files imported in this session,
-    // because imageSources read from the server will not be included
-    // in importedFiles
+    // because imageSources read from the server will not be
+    // included in importedFiles
     .filter( imageFile => {
       const { lastModified, name, size, type } = imageFile
 
@@ -476,12 +478,28 @@ function setCropByDefault(state, cropByDefault) {
 
 
 function setUseFileNames(state, useFileNames) {
-  return { ...state, useFileNames }
+  const { total, layoutNames, alwaysUseFileNames } = state
+  const cardData = createCards(
+    total,
+    layoutNames,
+    lcg(),
+    useFileNames,
+    alwaysUseFileNames
+  )
+  return { ...state, cardData, useFileNames }
 }
 
 
 function setAlwaysUseFileNames(state, alwaysUseFileNames) {
-  return { ...state, alwaysUseFileNames }
+  const { total, layoutNames, useFileNames } = state
+  const cardData = createCards(
+    total,
+    layoutNames,
+    lcg(),
+    useFileNames,
+    alwaysUseFileNames
+  )
+  return { ...state, cardData, alwaysUseFileNames }
 }
 
 
