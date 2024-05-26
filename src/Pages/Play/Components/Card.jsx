@@ -59,7 +59,8 @@ export const Card = ({ index, top, d, x, y, match }) => {
       rotation,
       offsetX,
       offsetY,
-      crop
+      crop,
+      useFileName
     } = imageData
 
     if (crop === 0) {
@@ -86,6 +87,7 @@ export const Card = ({ index, top, d, x, y, match }) => {
         match={href === match}
         path={`${BASE_URL}ischi/${root}`}
         index={index}
+        useFileName={useFileName}
         href={href}
         {...placement}
       />

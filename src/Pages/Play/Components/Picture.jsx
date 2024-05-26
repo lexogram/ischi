@@ -5,6 +5,7 @@
 
 import React, { useContext } from 'react'
 import { GameContext } from '../../../Contexts'
+import { getBestFit } from '../../Create/Panels/Cards/getFit'
 
 const EMOJI_REGEX = /(.{1,2}_)(.*)/ // some emojis are double-byte
 
@@ -12,6 +13,7 @@ const EMOJI_REGEX = /(.{1,2}_)(.*)/ // some emojis are double-byte
 export const Picture = ({
   index,
   path,
+  useFileName,
   href,
   cx,
   cy,
@@ -67,6 +69,37 @@ export const Picture = ({
   })()
 
 
+  const content = (useFileName)
+    ? getTextElement()
+    : <image
+        href={path + href}
+        {...square}
+        {...cropPath}
+        transform={`rotate(${rotation})`}
+        transform-origin={origin}
+        className={className}
+      />
+
+
+  function getTextElement() {
+    const name = href.replace(/\.\w+$/, "")
+    const { x, y, size } = getBestFit(name, width)
+
+    return (
+        <text
+          x={square.x + x}
+          y={square.y + y}
+          fontSize={size}
+          fill="#000"
+          transform={`rotate(${rotation})`}
+          transform-origin={origin}
+        >
+          {name}
+        </text>
+    )
+  }
+
+
   return (
     <g
       style={style}
@@ -81,14 +114,7 @@ export const Picture = ({
           />
         </clipPath>
       </defs>
-      <image
-        href={path + href}
-        {...square}
-        {...cropPath}
-        transform={`rotate(${rotation})`}
-        transform-origin={origin}
-        className={className}
-      />
+      {content}
       {crop && imageClicked && <circle
         {...circle}
         fill="#0000"
