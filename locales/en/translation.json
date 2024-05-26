@@ -124,7 +124,7 @@
     "menu": "Events",
     "none": "No events are currently scheduled.",
     "name": "\"Night at the Museum\"",
-    "welcome": "Welcome to the {{event}}!",
+    "welcome": "Welcome to the game!",
     "start-date": "The event will begin on 18 May",
     "hello": "Hello {{player}}! It's too early to register.",
     "choose-language": "Please choose your language:",
