@@ -7,7 +7,6 @@ import React from 'react'
 
 
 export const Toggle = ({
-  prop,
   title,
   offText,
   onText,
@@ -16,11 +15,11 @@ export const Toggle = ({
   className
 }) => {
 
-  
+
   const doAction = () => {
     action(!checked)
   }
-  
+
 
   return (
     <div
@@ -32,7 +31,6 @@ export const Toggle = ({
       >
         <input
           type="checkbox"
-          name={prop}
           checked={checked}
           onChange={doAction}
         />

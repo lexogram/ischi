@@ -36,6 +36,8 @@ const initialState =  {
   turnConstraint: false,
   useSunburst: false,
   cropByDefault: false,
+  useFileNames: false,
+  alwaysUseFileNames: false,
   imageSources: [],
   layouts: {},
   cardData: [],
@@ -150,6 +152,12 @@ const reducer = (state, action) => {
 
     case "SET_CROP_BY_DEFAULT":
       return setCropByDefault(state, payload)
+
+    case "SET_USE_FILENAMES":
+      return setUseFileNames(state, payload)
+
+    case "SET_ALWAYS_USE_FILENAMES":
+      return setAlwaysUseFileNames(state, payload)
 
     case "TWEAK_IMAGE":
       return tweakImage(state, payload)
@@ -464,6 +472,16 @@ function setUseSunburst(state, useSunburst) {
 
 function setCropByDefault(state, cropByDefault) {
   return { ...state, cropByDefault }
+}
+
+
+function setUseFileNames(state, useFileNames) {
+  return { ...state, useFileNames }
+}
+
+
+function setAlwaysUseFileNames(state, alwaysUseFileNames) {
+  return { ...state, alwaysUseFileNames }
 }
 
 

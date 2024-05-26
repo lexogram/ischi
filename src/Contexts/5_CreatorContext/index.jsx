@@ -49,6 +49,8 @@ export const CreatorProvider = ({ children }) => {
     turnConstraint,
     useSunburst,
     cropByDefault,
+    useFileNames,
+    alwaysUseFileNames,
     imageSources,
     layouts,
     cardData,
@@ -80,6 +82,8 @@ export const CreatorProvider = ({ children }) => {
   const [ dialog, setDialog ] = useState()
 
 
+
+
   const addImageFiles = newImageFiles => {
     setImageFiles([ ...imageFiles, ...newImageFiles])
   }
@@ -108,6 +112,20 @@ export const CreatorProvider = ({ children }) => {
   const setCropByDefault = value => {
     dispatch({
       type: "SET_CROP_BY_DEFAULT",
+      payload: value
+    })
+  }
+
+  const setUseFileNames = value => {
+    dispatch({
+      type: "SET_USE_FILENAMES",
+      payload: value
+    })
+  }
+
+  const setAlwaysUseFileNames = value => {
+    dispatch({
+      type: "SET_ALWAYS_USE_FILENAMES",
       payload: value
     })
   }
@@ -361,6 +379,11 @@ export const CreatorProvider = ({ children }) => {
         layoutName,
         setLayoutName,
         setCardNumber,
+
+        useFileNames,
+        setUseFileNames,
+        alwaysUseFileNames,
+        setAlwaysUseFileNames,
 
         useDirectory,
         setUseDirectory,

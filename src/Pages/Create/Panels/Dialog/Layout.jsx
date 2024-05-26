@@ -20,23 +20,36 @@ export const Layout = () => {
     useSunburst,
     setUseSunburst,
     cropByDefault,
-    setCropByDefault
+    setCropByDefault,
+    useFileNames,
+    setUseFileNames,
+    alwaysUseFileNames,
+    setAlwaysUseFileNames
   } = useContext(CreatorContext)
 
-  
+
+
   const turnConstraintClass = customLayout
     ? ""
     : "disabled"
   const useSunburstClass = turnConstraint && customLayout
     ? ""
     : "disabled"
-  
+  const alwaysUseFileNamesClass = useFileNames
+    ? ""
+    : "disabled"
+
+
+
+    // console.log("useFileNames:", useFileNames);
+    // console.log("alwaysUseFileNamesClass:", alwaysUseFileNamesClass);
+
+
 
   return (
     <div className="settings">
       <h1>{t("layout-title")}</h1>
       <Toggle
-        prop="custom"
         title={t("layout-is")}
         offText={t("identical")}
         onText={t("different")}
@@ -45,7 +58,6 @@ export const Layout = () => {
       />
       <Toggle
         className={turnConstraintClass}
-        prop="rotation"
         title={t("rotation-is")}
         offText={t("free")}
         onText={t("fixed")}
@@ -54,7 +66,6 @@ export const Layout = () => {
       />
       <Toggle
         className={useSunburstClass}
-        prop="direction"
         title={t("fixed-as")}
         offText={t("upright")}
         onText={t("outward")}
@@ -62,7 +73,20 @@ export const Layout = () => {
         action={setUseSunburst}
       />
       <Toggle
-        prop="crop"
+        title={t("use-file-names")}
+        offText={t("no")}
+        onText={t("yes")}
+        checked={useFileNames}
+        action={setUseFileNames}
+      />
+      <Toggle
+        className={alwaysUseFileNamesClass}
+        offText={t("half-the-time")}
+        onText={t("always")}
+        checked={alwaysUseFileNames}
+        action={setAlwaysUseFileNames}
+      />
+      <Toggle
         title={t("crop-by-default")}
         offText={t("no")}
         onText={t("yes")}
