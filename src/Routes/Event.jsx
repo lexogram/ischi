@@ -79,10 +79,7 @@ export const Event = () => {
     setOrganization(organization || "")
 
     if (room_host) {
-      // Calque on expression in creatEventRoom in ischi.js on the
-      // server:
-      //  const room = `/${organization}/${roomHost}`
-      setRoomHost(`/${organization}/${room_host}`)
+      setRoomHost(room_host, organization)
 
     } else {
       setRoomHost("")
@@ -98,7 +95,7 @@ export const Event = () => {
 
 
   useEffect(openSocketIfNeeded, [])
-  useEffect(setParams, [organization, room_host])
+  useEffect(setParams, [organization, room_host, player])
 
 
   return (

@@ -60,9 +60,25 @@ export const EventProvider = ({ children }) => {
   const [ link, setLink ]                 = useState("")
 
 
-  const setRoomHost = roomHost => {
-    setTheRoomHost(roomHost)
-    createLink(roomHost)
+  const setRoomHost = (room_host, organization) => {
+    if (!room_host) {
+      return setTheRoomHost("")
+    }
+
+    // Calque on expression in creatEventRoom in ischi.js on the
+    // server:
+    //  const room = `/${organization}/${roomHost}`
+    const room = `/${organization}/${room_host}`
+
+    if (player && room_host.startsWith(player)) {
+      // The room host followed the link to their own game.
+      setTheRoomHost("")
+
+    } else {
+      setTheRoomHost(room)
+    }
+
+    createLink(room)
   }
   // console.log("user_data:", user_data);
   // {} OR
@@ -429,7 +445,7 @@ export const EventProvider = ({ children }) => {
     if (!endTime) {  // the game was not complete...
       setEndTime(-1) // ... but it's over
     }
-    
+
     leaveGame()
   }
 
