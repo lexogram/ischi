@@ -163,6 +163,33 @@ button:disabled,
 }
 
 
+/* DISCONNECTED / DISCONNECTED / DISCONNECTED / DISCONNECTED */
+
+#disconnected {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+
+  & img {
+    width: 70vmin;
+    height: 70vmin;
+  }
+
+  & button {
+    margin-top: 5vmin;
+    font-size: min(40px, 10vmin);
+    padding: min(16px, 4vmin);
+
+    &.hidden {
+      visibility: hidden
+    }
+  }
+}
+
+
 /* PRINT // PRINT // PRINT // PRINT // PRINT // PRINT // PRINT */
 
 main {

@@ -3,19 +3,22 @@
  */
 
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import disconnected from '../Assets/disconnected.svg'
 
 
 const DELAY = 1000
 
 
-export const Disconnected = ({ error }) => {
-  const [ showReason, setShowReason ] = useState(false)
+export const Disconnected = () => {
+  const { t } = useTranslation()
+  const [ showButton, setShowButton ] = useState(false)
   
 
   useEffect(() => {
     setTimeout(
-      () => setShowReason(true),
+      () => setShowButton(true),
       DELAY
     )
   }, [])
@@ -26,18 +29,18 @@ export const Disconnected = ({ error }) => {
   }
 
 
+  const className = showButton ? "primary" : "hidden"
+
+
   return (
     <div id="disconnected">
-      <h1>No Connection</h1>
-      { showReason && (<>
-        { error && <p>{error}</p>}
-          <button
-            onClick={reloadPage}
-          >
-            Try Again
-          </button>
-        </>
-      )}
+      <img src={disconnected} />
+      <button
+        onClick={reloadPage}
+        className={className}
+      >
+        {t("try-again")}
+      </button>
     </div>
   )
 }

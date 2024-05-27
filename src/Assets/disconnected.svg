@@ -1,0 +1,55 @@
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 100 100"
+  >
+    <!-- globe -->
+    <g
+      fill="none"
+      stroke="#66c"
+      stroke-width="3"
+      stroke-linecap="round"
+    >
+      <path
+        d="
+          M 50 95
+          A 46.75 46.75 0 1 1 95 50
+
+          M 94 48
+          L 86 48
+          M 60 48
+          L 2 48
+
+          M 48 2
+          L 48 60
+
+          M 50 95
+          A 56 56 0 0 1 48 2     
+          A 56 56 0 0 1 74 44
+
+          M 16 16
+          A 55 55 0 0 0 81 16  
+          M 16 81
+          A 55 55 0 0 1 45 70 
+        "
+      />
+    </g>
+
+    <!-- unavailable -->
+    <g 
+      fill="none"
+      stroke="#960"
+      stroke-width="5"
+    >
+      <circle
+        cx="75"
+        cy="75"
+        r="22.5"
+      />
+      <line
+        x1="58"
+        y1="92"
+        x2="92"
+        y2="58"
+      />
+    </g>
+  </svg>
