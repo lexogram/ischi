@@ -88,6 +88,16 @@ export const CreatorProvider = ({ children }) => {
     setImageFiles([ ...imageFiles, ...newImageFiles])
   }
 
+
+  const swapImages = (indices) => {
+    const action = {
+      type: "SWAP_IMAGES",
+      payload: indices
+    }
+    dispatch(action)
+  }
+
+
   const setCustomLayout = value => {
     dispatch({
       type: "SET_CUSTOM_LAYOUT",
@@ -405,7 +415,7 @@ export const CreatorProvider = ({ children }) => {
         SPACING,
         RADIUS,
 
-        // swapImages,
+        swapImages,
         // clearImages,
 
         tweakIndices,

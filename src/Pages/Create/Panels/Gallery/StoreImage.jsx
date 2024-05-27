@@ -92,7 +92,7 @@ export const StoreImage = ({ src, name, className, gapClass, index }) => {
       target.parentNode.classList.remove("hilite")
       const dragIndex = getDragIndex(event)
 
-      swapImages({ dragIndex, dropIndex: index })
+      swapImages({ dragIndex, dropIndex: index, name })
     }
   }
 

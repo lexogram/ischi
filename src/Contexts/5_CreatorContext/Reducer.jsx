@@ -316,7 +316,7 @@ function addImages( state, imageFiles ) {
     .from(imageFiles)
     // Check if an image with the same name and statistics has
     // already been added. There is a small chance of a false
-    // match, if two different imageSources with the same name 
+    // match, if two different imageSources with the same name
     // happen to have exactly the same size and modification time.
     //
     // This only applies to files imported in this session,
@@ -439,16 +439,44 @@ function setImagesPerCard( state, imagesPerCard ) {
 
 
 
-//!!! NOT IDEMPOTENT !!!  NOT IDEMPOTENT !!!  NOT IDEMPOTENT !!!//
-function swapImages(state, {dragIndex, dropIndex}) {
+//!!! NOT IDEMPOTENT !!! NOT IDEMPOTENT !!! NOT IDEMPOTENT !!!//
+// When StrictMode is active during development, swapImages will
+// be called twice. The second time it is called, it should NOT
+// swap the images back to their original position.
+function swapImages(state, {dragIndex, dropIndex, name }) {
+  // `name` is the short name of the image at dropIndex
   const { imageSources } = state
   const dragImage = imageSources[dragIndex]
+
+  // Check if the short name of the image at dragIndex is the
+  // same as the name of the image where the drop was made.
+  const dragName = getName(dragImage)
+  if (dragName === name) {
+    // StrictMode is in operation and this is the second call.
+    // Don't swap the images back to their starting positions
+    return state
+  }
+
   const dropImage = imageSources.splice(dropIndex, 1, dragImage)[0]
   // We now have two copies of dragImage, so we replace the
   // original with the dropImage that we just spliced out
   imageSources.splice(dragIndex, 1, dropImage)
 
   return { ...state, imageSources }
+
+  function getName(imageData) {
+    const { source, file } = imageData
+
+    // file only exists for images that have only just been
+    // added
+    let name = file?.name // will be undefined for saved images
+    if (name) {
+      name = source.replace(/^.*\//, "")  // -url path
+                   .replace(/\.\w+$/, "") // -extension
+    }
+
+    return name
+  }
 }
 
 
